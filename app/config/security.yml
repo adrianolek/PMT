@@ -1,0 +1,39 @@
+security:
+    encoders:
+        PMT\UserBundle\Entity\User:
+            algorithm: bcrypt
+            cost:      15
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        pmt_userbundle:
+            entity: { class: PMTUserBundle:User, property: email }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api:
+            pattern: ^/api/
+            stateless: true
+            api: true
+
+        main:
+            pattern:    ^/
+            form_login: ~
+            remember_me:
+                key: "%secret%"
+                name: r
+                lifetime: 2592000 # 30 days
+            anonymous: ~
+            logout:
+                path:   /logout
+                target: /login
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_USER }

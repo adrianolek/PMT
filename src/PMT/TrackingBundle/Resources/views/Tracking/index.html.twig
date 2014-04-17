@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+{% block title %}Time Tracking{% endblock %}
+
+{% block body %}
+
+    <div class="page-header">
+      <h1>
+          Time Tracking
+          {% if is_granted('ROLE_MANAGER') %}
+            <a href="{{ path('track_new') }}" class="btn btn-default">Add entry</a>
+          {% endif %}
+      </h1>
+    </div>
+    
+    {{ form_start(filter, { 'method': 'get', 'action': url, 'attr': {'id': 'track_filter', 'class': 'form-inline'} }) }}
+        <div class="form-group">
+            <div class="input-daterange" id="datepicker">
+                {{ form_widget(filter.date_start, {'attr': {'class': 'form-control'}} ) }}
+                <span class="add-on">to</span>
+                {{ form_widget(filter.date_end, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_widget(filter.filter, {'attr': {'class': 'btn btn-primary'}}) }}
+            <a href="{{ url }}" class="btn btn-default">Reset</a>
+        </div>
+    {{ form_end(filter) }}
+    
+    <table class="table table-condensed tracks">
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>End</th>
+                <th>Duration</th>
+                <th>Project</th>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set day = null %}
+            {% for track in tracks %}
+                {% if not(day) or track.startedAt|date('Y-m-d') != day|date('Y-m-d') %}
+                    {% set day = track.startedAt %}
+                    <tr class="day">
+                        <td colspan="7">{{ day|date('l Y-m-d') }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td>{{ track.startedAt|date('d M H:i') }}</td>
+                    <td>{{ track.endedAt|date('d M H:i') }}</td>
+                    <td>{{ track.duration|duration('%H:%M:%S') }}</td>
+                    {% if track.task %}
+                        <td><a href="{{ path('project_tasks', {'project_id': track.task.project.id }) }}">{{ track.task.project }}</a></td>
+                        <td><a href="{{ path('project_task', {'project_id': track.task.project.id, 'id': track.task.id }) }}">{{ track.task }}</a></td>
+                    {% else %}
+                        <td colspan="2">Idle</td>
+                    {% endif %}
+                    <td>{{ track.description|nl2br }}</td>
+                    <td>
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <a href="{{ path('track_edit', { 'id' : track.id }) }}" class="btn btn-default btn-xs">Edit</a>
+                            <a onclick="return confirm('Do you really want to delete this entry?')" href="{{ path('track_delete', { 'id' : track.id }) }}" class="btn btn-danger btn-xs">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">Total: {{ total|duration('%hh %mm %ss') }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+      $(function(){
+          $('#track_filter .input-daterange').datepicker({
+            todayBtn: true,
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+          });
+      });
+  </script>
+{% endblock %}

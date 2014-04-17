@@ -1,0 +1,22 @@
+{% if is_granted(expression('has_role("ROLE_MANAGER") or object.getAssignedUsers().contains(user)'), task) %}
+    <div class="btn-group pull-right status-change">
+        <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+            {{ task.categoryName }} {{ task.statusName }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            {% if task.advanceStatuses|length > 0 %}
+                <li role="presentation" class="dropdown-header">Advance status</li>
+                {% for status, name in task.advanceStatuses %}
+                    <li><a href="#" data-status="{{ status }}" data-task="{{ task.id }}">{{ name }}</a></li>
+                {% endfor %}
+            {% endif %}
+
+            {% if task.recedeStatuses|length > 0 %}
+                <li role="presentation" class="dropdown-header">Recede status</li>
+                {% for status, name in task.recedeStatuses %}
+                    <li><a href="#" data-status="{{ status }}" data-task="{{ task.id }}">{{ name }}</a></li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

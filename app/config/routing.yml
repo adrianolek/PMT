@@ -1,0 +1,40 @@
+pmt_api:
+    resource: "@PMTApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_tracking:
+    resource: "@PMTTrackingBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_file:
+    resource: "@PMTFileBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_comment:
+    resource: "@PMTCommentBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_project:
+    resource: "@PMTProjectBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_task:
+    resource: "@PMTTaskBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pmt_user:
+    resource: "@PMTUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+login_check:
+    pattern:   /login_check
+    
+logout:
+    pattern:   /logout

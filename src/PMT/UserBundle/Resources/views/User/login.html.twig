@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+{% block title %}Log in{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+      <h1>Log in</h1>
+    </div>
+    
+    {{ form_start(form, {'action': path('login_check') }) }}
+        {{ form_errors(form) }}
+        {{ form_row(form._username) }}
+        {{ form_row(form._password) }}
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <div class="checkbox">
+                    {{ form_widget(form._remember_me) }}
+                    {{ form_label(form._remember_me) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-primary">Log in</button>
+          </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+

@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+
+{% block title %}{{ is_new ? 'New time tracking entry' : 'Edit time tracking entry' }}{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h1>{{ is_new ? 'New time tracking entry' : 'Edit time tracking entry' }}</h1>
+    </div>
+
+    {% if is_new %}
+        {{ form_start(form, {'action': path('track_new') }) }}
+    {% else %}
+        {{ form_start(form, {'action': path('track_edit', { 'id': track.id }) }) }}
+    {% endif %}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.task) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.startTime, {'attr': {'placeholder': 'hh:mm:ss'}}) }}
+    {{ form_row(form.endTime, {'attr': {'placeholder': 'hh:mm:ss'}}) }}
+    {{ form_row(form.description, {'attr': {'rows': 5}}) }}
+    
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
+            or
+            <a href="{{ path('tracking') }}">Return to time tracking</a>
+        </div>
+    </div>
+        
+    {{ form_end(form) }}
+</ul>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+      $(function(){
+          $('#track_date').datepicker({
+            todayBtn: true,
+            autoclose: true,
+            format: 'yyyy-mm-dd',
+          });
+      });
+  </script>
+{% endblock %}

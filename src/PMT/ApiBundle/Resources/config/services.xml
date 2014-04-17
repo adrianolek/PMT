@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="api.security.authentication.provider" class="PMT\ApiBundle\Security\Authentication\Provider\ApiProvider" public="false">
+            <argument /> <!-- User Provider -->
+            <argument type="service" id="security.user_checker" />
+            <argument /> <!-- Provider-shared Key -->
+            <argument type="service" id="security.encoder_factory" />
+            <argument>%security.authentication.hide_user_not_found%</argument>
+        </service>
+
+        <service id="api.security.authentication.listener"
+                 class="PMT\ApiBundle\Security\Firewall\ApiListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="security.authentication.manager" />
+            <argument type="service" id="security.http_utils" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="pmt.filter_response_listener" class="PMT\ApiBundle\EventListener\ResponseListener">
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+        </service>
+
+        <service id="pmt.filter_request_listener" class="PMT\ApiBundle\EventListener\RequestListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="255"/>
+        </service>
+    </services>
+
+</container>

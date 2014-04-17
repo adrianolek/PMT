@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ task.name }}{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        {{ include('PMTTaskBundle:Task:status.html.twig', { 'task': task }) }}
+        <h1>
+            #{{ task.id }} {{ task.name }}
+            {% if is_granted(expression('has_role("ROLE_MANAGER") or object.getUser() == user'), task) %}
+                <a href="{{ path('project_task_edit', { 'project_id': project.id, 'id': task.id }) }}" class="btn btn-default">Edit</a>
+            {% endif %}
+        </h1>
+    </div>
+    
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" title="{{ task.progress }}%" style="width: {{ task.progress }}%;">
+            {{ task.progress }}%
+        </div>
+    </div>
+
+    <blockquote>{{ task.description|nl2br|converturls }}
+        <small>
+            {{ time_diff(task.createdAt) }} ({{ task.createdAt|date }}) by {{ task.user }}
+        </small>
+    </blockquote>
+    
+
+    
+    <h3>Uploads</h3>
+    {{ render(controller('PMTFileBundle:File:new', { 'task_id': task.id })) }}
+    {{ render(controller('PMTFileBundle:File:index', { 'task_id': task.id })) }}
+    
+    <h3>Comments</h3>
+    
+    {{ render(controller('PMTCommentBundle:Comment:new', { 'task_id': task.id })) }}
+    
+    {% for comment in task.comments %}   
+      <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="media">
+                  <img src="{{ gravatar(comment.user.email) }}" class="img-circle pull-left media-object"/>
+                  <div class="media-body">
+                      {{ comment.content|nl2br|converturls }}
+                  </div>     
+              </div>
+          </div>
+          <div class="panel-footer">{{ comment.user }} {{ time_diff(comment.createdAt) }} ({{ comment.createdAt|date }})</div>
+      </div>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+      app.tasks.status('{{ path('task_status', {'id': 'id'}) }}');
+  </script>
+{% endblock %}

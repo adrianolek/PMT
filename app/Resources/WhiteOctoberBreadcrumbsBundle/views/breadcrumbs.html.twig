@@ -1,0 +1,9 @@
+{% if wo_breadcrumbs()|length %}
+  {% spaceless %}
+    <ol class="breadcrumb">
+      {% for b in breadcrumbs %}
+        <li>{% if b.url %}<a href="{{ b.url }}">{% endif %}{{ b.text }}{% if b.url %}</a>{% endif %}</li>
+      {% endfor %}
+    </ol>
+  {% endspaceless %}
+{% endif %}

@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+{% block title %}People{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>
+            People
+            {% if is_granted('ROLE_MANAGER') %}
+                <a href="{{ path('people_new') }}" class="btn btn-default">Add user</a>
+            {% endif %}
+        </h1>
+    </div>
+
+    {% for user in users %}
+        <div class="col-lg-4 media">
+            <img src="{{ gravatar(user.email) }}" class="img-circle pull-left media-object"/>            
+            <div class="media-body">
+                {% if is_granted(expression('has_role("ROLE_MANAGER") or user.getId() == object.getId()'), user) %}
+                    <a href="{{ path('people_edit', { 'id': user.id }) }}" class="btn btn-default btn-xs pull-right">edit</a>
+                {% endif %}
+                <h4>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        <a href="{{ path('user_tracking', {'id': user.id }) }}">{{ user.fullname }}</a>
+                    {% else %}
+                        {{ user.fullname }}
+                    {% endif %}
+                </h4>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

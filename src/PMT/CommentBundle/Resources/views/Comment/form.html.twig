@@ -1,0 +1,13 @@
+{{ form_start(form, {'action': path('task_comment_new', { 'task_id': task_id }), 'attr': { 'class': null } }) }}
+
+<div class="row">
+  <div class="form-group col-lg-6">
+      {{ form_widget(form.content, {'attr': {'rows': 5, 'class': 'form-control'}}) }}
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Create</button>
+</div>
+    
+{{ form_end(form) }}
+
+<div class="clearfix"></div>

@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>
+            Projects
+            {% if is_granted('ROLE_MANAGER') %}
+                <a href="{{ path('project_new') }}" class="btn btn-default">Add project</a>
+            {% endif %}
+        </h1>
+    </div>
+
+    <table class="table table-hover">
+        {% for project in projects %}
+            <tr>
+                <td>
+                    <a href="{{ path('project_tasks', { 'project_id': project.id }) }}">{{ project.name }}</a>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        <a href="{{ path('project_edit', { 'id': project.id }) }}" class="btn btn-default btn-xs pull-right">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

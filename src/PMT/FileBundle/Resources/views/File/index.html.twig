@@ -1,0 +1,10 @@
+<div class="row thumbnails">
+    {% for file in files %}
+        <div class="col-sm-6 col-md-3">
+            <a href="{{ path('file', {'key': file.downloadKey, 'ext': file.extension}) }}" class="thumbnail">
+                <img src="{{ thumb_path(file) }}" class="{{ file.isImage ? 'image' : 'file' }}">
+                {{ file.name }}
+            </a>
+        </div>
+    {% endfor %}
+</div>

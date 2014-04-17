@@ -1,0 +1,140 @@
+{% extends '::base.html.twig' %}
+{% block title %}Tasks{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+      <h1>
+          Tasks
+          <a href="{{ path('project_task_new', { 'project_id': project.id }) }}" class="btn btn-default">Add task</a>
+      </h1>
+    </div>
+
+    {{ form_start(filter, { 'method': 'get', 'action': path('project_tasks', { 'project_id': project.id }), 'attr': {'id': 'task_filter', 'class': 'form-inline'} }) }}
+        <div class="form-group">
+            {{ form_widget(filter.assignment, { 'attr': { 'class': 'show-tick' }}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(filter.categories, { 'attr': {'data-title': 'Select categories'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(filter.statuses, { 'attr': {'data-title': 'Select statuses'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(filter.order, { 'attr': { 'class': 'show-tick' }}) }}
+        </div>
+        <div class="form-group">
+            <div class="input-daterange" id="datepicker">
+                {{ form_widget(filter.date_start, {'attr': {'class': 'form-control'}} ) }}
+                <span class="add-on">to</span>
+                {{ form_widget(filter.date_end, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_widget(filter.filter, {'attr': {'class': 'btn btn-primary'}}) }}
+            <a href="{{ path('project_tasks', {'project_id': project.id}) }}" class="btn btn-default">Reset</a>
+        </div>
+    {{ form_end(filter) }}
+    
+    <table class="table" id="tasks_list">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Progress</th>
+                <th>Time</th>
+                <th>Assets</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr data-id="{{ task.id }}" id="task_{{ task.id }}">
+                    <td class="priority" style="background-color:{{ task.priorityColor }}">{{ task.id }}</td>
+                    <td>
+                        <a href="{{ path('project_task', { 'project_id': project.id, 'id': task.id }) }}">{{ task.name }}</a>
+                        {{ include('PMTTaskBundle:Task:status.html.twig', { 'task': task }) }}
+                        <br/>
+                        {% for user in task.assignedUsers -%}
+                            {%- if task.id in in_progress|keys and user.id in in_progress[task.id] -%}
+                                <strong>{{ user }}</strong>
+                            {%- else -%}
+                                {{ user }}
+                            {%- endif -%}
+                            {{- loop.last ? '' : ',' }}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div class="progress {% if task.id in in_progress|keys %}progress-striped active{% endif %}" title="{{ task.progress }}%">
+                            <div class="progress-bar" role="progressbar" style="width: {{ task.progress }}%;">
+                                {{ task.progress }}%
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ durations[task.id] is defined ? durations[task.id] : 0 }}h of {{ task.estimatedTimeHours }}h</td>
+                    <td>
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-comment"></span>
+                            {{ task.commentsCount }}
+                        </span>
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-file"></span>
+                            {{ task.filesCount }}
+                        </span>
+                    </td>
+                    <td>
+                        {{ time_diff(task.createdAt) }}<br/>
+                        {{ task.createdAt|date }}<br/>
+                        by {{ task.user }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+      app.tasks.status('{{ path('task_status', {'id' : 'id'}) }}');
+      $(function(){
+          $('#task_filter select').selectpicker();
+          $('#task_filter .input-daterange').datepicker({
+            todayBtn: true,
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
+
+          {% if(filter.vars.value.order == 'priority') %}
+            $('#tasks_list tbody').addClass('sortable').sortable({
+              handle: '.priority',
+              axis: 'y',
+              helper: function(e, ui) {
+                ui.children().each(function() {
+                  $(this).width($(this).width());
+                });
+                return ui;
+              },
+              start: function(e, ui)
+              {
+                ui.placeholder.height(ui.item.height());
+              },
+              stop: function(e, ui){
+                $.ajax({
+                  type: "POST",
+                  url: '{{ path('tasks_order') }}',
+                  data: { 'item': ui.item.data('id'),
+                    'prev': ui.item.prev('tr').data('id'),
+                    'next': ui.item.next('tr').data('id')
+                  },
+                  dataType: 'json',
+                  success: function(data){
+                    $('#task_'+data.id+' .priority').animate({'backgroundColor': data.color}, 500);
+                  }
+                });
+              },
+              placeholder: 'sortable-placeholder'
+            });
+          {% endif %}
+      });
+  </script>
+{% endblock %}

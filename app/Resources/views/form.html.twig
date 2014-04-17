@@ -1,0 +1,58 @@
+{% block form_row %}
+    <div class="form-group{% if errors|length > 0 %} has-error{% endif %}">
+      {{ form_label(form, null, { 'label_attr': {'class': 'col-lg-2 control-label'}}) }}
+      <div class="col-lg-4">
+        {% if 'multiple' in form.vars|keys and 'expanded' in form.vars|keys and form.vars.multiple and form.vars.expanded %}
+            {{ form_widget(form) }}
+        {% else %}
+            {{ form_widget(form,  { 'attr': {'class': 'form-control'}}) }}
+        {% endif %}
+        {{ form_errors(form) }}      
+      </div>
+    </div>
+{% endblock form_row %}
+
+{% block form_start %}
+{% spaceless %}
+    {% set method = method|upper %}
+    {% if method in ["GET", "POST"] %}
+        {% set form_method = method %}
+    {% else %}
+        {% set form_method = "POST" %}
+    {% endif %}
+
+    {% if not ('class' in attr|keys) %}
+      {% set attr = attr|merge({'class': 'form-horizontal'}) %}
+    {% endif %}
+    
+    <form novalidate method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {% if form_method != method %}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+{% endspaceless %}
+{% endblock form_start %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        <span class="help-block">
+        {% for error in errors %}
+            {{ error.message }}
+        {% endfor %}
+        </span>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <div class="checkbox">
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}

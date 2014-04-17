@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}PMT{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noindex, nofollow">
+        {% block stylesheets %}
+          <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet" />
+          <link href="{{ asset('/js/bootstrap-select/bootstrap-select.css') }}" rel="stylesheet" />
+          <link href="{{ asset('/js/bootstrap-datepicker/datepicker.css') }}" rel="stylesheet" />
+            <link href="{{ asset('/js/select2/select2.css') }}" rel="stylesheet" />
+            <link href="{{ asset('/js/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+          <link href="{{ asset('/css/pmt.css') }}" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">PMT</a>
+                </div>
+                <nav class="navbar-collapse collapse navbar-responsive-collapse" role="navigation">
+                    {{ knp_menu_render('main') }}
+                    
+                    {{ knp_menu_render('right') }}
+                </nav>
+            </div>
+        </header>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    {% include 'flash.html.twig' %}
+                    
+                    {{ wo_render_breadcrumbs() }}
+                    
+                    {% block body %}{% endblock %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <div class="col-lg-2">
+                        <input type="text" id="search_term" class="form-control" />
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% block javascripts %}
+            <script src="{{ asset('/js/jquery-2.0.3.js') }}"></script>
+            <script src="{{ asset('/js/bootstrap.js') }}"></script>
+            <script src="{{ asset('/js/respond.src.js') }}"></script>
+            <script src="{{ asset('/js/bootstrap-select/bootstrap-select.js') }}"></script>
+            <script src="{{ asset('/js/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+            <script src="{{ asset('/js/ui/jquery.ui.core.js') }}"></script>
+            <script src="{{ asset('/js/ui/jquery.ui.widget.js') }}"></script>
+            <script src="{{ asset('/js/ui/jquery.ui.mouse.js') }}"></script>
+            <script src="{{ asset('/js/ui/jquery.ui.sortable.js') }}"></script>
+            <script src="{{ asset('/js/ui/jquery.ui.effect.js') }}"></script>
+            <script src="{{ asset('/js/select2/select2.js') }}"></script>
+            <script src="{{ asset('/js/app.js') }}"></script>
+            {% if is_granted('ROLE_USER') %}
+                <script type="text/javascript">
+                    app.search.side('{{ path('search') }}');
+                </script>
+            {% endif %}
+        {% endblock %}
+    </body>
+</html>

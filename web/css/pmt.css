@@ -1,0 +1,92 @@
+body {
+  position: relative;
+  padding-top: 60px;
+}
+
+body.webview {
+	padding-top: 10px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+.page-header {
+	margin-top: 20px;
+}
+
+.thumbnails .file  {
+	margin: 48px auto 48px auto;
+}
+
+.thumbnails a {
+	text-align: center;
+}
+
+#task_filter .form-group,
+#track_filter .form-group
+{
+	margin-bottom: 5px;
+}
+
+.input-daterange input
+{
+	width: 120px;
+}
+
+.input-daterange .add-on
+{
+	height: 34px;
+	line-height: 26px;
+}
+
+#tasks_list td
+{
+	background: #fff;
+}
+
+#tasks_list .priority
+{
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+	width: 65px;
+}
+
+#tasks_list .sortable .priority
+{
+  cursor: move;	
+}
+
+.list-group .priority
+{
+	margin-right: 10px;
+	height: 60px;
+	padding-top: 20px;
+	
+}
+
+.list-group a
+{
+	color: #428bca;
+}
+
+.list-group a .priority
+{
+	color: #000;
+}
+
+.sortable-placeholder td
+{
+	background-color: #eee !important;
+	height: 50px;
+}
+
+.tracks .day td,
+.tracks tfoot td
+{
+	background-color: #eee;
+	font-weight: bold;
+}
