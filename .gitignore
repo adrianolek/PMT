@@ -8,8 +8,10 @@
 /bin/
 /composer.phar
 /web/uploads/*
+/.vagrant
 
 .buildpath
 .settings
 .project
 .idea
+
