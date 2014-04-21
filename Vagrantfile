@@ -27,12 +27,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  data['vm']['synced_folder'].each do |i, folder|
-    if folder['source'] != '' && folder['target'] != '' && folder['id'] != ''
-      nfs = (folder['nfs'] == "true") ? "nfs" : nil
-      config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{folder['id']}", type: nfs
-    end
-  end
+  config.vm.synced_folder ".", "/var/www/pmt", type: "rsync", rsync__exclude: ".git/"
 
   config.vm.usable_port_range = (10200..10500)
 
