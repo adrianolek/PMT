@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ is_new ? 'New organization' : 'Edit organization' }}{% endblock %}
+{% block body %}
+    <div class="page-header">
+        <h1>{{ is_new ? 'New organization' : 'Edit organization' }}</h1>
+    </div>
+
+    {% if is_new %}
+        {{ form_start(form, {'action': path('organization_new') }) }}
+    {% else %}
+        {{ form_start(form, {'action': path('organization_new', { 'id': organization.id }) }) }}
+    {% endif %}
+    {{ form_errors(form) }}
+    
+    {{ form_row(form.name) }}
+    
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
+        {% if not is_new and is_granted('ROLE_MANAGER') %}
+            <a onclick="return confirm('Do you really want to delete {{ organization.name }}?')" href="{{ path('organization_delete', { 'id': organization.id }) }}" class="btn btn-danger">Delete</a>
+        {% endif %}
+        or
+        <a href="{{ path('people') }}">Return to people</a>
+      </div>
+    </div>
+        
+    {{ form_end(form) }}
+</ul>
+{% endblock %}
