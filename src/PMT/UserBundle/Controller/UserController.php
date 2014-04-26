@@ -35,9 +35,11 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('PMTUserBundle:User')->findAll();
+        $organizations = $em->getRepository('PMTUserBundle:Organization')->findAll();
 
         return array(
             'users' => $users,
+            'organizations' => $organizations,
         );
     }
     
