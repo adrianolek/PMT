@@ -99,10 +99,6 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: validator.constraint_validator, alias: password_required }
-            
-knp_menu:
-    twig:
-        template: ::menu.html.twig
         
 knp_time: ~
         

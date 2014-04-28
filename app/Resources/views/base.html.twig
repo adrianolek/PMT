@@ -28,9 +28,9 @@
                     <a class="navbar-brand" href="#">PMT</a>
                 </div>
                 <nav class="navbar-collapse collapse navbar-responsive-collapse" role="navigation">
-                    {{ knp_menu_render('main') }}
+                    {{ knp_menu_render('main', { currentClass: 'active' }) }}
                     
-                    {{ knp_menu_render('right') }}
+                    {{ knp_menu_render('right', { currentClass: 'active' }) }}
                 </nav>
             </div>
         </header>
