@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TaskText
  *
  * @ORM\Table(name="pmt_tasks_texts",options={"engine"="MyISAM"},
- *   indexes={@ORM\Index(columns={"name"},flags={"FULLTEXT"}),@ORM\Index(columns={"description"},flags={"FULLTEXT"})})
+ *   indexes={@ORM\Index(columns={"name"},flags={"FULLTEXT"}),@ORM\Index(columns={"description"},flags={"FULLTEXT"}),@ORM\Index(columns={"name","description"},flags={"FULLTEXT"})})
  * @ORM\Entity
  */
 class TaskText
