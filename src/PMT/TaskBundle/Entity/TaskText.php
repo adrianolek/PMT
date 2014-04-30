@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="pmt_tasks_texts",options={"engine"="MyISAM"},
  *   indexes={@ORM\Index(columns={"name"},flags={"FULLTEXT"}),@ORM\Index(columns={"description"},flags={"FULLTEXT"}),@ORM\Index(columns={"name","description"},flags={"FULLTEXT"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="PMT\TaskBundle\Entity\TaskTextRepository")
  */
 class TaskText
 {
@@ -35,17 +35,6 @@ class TaskText
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set taskId

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="pmt_tasks")
  * @ORM\Entity(repositoryClass="PMT\TaskBundle\Entity\TaskRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+ * @ORM\EntityListeners({"PMT\TaskBundle\Entity\TaskListener"})
  */
 class Task
 {

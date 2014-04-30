@@ -138,7 +138,7 @@ class TaskController extends Controller
     
     /**
      * @Route("/project/{project_id}/task/{id}/delete", name="project_task_delete")
-     * @Security("has_role('MANAGER')")
+     * @Security("has_role('ROLE_MANAGER')")
      */
     public function deleteAction(Request $request, Task $task)
     {
