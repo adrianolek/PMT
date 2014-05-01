@@ -35,7 +35,7 @@
         "icanboogie/inflector": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.31"  
+        "phpunit/phpunit": "4.0.19"  
     },
     "scripts": {
         "post-install-cmd": [
