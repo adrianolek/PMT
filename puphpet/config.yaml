@@ -103,7 +103,7 @@ mysql:
     phpmyadmin: '1'
     adminer: 0
     databases:
-        fzLOXAEM1JzG:
+        dev:
             grant:
                 - ALL
             name: pmt
@@ -111,4 +111,11 @@ mysql:
             user: pmt
             password: pmt
             sql_file: ''
-
+        test:
+            grant:
+                - ALL
+            name: pmt_test
+            host: localhost
+            user: pmt
+            password: pmt
+            sql_file: ''
