@@ -21,3 +21,5 @@ doctrine:
         dbname:   pmt_test
         user:     pmt
         password: pmt
+        
+liip_functional_test: ~
