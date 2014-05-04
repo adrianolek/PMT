@@ -27,6 +27,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $em)
     {
         $user = new User();
+        $user->setRole('manager');
         $user->setEmail('manager@pmt');
         $encoder = $this->container
             ->get('security.encoder_factory')
