@@ -40,5 +40,12 @@ class UserControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/'));
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('ROLE_MANAGER'));
     }
+    
+    public function testIndex()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/people', array(), array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 
 }
