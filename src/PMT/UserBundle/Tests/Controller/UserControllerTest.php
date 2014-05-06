@@ -43,9 +43,22 @@ class UserControllerTest extends WebTestCase
     
     public function testIndex()
     {
-        $client = static::createClient();
-        $client->request('GET', '/people', array(), array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
+        $client = static::createClient(array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
+        $crawler = $client->request('GET', '/people');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
+        return $crawler->selectLink('Add user')->link();
+    }
+
+    /**
+     * @depends testIndex
+     */
+    public function testAddUser($link)
+    {
+        $client = static::createClient(array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
+        $client->click($link);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+    
 
 }
