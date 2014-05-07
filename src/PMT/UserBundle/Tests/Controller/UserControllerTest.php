@@ -2,7 +2,7 @@
 
 namespace PMT\UserBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use PMT\TestBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
@@ -15,7 +15,7 @@ class UserControllerTest extends WebTestCase
 
         $client = static::createClient();
        
-        $crawler = $client->request('GET', '/');
+        $client->request('GET', '/');
         
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
         
@@ -23,9 +23,8 @@ class UserControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Log in')->form();
         
-        $crawler = $client->submit($form);
-
-        $crawler = $client->followRedirect();
+        $client->submit($form);
+        $client->followRedirect();
 
         $this->assertRegExp(
             '/Bad credentials/',
@@ -35,7 +34,7 @@ class UserControllerTest extends WebTestCase
         $form['_username'] = 'manager@pmt';
         $form['_password'] = 'manager';
 
-        $crawler = $client->submit($form);
+        $client->submit($form);
 
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/'));
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('ROLE_MANAGER'));
@@ -43,20 +42,18 @@ class UserControllerTest extends WebTestCase
     
     public function testIndex()
     {
-        $client = static::createClient(array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
-        $crawler = $client->request('GET', '/people');
+        $client = static::createAuthClient();
+        $client->request('GET', '/people');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
-        return $crawler->selectLink('Add user')->link();
     }
 
-    /**
-     * @depends testIndex
-     */
-    public function testAddUser($link)
+    public function testAddUser()
     {
-        $client = static::createClient(array(), array('PHP_AUTH_USER' => 'manager@pmt', 'PHP_AUTH_PW' => 'manager'));
+        $client = static::createAuthClient();
+        $crawler = $client->request('GET', '/people');
+        $link = $crawler->selectLink('Add user')->link();
         $client->click($link);
+        
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
     
