@@ -52,9 +52,20 @@ class UserControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $crawler = $client->request('GET', '/people');
         $link = $crawler->selectLink('Add user')->link();
-        $client->click($link);
-        
+        $crawler = $client->click($link);
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
+        $form = $crawler->selectButton('Create')->form();
+        
+        $client->submit($form, array(
+            'user[email]' => 'test@test.com',
+            'user[last_name]' => 'test',
+            'user[first_name]' => 'test',
+            'user[plain_password]'  => 'test',
+        ));
+
+        $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
     
 
