@@ -7,12 +7,15 @@ use PMT\TestBundle\Test\WebTestCase;
 class UserControllerTest extends WebTestCase
 {
 
-    public function testLogin()
+    public function setUp()
     {
         $this->loadFixtures(array(
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData'
         ));
-
+    }
+    
+    public function testLogin()
+    {
         $client = static::createClient();
        
         $client->request('GET', '/');
@@ -31,7 +34,7 @@ class UserControllerTest extends WebTestCase
             $client->getResponse()->getContent()
         );
         
-        $form['_username'] = 'manager@pmt';
+        $form['_username'] = 'manager@pmt.test';
         $form['_password'] = 'manager';
 
         $client->submit($form);
@@ -64,6 +67,24 @@ class UserControllerTest extends WebTestCase
             'user[first_name]' => 'test',
             'user[plain_password]'  => 'test',
         ));
+
+        $this->assertTrue($client->getResponse()->isRedirect('/people'));
+    }
+    
+    public function testEditUser()
+    {
+        $client = static::createAuthClient();
+        $crawler = $client->request('GET', '/people');
+        $link = $crawler->selectLink('edit')->link();
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('Update')->form();
+        $form['user[first_name]'] = 'Foo';
+        $form['user[last_name]'] = 'Bar';
+        
+        $client->submit($form);
 
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
