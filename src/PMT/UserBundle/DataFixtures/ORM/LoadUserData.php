@@ -36,6 +36,18 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setPassword($encoder->encodePassword('manager', $user->getSalt()));
 
         $em->persist($user);
+
+        $user = new User();
+        $user->setRole('user');
+        $user->setEmail('user@pmt.test');
+        $encoder = $this->container
+            ->get('security.encoder_factory')
+            ->getEncoder($user)
+        ;
+        $user->setPassword($encoder->encodePassword('user', $user->getSalt()));
+
+        $em->persist($user);
+        
         $em->flush();
     }
 }

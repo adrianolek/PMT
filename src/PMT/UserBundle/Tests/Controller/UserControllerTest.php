@@ -89,5 +89,21 @@ class UserControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
     
+    public function testDeleteUser()
+    {
+        $client = static::createAuthClient();
+        $crawler = $client->request('GET', '/people');
+        $link = $crawler->selectLink('edit')->last()->link();
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $link = $crawler->selectLink('Delete')->link();
+        
+        $client->click($link);
+
+        $this->assertTrue($client->getResponse()->isRedirect('/people'));
+    }
+    
 
 }
