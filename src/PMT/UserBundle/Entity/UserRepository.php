@@ -4,6 +4,7 @@ namespace PMT\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
+use PMT\ProjectBundle\Entity\Project;
 use PMT\TaskBundle\Entity\Task;
 
 /**

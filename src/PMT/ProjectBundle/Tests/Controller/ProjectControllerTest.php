@@ -40,4 +40,37 @@ class ProjectControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isRedirect('/'));
     }
+
+    public function testEditProject()
+    {
+        $client = static::createAuthClient();
+        $crawler = $client->request('GET', '/');
+        $link = $crawler->selectLink('edit')->link();
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('Update')->form();
+        $form['project[name]'] = 'Bar project';
+
+        $client->submit($form);
+
+        $this->assertTrue($client->getResponse()->isRedirect('/'));
+    }
+
+    public function testDeleteProject()
+    {
+        $client = static::createAuthClient();
+        $crawler = $client->request('GET', '/');
+        $link = $crawler->selectLink('edit')->last()->link();
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $link = $crawler->selectLink('Delete')->link();
+
+        $client->click($link);
+
+        $this->assertTrue($client->getResponse()->isRedirect('/'));
+    }
 }
