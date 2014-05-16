@@ -1,4 +1,6 @@
 security:
+    encoders:
+        PMT\UserBundle\Entity\User: plaintext
     firewalls:
         main:
             http_basic: true

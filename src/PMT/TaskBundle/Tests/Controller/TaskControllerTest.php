@@ -12,7 +12,8 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loadFixtures(array(
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData',
-            'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData'
+            'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData',
+            'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData'
         ));
     }
 
@@ -46,10 +47,26 @@ class TaskControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
-            'task[name]' => 'Foo project',
+            'task[name]' => 'Foo',
             'task[category]' => 'feature'
         ));
 
         $this->assertTrue($client->getResponse()->isRedirect($tasks_url));
+    }
+
+    public function testShowTask()
+    {
+        $client = static::createAuthClient();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $project = $em->createQueryBuilder()->select('p')->from('PMT\ProjectBundle\Entity\Project', 'p')->getQuery()->getSingleResult();
+
+        $crawler = $client->request('GET', '/project/' . $project->getId() . '/tasks');
+
+        $link = $crawler->selectLink('Foo task')->link();
+
+        $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

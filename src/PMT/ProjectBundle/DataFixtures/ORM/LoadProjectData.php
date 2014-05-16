@@ -2,13 +2,13 @@
 
 namespace PMT\ProjectBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use PMT\ProjectBundle\Entity\Project;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadProjectData implements FixtureInterface
+class LoadProjectData extends AbstractFixture
 {
 
 
@@ -20,5 +20,7 @@ class LoadProjectData implements FixtureInterface
         $em->persist($project);
 
         $em->flush();
+
+        $this->addReference('project-foo', $project);
     }
 }
