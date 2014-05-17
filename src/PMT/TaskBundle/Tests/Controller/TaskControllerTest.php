@@ -69,4 +69,30 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testEditTask()
+    {
+        $client = static::createAuthClient();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\task', 't')->getQuery()->getSingleResult();
+
+        $task_url = '/project/' . $task->getProject()->getId() . '/task/' . $task->getId();
+        $crawler = $client->request('GET', $task_url);
+
+        $link = $crawler->selectLink('Edit')->link();
+
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('Update')->form();
+
+        $client->submit($form, array(
+            'task[name]' => 'Foo',
+            'task[category]' => 'feature'
+        ));
+
+        $this->assertTrue($client->getResponse()->isRedirect($task_url));
+    }
 }
