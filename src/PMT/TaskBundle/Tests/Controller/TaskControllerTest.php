@@ -95,4 +95,28 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isRedirect($task_url));
     }
+
+    public function testDeleteTask()
+    {
+        $client = static::createAuthClient();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\task', 't')->getQuery()->getSingleResult();
+
+        $crawler = $client->request('GET', '/project/' . $task->getProject()->getId() . '/task/' . $task->getId());
+
+        $link = $crawler->selectLink('Edit')->link();
+
+        $crawler = $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $link = $crawler->selectLink('Delete')->link();
+
+        $crawler = $client->click($link);
+
+        $this->assertTrue($client->getResponse()->isRedirect('/project/' . $task->getProject()->getId() . '/tasks'));
+
+        $this->assertEquals(0, $crawler->selectLink($task->getName())->count());
+    }
 }
