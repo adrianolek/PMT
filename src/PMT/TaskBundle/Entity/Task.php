@@ -24,7 +24,7 @@ class Task
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="integer")
@@ -70,10 +70,10 @@ class Task
      * @ORM\Column(name="progress", type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(value = 0)
      * @Assert\LessThanOrEqual(value = 100)
-     * 
+     *
      */
     private $progress;
-    
+
     /**
      * @var integer
      *
@@ -94,7 +94,7 @@ class Task
 
     /**
      * @var \DateTime
-     * 
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
@@ -114,49 +114,49 @@ class Task
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\ProjectBundle\Entity\Project", inversedBy="tasks")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\UserBundle\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\CommentBundle\Entity\Comment", mappedBy="task", fetch="EXTRA_LAZY")
      */
     private $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\FileBundle\Entity\File", mappedBy="task", fetch="EXTRA_LAZY")
      */
     private $files;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TrackingBundle\Entity\Track", mappedBy="task", fetch="EXTRA_LAZY")
      */
     private $tracks;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TaskBundle\Entity\Event", mappedBy="task", fetch="EXTRA_LAZY")
      */
     private $events;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="\PMT\UserBundle\Entity\User")
      * @ORM\JoinTable(name="pmt_tasks_users")
      **/
     private $assignedUsers;
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -166,20 +166,20 @@ class Task
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return Task
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -189,20 +189,20 @@ class Task
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Task
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -212,20 +212,20 @@ class Task
     /**
      * Set status
      *
-     * @param string $status
+     * @param  string $status
      * @return Task
      */
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -235,20 +235,20 @@ class Task
     /**
      * Set category
      *
-     * @param string $category
+     * @param  string $category
      * @return Task
      */
     public function setCategory($category)
     {
         $this->category = $category;
-    
+
         return $this;
     }
 
     /**
      * Get category
      *
-     * @return string 
+     * @return string
      */
     public function getCategory()
     {
@@ -258,20 +258,20 @@ class Task
     /**
      * Set progress
      *
-     * @param integer $progress
+     * @param  integer $progress
      * @return Task
      */
     public function setProgress($progress)
     {
         $this->progress = $progress;
-    
+
         return $this;
     }
 
     /**
      * Get progress
      *
-     * @return integer 
+     * @return integer
      */
     public function getProgress()
     {
@@ -281,20 +281,20 @@ class Task
     /**
      * Set estimatedTime
      *
-     * @param integer $estimatedTime
+     * @param  integer $estimatedTime
      * @return Task
      */
     public function setEstimatedTime($estimatedTime)
     {
         $this->estimatedTime = $estimatedTime;
-    
+
         return $this;
     }
 
     /**
      * Get estimatedTime
      *
-     * @return integer 
+     * @return integer
      */
     public function getEstimatedTime()
     {
@@ -304,20 +304,20 @@ class Task
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Task
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -327,20 +327,20 @@ class Task
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Task
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -350,20 +350,20 @@ class Task
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return Task
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -373,20 +373,20 @@ class Task
     /**
      * Set parent
      *
-     * @param \PMT\ProjectBundle\Entity\Project $parent
+     * @param  \PMT\ProjectBundle\Entity\Project $parent
      * @return Task
      */
     public function setParent(\PMT\ProjectBundle\Entity\Project $parent = null)
     {
         $this->parent = $parent;
-    
+
         return $this;
     }
 
     /**
      * Get parent
      *
-     * @return \PMT\ProjectBundle\Entity\Project 
+     * @return \PMT\ProjectBundle\Entity\Project
      */
     public function getParent()
     {
@@ -396,26 +396,26 @@ class Task
     /**
      * Set project
      *
-     * @param \PMT\ProjectBundle\Entity\Project $project
+     * @param  \PMT\ProjectBundle\Entity\Project $project
      * @return Task
      */
     public function setProject(\PMT\ProjectBundle\Entity\Project $project = null)
     {
         $this->project = $project;
-    
+
         return $this;
     }
 
     /**
      * Get project
      *
-     * @return \PMT\ProjectBundle\Entity\Project 
+     * @return \PMT\ProjectBundle\Entity\Project
      */
     public function getProject()
     {
         return $this->project;
     }
-    
+
     public function __toString()
     {
         return $this->getName();
@@ -428,24 +428,24 @@ class Task
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->assignedUsers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set user
      *
-     * @param \PMT\UserBundle\Entity\User $user
+     * @param  \PMT\UserBundle\Entity\User $user
      * @return Task
      */
     public function setUser(\PMT\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \PMT\UserBundle\Entity\User 
+     * @return \PMT\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -455,13 +455,13 @@ class Task
     /**
      * Add comments
      *
-     * @param \PMT\CommentBundle\Entity\Comment $comments
+     * @param  \PMT\CommentBundle\Entity\Comment $comments
      * @return Task
      */
     public function addComment(\PMT\CommentBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -478,7 +478,7 @@ class Task
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -488,13 +488,13 @@ class Task
     /**
      * Add files
      *
-     * @param \PMT\FileBundle\Entity\File $files
+     * @param  \PMT\FileBundle\Entity\File $files
      * @return Task
      */
     public function addFile(\PMT\FileBundle\Entity\File $files)
     {
         $this->files[] = $files;
-    
+
         return $this;
     }
 
@@ -511,18 +511,18 @@ class Task
     /**
      * Get files
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFiles()
     {
         return $this->files;
     }
-    
+
     public function getCommentsCount()
     {
         return $this->comments->count();
     }
-    
+
     public function getFilesCount()
     {
         return $this->files->count();
@@ -531,13 +531,13 @@ class Task
     /**
      * Add tracks
      *
-     * @param \PMT\TrackingBundle\Entity\Track $tracks
+     * @param  \PMT\TrackingBundle\Entity\Track $tracks
      * @return Task
      */
     public function addTrack(\PMT\TrackingBundle\Entity\Track $tracks)
     {
         $this->tracks[] = $tracks;
-    
+
         return $this;
     }
 
@@ -554,7 +554,7 @@ class Task
     /**
      * Get tracks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {
@@ -564,13 +564,13 @@ class Task
     /**
      * Add assignedUsers
      *
-     * @param \PMT\UserBundle\Entity\User $assignedUsers
+     * @param  \PMT\UserBundle\Entity\User $assignedUsers
      * @return Task
      */
     public function addAssignedUser(\PMT\UserBundle\Entity\User $assignedUsers)
     {
         $this->assignedUsers[] = $assignedUsers;
-    
+
         return $this;
     }
 
@@ -587,18 +587,18 @@ class Task
     /**
      * Get assignedUsers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAssignedUsers()
     {
         return $this->assignedUsers;
     }
-    
+
     public function getEstimatedTimeHours()
     {
         return $this->getEstimatedTime()/3600;
     }
-    
+
     public function setEstimatedTimeHours($v)
     {
       return $this->setEstimatedTime($v*3600);
@@ -607,32 +607,32 @@ class Task
     /**
      * Set position
      *
-     * @param integer $position
+     * @param  integer $position
      * @return Task
      */
     public function setPosition($position)
     {
         $this->position = $position;
-    
+
         return $this;
     }
 
     /**
      * Get position
      *
-     * @return integer 
+     * @return integer
      */
     public function getPosition()
     {
         return $this->position;
     }
-    
+
     public static function getCategoryOptions()
     {
         return array('feature' => 'feature', 'modification' => 'modification',
             'bug' => 'bug', 'testing' => 'testing', 'support' => 'support');
     }
-    
+
     public static function getStatusOptions()
     {
         return array(
@@ -648,62 +648,67 @@ class Task
     /**
      * Set priority
      *
-     * @param integer $priority
+     * @param  integer $priority
      * @return Task
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
-    
+
         return $this;
     }
 
     /**
      * Get priority
      *
-     * @return integer 
+     * @return integer
      */
     public function getPriority()
     {
         return $this->priority;
     }
-    
+
     public function getPriorityColor()
     {
         $r = 255;
         $g = round(255-200*($this->getPriority())/100);
         $b = round(150-150*($this->getPriority())/100);
+
         return "rgb($r,$g,$b)";
     }
-    
+
     public function getProjectName()
     {
         return $this->getProject()->getName();
     }
-    
+
     public function getCategoryName()
     {
         $options = Task::getCategoryOptions();
+
         return $options[$this->getCategory()];
     }
-    
+
     public function getStatusName()
     {
       $options = Task::getStatusOptions();
+
       return $options[$this->getStatus()];
     }
-    
+
     public function getAdvanceStatuses()
     {
         $statuses = array_keys(self::getStatusOptions());
         $advance = array_slice($statuses, array_search($this->getStatus(), $statuses)+1);
+
         return array_intersect_key(self::getStatusOptions(), array_flip($advance));
     }
-    
+
     public function getRecedeStatuses()
     {
         $statuses = array_reverse(array_keys(self::getStatusOptions()));
         $advance = array_slice($statuses, array_search($this->getStatus(), $statuses)+1);
+
         return array_reverse(array_intersect_key(self::getStatusOptions(), array_flip($advance)));
     }
 }

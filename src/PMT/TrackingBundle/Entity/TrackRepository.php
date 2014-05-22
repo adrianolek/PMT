@@ -12,35 +12,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class TrackRepository extends EntityRepository
 {
-    
+
     public function filter($filter, $user_id)
     {
       $qb = $this->createQueryBuilder('t');
       $qb->where($qb->expr()->eq('t.user', ':user_id'))
           ->setParameter('user_id', $user_id);
-          
-      if($filter['date_start'])
-      {
+
+      if ($filter['date_start']) {
         $qb->andWhere($qb->expr()->gte('t.startedAt', ':date_start'))
             ->setParameter(':date_start', $filter['date_start']);
       }
-    
-      if($filter['date_end'])
-      {
+
+      if ($filter['date_end']) {
         $qb->andWhere($qb->expr()->lte('t.startedAt', ':date_end'))
             ->setParameter('date_end', $filter['date_end'].' 23:59:59');
       }
-    
+
       $qb->orderBy('t.startedAt', 'ASC');
-    
+
       $tracks = $qb->getQuery()->getResult();
-      
+
       $total = 0;
-      foreach($tracks as $track)
-      {
-          $total += $track->getDuration(); 
+      foreach ($tracks as $track) {
+          $total += $track->getDuration();
       }
-            
+
       return array($total, $tracks);
     }
 }

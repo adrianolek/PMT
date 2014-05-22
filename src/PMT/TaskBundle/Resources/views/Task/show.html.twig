@@ -11,7 +11,7 @@
             {% endif %}
         </h1>
     </div>
-    
+
     <div class="progress">
         <div class="progress-bar" role="progressbar" title="{{ task.progress }}%" style="width: {{ task.progress }}%;">
             {{ task.progress }}%
@@ -23,25 +23,25 @@
             {{ time_diff(task.createdAt) }} ({{ task.createdAt|date }}) by {{ task.user }}
         </small>
     </blockquote>
-    
 
-    
+
+
     <h3>Uploads</h3>
     {{ render(controller('PMTFileBundle:File:new', { 'task_id': task.id })) }}
     {{ render(controller('PMTFileBundle:File:index', { 'task_id': task.id })) }}
-    
+
     <h3>Comments</h3>
-    
+
     {{ render(controller('PMTCommentBundle:Comment:new', { 'task_id': task.id })) }}
-    
-    {% for comment in task.comments %}   
+
+    {% for comment in task.comments %}
       <div class="panel panel-default">
           <div class="panel-body">
               <div class="media">
                   <img src="{{ gravatar(comment.user.email) }}" class="img-circle pull-left media-object"/>
                   <div class="media-body">
                       {{ comment.content|nl2br|converturls }}
-                  </div>     
+                  </div>
               </div>
           </div>
           <div class="panel-footer">{{ comment.user }} {{ time_diff(comment.createdAt) }} ({{ comment.createdAt|date }})</div>

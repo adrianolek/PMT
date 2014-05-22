@@ -24,7 +24,7 @@ class OrganizationController extends Controller
         $organization = new Organization();
         $form = $this->createForm(new OrganizationType(), $organization);
 
-        if($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
@@ -43,5 +43,5 @@ class OrganizationController extends Controller
             'form' => $form->createView(),
         );
     }
-    
+
 }

@@ -6,10 +6,8 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use PMT\TaskBundle\Entity\Task;
 
-
 class LoadTaskData extends AbstractFixture
 {
-
 
     public function load(ObjectManager $em)
     {

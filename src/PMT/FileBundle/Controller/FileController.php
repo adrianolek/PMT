@@ -24,34 +24,34 @@ class FileController extends Controller
         $form = $this->createFormBuilder($file)
             ->add('file')
             ->getForm();
-        
+
         if ($this->getRequest()->getMethod() === 'POST') {
             $form->handleRequest($this->getRequest());
-        
+
             if ($form->isValid()) {
                 $em->persist($file);
                 $em->flush();
-        
+
                 $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-        
+
                 // Here, "getMyFile" returns the "UploadedFile" instance that the form bound in your $myFile property
                 $uploadableManager->markEntityToUpload($file, $file->getFile());
-        
+
                 $em->flush();
-                
+
                 $this->get('session')->getFlashBag()->add('success', sprintf('File %s has been uploaded.', $file));
-        
+
                 return $this->redirect($this->generateUrl('project_task', array('project_id' => $file->getTask()->getProject()->getId(),
                     'id' => $file->getTask()->getId())));
             }
         }
-        
+
         return array(
             'task_id' => $task_id,
             'form' => $form->createView()
         );
     }
-    
+
     /**
      * @Route("/task/{task_id}/files", name="task_files")
      * @Template()
@@ -60,12 +60,12 @@ class FileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $task = $em->getReference('PMT\TaskBundle\Entity\Task', $task_id);
-        
+
         return array(
             'files' => $task->getFiles()
         );
     }
-    
+
     /**
      * @Route("/file/{key}.{ext}", name="file")
      * @Route("/file/t/{key}.{ext}", name="thumb")
@@ -77,20 +77,17 @@ class FileController extends Controller
         $file = $em->getRepository('PMT\FileBundle\Entity\File')->findOneBy(array('download_key' => $key));
 
         $response = new Response(null, 200);
-        
-        if($request->get('_route') == 'thumb')
-        {
+
+        if ($request->get('_route') == 'thumb') {
             $response->headers->set('X-Sendfile', $file->getThumbPath());
-        }
-        else
-        {
+        } else {
             $response->headers->set('X-Sendfile', $file->getPath());
         }
         $response->headers->set('Content-Type', $file->getMimeType());
         $response->headers->set('Content-Disposition', 'inline; filename="'.$file->getName().'"');
         $response->headers->set('Cache-control', 'public');
         $response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', strtotime('+1 year')));
-        
+
         return $response;
     }
 }

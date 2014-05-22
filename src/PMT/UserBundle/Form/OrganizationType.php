@@ -12,7 +12,7 @@ class OrganizationType extends AbstractType
     {
         $builder->add('name');
     }
-    
+
     public function getName()
     {
         return 'organization';

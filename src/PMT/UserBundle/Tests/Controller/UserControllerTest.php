@@ -13,19 +13,19 @@ class UserControllerTest extends WebTestCase
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData'
         ));
     }
-    
+
     public function testLogin()
     {
         $client = static::createClient();
-       
+
         $client->request('GET', '/');
-        
+
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/login'));
-        
+
         $crawler = $client->followRedirect();
 
         $form = $crawler->selectButton('Log in')->form();
-        
+
         $client->submit($form);
         $client->followRedirect();
 
@@ -33,7 +33,7 @@ class UserControllerTest extends WebTestCase
             '/Bad credentials/',
             $client->getResponse()->getContent()
         );
-        
+
         $form['_username'] = 'manager@pmt.test';
         $form['_password'] = 'manager';
 
@@ -42,7 +42,7 @@ class UserControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isRedirect('http://localhost/'));
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('ROLE_MANAGER'));
     }
-    
+
     public function testIndex()
     {
         $client = static::createAuthClient();
@@ -58,9 +58,9 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->click($link);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        
+
         $form = $crawler->selectButton('Create')->form();
-        
+
         $client->submit($form, array(
             'user[email]' => 'test@test.com',
             'user[last_name]' => 'test',
@@ -70,7 +70,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
-    
+
     public function testEditUser()
     {
         $client = static::createAuthClient();
@@ -83,12 +83,12 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton('Update')->form();
         $form['user[first_name]'] = 'Foo';
         $form['user[last_name]'] = 'Bar';
-        
+
         $client->submit($form);
 
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
-    
+
     public function testDeleteUser()
     {
         $client = static::createAuthClient();
@@ -99,11 +99,10 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $link = $crawler->selectLink('Delete')->link();
-        
+
         $client->click($link);
 
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
-    
 
 }

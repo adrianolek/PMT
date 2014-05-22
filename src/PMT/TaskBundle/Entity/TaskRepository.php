@@ -2,9 +2,7 @@
 
 namespace PMT\TaskBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
 use Gedmo\Sortable\Entity\Repository\SortableRepository;
-
 
 /**
  * TaskRepository
@@ -14,7 +12,7 @@ use Gedmo\Sortable\Entity\Repository\SortableRepository;
  */
 class TaskRepository extends SortableRepository
 {
-    
+
     public function filter($filter, $project_id, $user_id)
     {
         $this->getEntityManager()->getFilters()->getFilter('softdeleteable')->disableForEntity('PMT\UserBundle\Entity\User');
@@ -25,70 +23,56 @@ class TaskRepository extends SortableRepository
         $qb->leftJoin('t.user', 'a');
         $qb->where($qb->expr()->eq('t.project', ':project_id'))
             ->setParameter('project_id', $project_id);
-        
-        if($filter['assignment'] == 'assigned')
-        {
+
+        if ($filter['assignment'] == 'assigned') {
             $qb->andWhere($qb->expr()->eq('u.id', ':user_id'))
                 ->setParameter('user_id', $user_id);
-        }
-        elseif($filter['assignment'] == 'unassigned')
-        {
+        } elseif ($filter['assignment'] == 'unassigned') {
             $qb->andWhere($qb->expr()->isNull('u.id'));
         }
-        
-        if($filter['categories'])
-        {
+
+        if ($filter['categories']) {
             $qb->andWhere($qb->expr()->in('t.category', ':categories'))
                 ->setParameter('categories', $filter['categories']);
         }
-        
-        if($filter['statuses'])
-        {
+
+        if ($filter['statuses']) {
             $qb->andWhere($qb->expr()->in('t.status', ':statuses'))
                 ->setParameter('statuses', $filter['statuses']);
         }
-        
-        if($filter['date_start'])
-        {
+
+        if ($filter['date_start']) {
             $filter['date_start'] = $filter['date_start'].' 00:00:00';
-            
+
             $qb->andWhere($qb->expr()->gte('t.createdAt', ':date_start'))
                 ->setParameter(':date_start', $filter['date_start']);
         }
-        
-        if($filter['date_end'])
-        {
+
+        if ($filter['date_end']) {
             $filter['date_end'] = $filter['date_end'].' 23:59:59';
             $qb->andWhere($qb->expr()->lte('t.createdAt', ':date_end'))
                 ->setParameter('date_end', $filter['date_end']);
         }
-        
-        if($filter['order'] == 'date')
-        {
+
+        if ($filter['order'] == 'date') {
             $qb->orderBy('t.createdAt', 'DESC');
-        }
-        elseif($filter['order'] == 'progress')
-        {
+        } elseif ($filter['order'] == 'progress') {
           $qb->orderBy('t.progress', 'DESC');
-        }
-        elseif($filter['order'] == 'name')
-        {
+        } elseif ($filter['order'] == 'name') {
           $qb->orderBy('t.name', 'ASC');
-        }
-        else
-        {
+        } else {
             $qb->orderBy('t.position', 'ASC');
         }
-        
+
         $tasks = $qb->getQuery()->getResult();
 
         $this->getEntityManager()->getFilters()->getFilter('softdeleteable')->enableForEntity('PMT\UserBundle\Entity\User');
 
         $durations = $this->getDurations($filter);
-        
+
         return array($tasks, $durations);
     }
-    
+
     public function getDurations($filter)
     {
         $durations = array();
@@ -102,38 +86,33 @@ class TaskRepository extends SortableRepository
                     AND t.status IN ('.implode(',', array_fill(0, count($filter['statuses']), '?')).')
                 GROUP BY t.id');
         $stmt->execute(array_merge(array($filter['date_start'], $filter['date_end']), $filter['statuses']));
-        
-        while($row = $stmt->fetch(\PDO::FETCH_ASSOC))
-        {
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $durations[$row['id']] = round($row['sum']/3600, 2);
         }
-        
+
         return $durations;
     }
-    
+
     public function updateProgress(Task $task)
     {
-        if($task->getProgress() < 89)
-        {
+        if ($task->getProgress() < 89) {
             $con = $this->getEntityManager()->getConnection();
             $stmt = $con->prepare('SELECT SUM(TIMESTAMPDIFF(SECOND, started_at, ended_at)) AS sum FROM pmt_tracks WHERE deleted_at IS NULL AND task_id = :task_id');
             $stmt->execute(array('task_id' => $task->getId()));
             $res = $stmt->fetch(\PDO::FETCH_ASSOC);
-            
-            if(isset($res['sum']) && $task->getEstimatedTime())
-            {
+
+            if (isset($res['sum']) && $task->getEstimatedTime()) {
                 $task->setProgress(min(round(($res['sum']/$task->getEstimatedTime())*100), 89));
-            }
-            else
-            {
+            } else {
                 $task->setProgress(0);
             }
-            
+
             $this->getEntityManager()->persist($task);
             $this->getEntityManager()->flush($task);
         }
     }
-    
+
     public function getInProgress()
     {
         $in_progress = array();
@@ -144,15 +123,12 @@ class TaskRepository extends SortableRepository
         $stmt->execute(array($ago->format('Y-m-d H:i:s')));
 
         $users = array();
-        while($row = $stmt->fetch(\PDO::FETCH_ASSOC))
-        {            
-            if(!in_array($row['user_id'], $users))
-            {
-                if(!isset($in_progress[$row['task_id']]))
-                {
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            if (!in_array($row['user_id'], $users)) {
+                if (!isset($in_progress[$row['task_id']])) {
                     $in_progress[$row['task_id']] = array();
                 }
-                
+
                 $in_progress[$row['task_id']][] = $row['user_id'];
                 $users[] = $row['user_id'];
             }
@@ -160,7 +136,7 @@ class TaskRepository extends SortableRepository
 
         return $in_progress;
     }
-    
+
     public function search($term, $page, $router)
     {
         $results = array();
@@ -177,8 +153,7 @@ OFFSET :offset');
         $stmt->bindValue('term', $term);
         $stmt->execute();
 
-        foreach($stmt->fetchAll(\PDO::FETCH_ASSOC) as $row)
-        {
+        foreach ($stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $results[] = array('id' => $row['id'],
                 'text' => '#'.$row['id'].': '.$row['name'],
                 'url' => $router->generate('project_task',

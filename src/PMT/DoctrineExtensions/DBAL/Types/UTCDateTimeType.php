@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace PMT\DoctrineExtensions\DBAL\Types;
 
@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\DateTimeType;
 
 class UTCDateTimeType extends DateTimeType
 {
-  static private $utc = null;
+  private static $utc = null;
 
   public function convertToDatabaseValue($value, AbstractPlatform $platform)
   {
@@ -19,6 +19,7 @@ class UTCDateTimeType extends DateTimeType
     /* @var $value \DateTime */
 
     $value->setTimezone($this->getUtc());
+
     return $value->format($platform->getDateTimeFormatString());
 
   }
@@ -37,9 +38,10 @@ class UTCDateTimeType extends DateTimeType
     if (!$val) {
       throw ConversionException::conversionFailed($value, $this->getName());
     }
+
     return $val;
   }
-  
+
   private function getUtc()
   {
       return (self::$utc) ? self::$utc : (self::$utc = new \DateTimeZone('UTC'));

@@ -14,7 +14,7 @@ class ProjectControllerTest extends WebTestCase
             'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData'
         ));
     }
-    
+
     public function testIndex()
     {
         $client = static::createAuthClient();

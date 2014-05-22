@@ -5,14 +5,12 @@ namespace PMT\TrackingBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PMT\TrackingBundle\Entity\Track;
-use Doctrine\ORM\EntityManager;
 
 class TrackingFilterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -29,7 +27,7 @@ class TrackingFilterType extends AbstractType
     {
         return null;
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
       $resolver->setDefaults(array(

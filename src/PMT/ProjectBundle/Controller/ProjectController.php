@@ -59,7 +59,6 @@ class ProjectController extends Controller
         );
     }
 
-
     /**
      * @Route("/project/{id}/edit", name="project_edit")
      * @Template("PMTProjectBundle:Project:form.html.twig")
@@ -82,8 +81,9 @@ class ProjectController extends Controller
                 return $this->redirect($this->generateUrl('projects'));
             }
         }
-        
+
         $view = $form->createView();
+
         return array(
             'project' => $project,
             'is_new' => false,

@@ -3,7 +3,6 @@
 namespace PMT\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\UnitOfWork;
 use PMT\ProjectBundle\Entity\Project;
 use PMT\TaskBundle\Entity\Task;
 
@@ -14,17 +13,16 @@ use PMT\TaskBundle\Entity\Task;
  * repository methods below.
  */
 class UserRepository extends EntityRepository
-{   
-    
+{
+
     public function getAssignedUsersChoices($object)
     {
-        if($object instanceof Project) {
+        if ($object instanceof Project) {
             $qb = $this->createQueryBuilder('u');
             $qb->addOrderBy('u.first_name');
             $qb->addOrderBy('u.last_name');
             $result = $qb->getQuery()->getResult();
-        }
-        elseif($object instanceof Task) {
+        } elseif ($object instanceof Task) {
             $result = $object->getProject()->getAssignedUsers()->toArray();
         }
 
@@ -32,10 +30,10 @@ class UserRepository extends EntityRepository
         $this->getEntityManager()->getFilters()->disable('softdeleteable');
         $assigned = $object->getAssignedUsers()->toArray();
         $this->getEntityManager()->getFilters()->enable('softdeleteable');
-        
+
         // duplicates will be squashed by form field
         $result = array_merge($result, $assigned);
-        
+
         return $result;
     }
 }

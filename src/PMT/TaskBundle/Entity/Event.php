@@ -39,7 +39,7 @@ class Event
 
     /**
      * @var \DateTime
-     * 
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
@@ -59,25 +59,23 @@ class Event
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\UserBundle\Entity\User", inversedBy="events")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\TaskBundle\Entity\Task", inversedBy="events")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
      */
     private $task;
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,20 +85,20 @@ class Event
     /**
      * Set type
      *
-     * @param string $type
+     * @param  string $type
      * @return Event
      */
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -110,20 +108,20 @@ class Event
     /**
      * Set data
      *
-     * @param array $data
+     * @param  array $data
      * @return Event
      */
     public function setData($data)
     {
         $this->data = $data;
-    
+
         return $this;
     }
 
     /**
      * Get data
      *
-     * @return array 
+     * @return array
      */
     public function getData()
     {
@@ -133,20 +131,20 @@ class Event
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Event
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -156,20 +154,20 @@ class Event
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Event
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -179,20 +177,20 @@ class Event
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return Event
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -202,20 +200,20 @@ class Event
     /**
      * Set user
      *
-     * @param \PMT\UserBundle\Entity\User $user
+     * @param  \PMT\UserBundle\Entity\User $user
      * @return Event
      */
     public function setUser(\PMT\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \PMT\UserBundle\Entity\User 
+     * @return \PMT\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -225,20 +223,20 @@ class Event
     /**
      * Set task
      *
-     * @param \PMT\TaskBundle\Entity\Task $task
+     * @param  \PMT\TaskBundle\Entity\Task $task
      * @return Event
      */
     public function setTask(\PMT\TaskBundle\Entity\Task $task = null)
     {
         $this->task = $task;
-    
+
         return $this;
     }
 
     /**
      * Get task
      *
-     * @return \PMT\TaskBundle\Entity\Task 
+     * @return \PMT\TaskBundle\Entity\Task
      */
     public function getTask()
     {

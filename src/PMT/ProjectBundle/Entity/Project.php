@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * Project
  *
@@ -35,7 +34,7 @@ class Project
 
     /**
      * @var \DateTime
-     * 
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
@@ -55,7 +54,7 @@ class Project
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TaskBundle\Entity\Task", mappedBy="project")
      */
@@ -67,11 +66,10 @@ class Project
      **/
     private $assignedUsers;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,20 +79,20 @@ class Project
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string  $name
      * @return Project
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -104,20 +102,20 @@ class Project
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Project
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -127,20 +125,20 @@ class Project
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Project
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -150,26 +148,26 @@ class Project
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return Project
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
         return $this->deletedAt;
     }
-    
+
     public function __toString()
     {
         return $this->getName();
@@ -181,17 +179,17 @@ class Project
     {
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add tasks
      *
-     * @param \PMT\TaskBundle\Entity\Task $tasks
+     * @param  \PMT\TaskBundle\Entity\Task $tasks
      * @return Project
      */
     public function addTask(\PMT\TaskBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-    
+
         return $this;
     }
 
@@ -208,7 +206,7 @@ class Project
     /**
      * Get tasks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTasks()
     {
@@ -218,7 +216,7 @@ class Project
     /**
      * Add assignedUsers
      *
-     * @param \PMT\UserBundle\Entity\User $assignedUsers
+     * @param  \PMT\UserBundle\Entity\User $assignedUsers
      * @return Project
      */
     public function addAssignedUser(\PMT\UserBundle\Entity\User $assignedUsers)
@@ -241,7 +239,7 @@ class Project
     /**
      * Get assignedUsers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAssignedUsers()
     {

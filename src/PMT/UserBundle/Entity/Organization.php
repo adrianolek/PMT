@@ -49,11 +49,10 @@ class Organization
      */
     private $name;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,7 +62,7 @@ class Organization
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string       $name
      * @return Organization
      */
     public function setName($name)
@@ -76,7 +75,7 @@ class Organization
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

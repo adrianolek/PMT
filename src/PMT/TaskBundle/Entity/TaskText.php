@@ -39,7 +39,7 @@ class TaskText
     /**
      * Set taskId
      *
-     * @param integer $taskId
+     * @param  integer  $taskId
      * @return TaskText
      */
     public function setTaskId($taskId)
@@ -52,7 +52,7 @@ class TaskText
     /**
      * Get taskId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTaskId()
     {
@@ -62,7 +62,7 @@ class TaskText
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string   $name
      * @return TaskText
      */
     public function setName($name)
@@ -75,7 +75,7 @@ class TaskText
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -85,7 +85,7 @@ class TaskText
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string   $description
      * @return TaskText
      */
     public function setDescription($description)
@@ -98,7 +98,7 @@ class TaskText
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {

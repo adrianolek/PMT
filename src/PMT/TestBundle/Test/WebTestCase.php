@@ -11,7 +11,7 @@ class WebTestCase extends BaseWebTestCase
             'PHP_AUTH_USER' => 'manager@pmt.test',
             'PHP_AUTH_PW' => 'manager'
         ));
-            
+
         return parent::createClient($options, $server);
     }
 }

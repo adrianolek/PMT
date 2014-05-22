@@ -12,7 +12,7 @@ class UserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,9 +22,8 @@ class UserType extends AbstractType
             ->add('first_name')
             ->add('plain_password', 'password', array(
                 'constraints' => array(new NotBlank(array('groups' => array('New'))))));
-        
-        if($options['is_manager'])
-        {
+
+        if ($options['is_manager']) {
             $builder->add('role', 'choice', array('choices' => User::getRoleOptions(), 'empty_value' => ''));
         }
     }

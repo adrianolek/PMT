@@ -37,9 +37,9 @@ class TaskControllerTest extends WebTestCase
 
         $tasks_url = '/project/' . $project->getId() . '/tasks';
         $crawler = $client->request('GET', $tasks_url);
-        
+
         $link = $crawler->selectLink('Add task')->link();
-        
+
         $crawler = $client->click($link);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

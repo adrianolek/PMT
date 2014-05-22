@@ -8,7 +8,6 @@ use PMT\TaskBundle\Form\TaskFilterType;
 use PMT\TrackingBundle\Entity\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,9 +34,8 @@ class DefaultController extends Controller
             $this->get('security.context')->isGranted('ROLE_MANAGER'),
             $this->getUser()
         );
-        
-        foreach($ps as $project)
-        {
+
+        foreach ($ps as $project) {
             /* @var $project Project */
             $projects[] = array('id' => $project->getId(), 'name' => $project->getName());
         }
@@ -64,9 +62,8 @@ class DefaultController extends Controller
         ));
 
         list($ts, $durations) = $em->getRepository('PMTTaskBundle:Task')->filter($filter->getData(), $project->getId(), $this->getUser()->getId());
-        
-        foreach($ts as $task)
-        {
+
+        foreach ($ts as $task) {
             /* @var $task Task */
             $tasks[] = array('id' => $task->getId(),
                 'name' => $task->getName(),
@@ -116,7 +113,7 @@ class DefaultController extends Controller
         ), $task->getProject())) {
             throw new AccessDeniedException();
         }
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $task->setEstimatedTimeHours($request->get('time'));
@@ -135,7 +132,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/tracking.json")
-     * @param Request $request
+     * @param  Request               $request
      * @return JsonResponse
      * @throws AccessDeniedException
      */
@@ -154,14 +151,12 @@ class DefaultController extends Controller
             ), $task->getProject())) {
                 throw new AccessDeniedException();
             }
-            
-            if(!$task->getAssignedUsers()->contains($this->getUser()))
-            {
+
+            if (!$task->getAssignedUsers()->contains($this->getUser())) {
                 $task->addAssignedUser($em->getReference('PMT\UserBundle\Entity\User', $this->getUser()->getId()));
             }
-            
-            if($task->getStatus() == 'waiting')
-            {
+
+            if ($task->getStatus() == 'waiting') {
                 $task->setStatus('in_progress');
             }
         }
@@ -170,20 +165,20 @@ class DefaultController extends Controller
         $track->setEndedAt(new \DateTime());
 
         $em->persist($track);
-        if(isset($task))
-        {
+        if (isset($task)) {
             $em->persist($task);
         }
         $em->flush();
 
         $response = new JsonResponse(array('id' => $track->getId()), 201);
+
         return $response;
     }
 
     /**
      * @Route("/tracking/{id}.json")
-     * @param Request $request
-     * @param Track $track
+     * @param  Request      $request
+     * @param  Track        $track
      * @return JsonResponse
      * @Security("track.getUser() == user")
      */
@@ -198,24 +193,21 @@ class DefaultController extends Controller
         $em->persist($track);
         $em->flush();
 
-        if($task = $track->getTask())
-        {
-            if($request->get('complete'))
-            {
+        if ($task = $track->getTask()) {
+            if ($request->get('complete')) {
                 $task->setProgress(100);
-                if($task->getStatus() == 'in_progress'){
+                if ($task->getStatus() == 'in_progress') {
                     $task->setStatus('complete');
                 }
                 $em->persist($track);
                 $em->flush();
-            }
-            else
-            {
+            } else {
                 $em->getRepository('PMTTaskBundle:Task')->updateProgress($track->getTask());
             }
         }
 
         $response = new JsonResponse(array('id' => $track->getId()));
+
         return $response;
     }
 }

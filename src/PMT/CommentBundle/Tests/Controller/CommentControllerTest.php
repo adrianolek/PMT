@@ -16,7 +16,7 @@ class CommentControllerTest extends WebTestCase
             'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData',
         ));
     }
-    
+
     public function testAdd()
     {
         $client = static::createAuthClient();

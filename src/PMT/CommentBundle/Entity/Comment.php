@@ -34,7 +34,7 @@ class Comment
 
     /**
      * @var \DateTime
-     * 
+     *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
@@ -54,24 +54,23 @@ class Comment
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\TaskBundle\Entity\Task", inversedBy="comments")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
      */
     private $task;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\UserBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -81,20 +80,20 @@ class Comment
     /**
      * Set userId
      *
-     * @param integer $userId
+     * @param  integer $userId
      * @return Comment
      */
     public function setUserId($userId)
     {
         $this->userId = $userId;
-    
+
         return $this;
     }
 
     /**
      * Get userId
      *
-     * @return integer 
+     * @return integer
      */
     public function getUserId()
     {
@@ -104,20 +103,20 @@ class Comment
     /**
      * Set taskId
      *
-     * @param integer $taskId
+     * @param  integer $taskId
      * @return Comment
      */
     public function setTaskId($taskId)
     {
         $this->taskId = $taskId;
-    
+
         return $this;
     }
 
     /**
      * Get taskId
      *
-     * @return integer 
+     * @return integer
      */
     public function getTaskId()
     {
@@ -127,20 +126,20 @@ class Comment
     /**
      * Set content
      *
-     * @param string $content
+     * @param  string  $content
      * @return Comment
      */
     public function setContent($content)
     {
         $this->content = $content;
-    
+
         return $this;
     }
 
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -150,20 +149,20 @@ class Comment
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Comment
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -173,20 +172,20 @@ class Comment
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Comment
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -196,20 +195,20 @@ class Comment
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return Comment
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -219,20 +218,20 @@ class Comment
     /**
      * Set task
      *
-     * @param \PMT\TaskBundle\Entity\Task $task
+     * @param  \PMT\TaskBundle\Entity\Task $task
      * @return Comment
      */
     public function setTask(\PMT\TaskBundle\Entity\Task $task = null)
     {
         $this->task = $task;
-    
+
         return $this;
     }
 
     /**
      * Get task
      *
-     * @return \PMT\TaskBundle\Entity\Task 
+     * @return \PMT\TaskBundle\Entity\Task
      */
     public function getTask()
     {
@@ -242,20 +241,20 @@ class Comment
     /**
      * Set user
      *
-     * @param \PMT\UserBundle\Entity\User $user
+     * @param  \PMT\UserBundle\Entity\User $user
      * @return Comment
      */
     public function setUser(\PMT\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \PMT\UserBundle\Entity\User 
+     * @return \PMT\UserBundle\Entity\User
      */
     public function getUser()
     {

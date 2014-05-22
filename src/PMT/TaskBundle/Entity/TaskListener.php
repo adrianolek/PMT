@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 class TaskListener
 {
 
-    /** 
+    /**
      * @ORM\PostPersist
      * @ORM\PostUpdate
      */
@@ -22,6 +22,5 @@ class TaskListener
     {
         $event->getEntityManager()->getRepository('PMTTaskBundle:TaskText')->deleteText($task);
     }
-
 
 }

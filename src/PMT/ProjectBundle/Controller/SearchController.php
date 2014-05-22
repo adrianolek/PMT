@@ -18,7 +18,7 @@ class SearchController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $results = $em->getRepository('PMTTaskBundle:Task')->search($request->get('term'), $request->get('page'), $this->get('router'));
-        
+
         return new JsonResponse(array(
             'results' => $results,
             'more' => count($results) > 0,

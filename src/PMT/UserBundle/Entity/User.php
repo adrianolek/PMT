@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace PMT\UserBundle\Entity;
 
@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -17,50 +16,50 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, \Serializable
 {
-    
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
-    
+
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated_at;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $deleted_at;
-        
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     protected $email;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     protected $last_name;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
     protected $first_name;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -78,42 +77,42 @@ class User implements UserInterface, \Serializable
      * @Assert\Choice(choices = {"manager" })
      */
     private $role;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TaskBundle\Entity\Task", mappedBy="user")
      */
     private $tasks;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\CommentBundle\Entity\Comment", mappedBy="user")
      */
     private $comments;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\FileBundle\Entity\File", mappedBy="user")
      */
     private $files;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TrackingBundle\Entity\Track", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $tracks;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="\PMT\TaskBundle\Entity\Event", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $events;
-    
+
     /**
      * @var string
      */
     protected $plainPassword;
-    
+
     /**
      * @var array
      */
     protected $roles;
-    
+
     public function __toString()
     {
         return $this->getFullName();
@@ -122,7 +121,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -132,20 +131,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set created_at
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return User
      */
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -155,20 +154,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set updated_at
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return User
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updated_at = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -178,20 +177,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set deleted_at
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return User
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deleted_at = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deleted_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -201,20 +200,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set email
      *
-     * @param string $email
+     * @param  string $email
      * @return User
      */
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -224,20 +223,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set last_name
      *
-     * @param string $lastName
+     * @param  string $lastName
      * @return User
      */
     public function setLastName($lastName)
     {
         $this->last_name = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get last_name
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -247,20 +246,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set first_name
      *
-     * @param string $firstName
+     * @param  string $firstName
      * @return User
      */
     public function setFirstName($firstName)
     {
         $this->first_name = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get first_name
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -270,75 +269,75 @@ class User implements UserInterface, \Serializable
     /**
      * Set password
      *
-     * @param string $password
+     * @param  string $password
      * @return User
      */
     public function setPassword($password)
     {
         $this->password = $password;
-    
+
         return $this;
     }
 
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
         return $this->password;
     }
-    
+
     public function getFullName()
     {
         return sprintf("%s %s", $this->first_name, $this->last_name);
     }
-    
+
     public function getPlainPassword()
     {
       return $this->plainPassword;
     }
-    
+
     public function setPlainPassword($password)
     {
       $this->plainPassword = $password;
-    
+
       return $this;
     }
-    
+
     public function getRoles()
     {
         $roles = array('ROLE_USER');
-        if($this->getRole() == 'manager')
-        {
+        if ($this->getRole() == 'manager') {
             $roles[] = 'ROLE_MANAGER';
         }
+
         return $roles;
     }
-    
+
     public function getUsername()
     {
         return $this->email;
     }
-    
+
     public function eraseCredentials()
     {
       $this->plainPassword = null;
     }
-    
+
     public function getSalt()
     {
         return null;
     }
-    
+
     public function serialize()
     {
       return serialize(array(
           $this->id,
       ));
     }
-    
+
     public function unserialize($serialized)
     {
       list (
@@ -355,17 +354,17 @@ class User implements UserInterface, \Serializable
         $this->files = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add tasks
      *
-     * @param \PMT\TaskBundle\Entity\Task $tasks
+     * @param  \PMT\TaskBundle\Entity\Task $tasks
      * @return User
      */
     public function addTask(\PMT\TaskBundle\Entity\Task $tasks)
     {
         $this->tasks[] = $tasks;
-    
+
         return $this;
     }
 
@@ -382,7 +381,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get tasks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTasks()
     {
@@ -392,13 +391,13 @@ class User implements UserInterface, \Serializable
     /**
      * Add comments
      *
-     * @param \PMT\CommentBundle\Entity\Comment $comments
+     * @param  \PMT\CommentBundle\Entity\Comment $comments
      * @return User
      */
     public function addComment(\PMT\CommentBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -415,7 +414,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -425,13 +424,13 @@ class User implements UserInterface, \Serializable
     /**
      * Add files
      *
-     * @param \PMT\FileBundle\Entity\File $files
+     * @param  \PMT\FileBundle\Entity\File $files
      * @return User
      */
     public function addFile(\PMT\FileBundle\Entity\File $files)
     {
         $this->files[] = $files;
-    
+
         return $this;
     }
 
@@ -448,7 +447,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get files
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFiles()
     {
@@ -458,13 +457,13 @@ class User implements UserInterface, \Serializable
     /**
      * Add tracks
      *
-     * @param \PMT\TrackingBundle\Entity\Track $tracks
+     * @param  \PMT\TrackingBundle\Entity\Track $tracks
      * @return User
      */
     public function addTrack(\PMT\TrackingBundle\Entity\Track $tracks)
     {
         $this->tracks[] = $tracks;
-    
+
         return $this;
     }
 
@@ -481,7 +480,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get tracks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTracks()
     {
@@ -491,20 +490,20 @@ class User implements UserInterface, \Serializable
     /**
      * Set api_key
      *
-     * @param string $apiKey
+     * @param  string $apiKey
      * @return User
      */
     public function setApiKey($apiKey)
     {
         $this->api_key = $apiKey;
-    
+
         return $this;
     }
 
     /**
      * Get api_key
      *
-     * @return string 
+     * @return string
      */
     public function getApiKey()
     {
@@ -514,13 +513,13 @@ class User implements UserInterface, \Serializable
     /**
      * Add events
      *
-     * @param \PMT\TaskBundle\Entity\Event $events
+     * @param  \PMT\TaskBundle\Entity\Event $events
      * @return User
      */
     public function addEvent(\PMT\TaskBundle\Entity\Event $events)
     {
         $this->events[] = $events;
-    
+
         return $this;
     }
 
@@ -537,7 +536,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get events
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvents()
     {
@@ -547,7 +546,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set role
      *
-     * @param string $role
+     * @param  string $role
      * @return User
      */
     public function setRole($role)
@@ -560,7 +559,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
     public function getRole()
     {

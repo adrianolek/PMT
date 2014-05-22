@@ -23,7 +23,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     {
         $this->container = $container;
     }
-    
+
     public function load(ObjectManager $em)
     {
         $user = new User();
@@ -47,7 +47,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setPassword($encoder->encodePassword('user', $user->getSalt()));
 
         $em->persist($user);
-        
+
         $em->flush();
     }
 }

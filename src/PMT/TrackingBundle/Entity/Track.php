@@ -45,7 +45,7 @@ class Track
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-    
+
     /**
      * @var \DateTime
      *
@@ -53,7 +53,7 @@ class Track
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
-    
+
     /**
      * @var \DateTime
      *
@@ -61,20 +61,20 @@ class Track
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
-    
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\UserBundle\Entity\User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\TaskBundle\Entity\Task", inversedBy="tracks")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
@@ -84,7 +84,7 @@ class Track
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,7 +94,7 @@ class Track
     /**
      * Set startedAt
      *
-     * @param \DateTime $startedAt
+     * @param  \DateTime $startedAt
      * @return Track
      */
     public function setStartedAt($startedAt)
@@ -104,14 +104,14 @@ class Track
         $tz = new \DateTimeZone(date_default_timezone_get());
         $this->startTime = $startedAt->setTimezone($tz)->format('H:i:s');
         $this->date = $this->getStartedAt()->setTimezone($tz)->format('Y-m-d');
-        
+
         return $this;
     }
 
     /**
      * Get startedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartedAt()
     {
@@ -121,7 +121,7 @@ class Track
     /**
      * Set endedAt
      *
-     * @param \DateTime $endedAt
+     * @param  \DateTime $endedAt
      * @return Track
      */
     public function setEndedAt($endedAt)
@@ -130,14 +130,14 @@ class Track
 
         $tz = new \DateTimeZone(date_default_timezone_get());
         $this->endTime = $endedAt->setTimezone($tz)->format('H:i:s');
-        
+
         return $this;
     }
 
     /**
      * Get endedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEndedAt()
     {
@@ -147,26 +147,26 @@ class Track
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Track
      */
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
         return $this->description;
     }
-    
+
     public function getDuration()
     {
         return $this->getEndedAt()->getTimestamp() - $this->getStartedAt()->getTimestamp();
@@ -175,20 +175,20 @@ class Track
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return Track
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -198,20 +198,20 @@ class Track
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Track
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -221,20 +221,20 @@ class Track
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return Track
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -244,20 +244,20 @@ class Track
     /**
      * Set user
      *
-     * @param \PMT\UserBundle\Entity\User $user
+     * @param  \PMT\UserBundle\Entity\User $user
      * @return Track
      */
     public function setUser(\PMT\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \PMT\UserBundle\Entity\User 
+     * @return \PMT\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -267,58 +267,58 @@ class Track
     /**
      * Set task
      *
-     * @param \PMT\TaskBundle\Entity\Task $task
+     * @param  \PMT\TaskBundle\Entity\Task $task
      * @return Track
      */
     public function setTask(\PMT\TaskBundle\Entity\Task $task = null)
     {
         $this->task = $task;
-    
+
         return $this;
     }
 
     /**
      * Get task
      *
-     * @return \PMT\TaskBundle\Entity\Task 
+     * @return \PMT\TaskBundle\Entity\Task
      */
     public function getTask()
     {
         return $this->task;
     }
-    
+
     /**
      * @Assert\NotBlank
      * @Assert\Regex(pattern="/^\d{4}-\d{2}-\d{2}$/")
      */
     private $date;
-    
+
     public function getDate()
     {
         return $this->date;
     }
-    
+
     public function setDate($v)
     {
         $this->date = $v;
     }
-    
+
     /**
      * @Assert\NotBlank
      * @Assert\Regex(pattern="/^\d{2}:\d{2}(:\d{2})?$/")
      */
     private $startTime;
-    
+
     public function getStartTime()
     {
         return $this->startTime;
     }
-    
+
     public function setStartTime($v)
     {
         $this->startTime = $v;
-    }    
-    
+    }
+
     /**
      * @Assert\NotBlank
      * @Assert\Regex(pattern="/^\d{2}:\d{2}(:\d{2})?$/")
@@ -328,29 +328,27 @@ class Track
     {
         return $this->endTime;
     }
-    
+
     public function setEndTime($v)
     {
         return $this->endTime = $v;
     }
-    
+
     /**
      * @ORM\PreFlush()
      */
     public function setTimeRange()
     {
-        if(isset($this->date) && $this->getStartTime() && $this->getEndTime())
-        {
+        if (isset($this->date) && $this->getStartTime() && $this->getEndTime()) {
             $this->setStartedAt(new \DateTime($this->date.' '.$this->getStartTime()));
             $this->setEndedAt(new \DateTime($this->date.' '.$this->getEndTime()));
-            
-            if($this->getStartedAt()->getTimestamp() > $this->getEndedAt()->getTimestamp())
-            {
+
+            if ($this->getStartedAt()->getTimestamp() > $this->getEndedAt()->getTimestamp()) {
                 $this->getEndedAt()->add(new \DateInterval('P1D'));
             }
         }
     }
-    
+
     /**
      * @ORM\PostLoad()
      */
@@ -358,14 +356,12 @@ class Track
     {
         $tz = new \DateTimeZone(date_default_timezone_get());
 
-        if($this->getStartedAt())
-        {
+        if ($this->getStartedAt()) {
             $this->startTime = $this->getStartedAt()->setTimezone($tz)->format('H:i:s');
             $this->date = $this->getStartedAt()->setTimezone($tz)->format('Y-m-d');
         }
 
-        if($this->getEndedAt())
-        {
+        if ($this->getEndedAt()) {
             $this->endTime = $this->getEndedAt()->setTimezone($tz)->format('H:i:s');
         }
     }

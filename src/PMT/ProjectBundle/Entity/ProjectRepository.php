@@ -14,40 +14,35 @@ use PMT\UserBundle\Entity\User;
  */
 class ProjectRepository extends EntityRepository
 {
-    
+
     public function findFor($is_manager = false, User $user = null)
     {
-        if($is_manager)
-        {
+        if ($is_manager) {
             return $this->findAll();
-        }
-        else
-        {
+        } else {
             $qb = $this->createQueryBuilder('p');
             $qb->join('p.assignedUsers', 'u');
             $qb->andWhere($qb->expr()->eq('u.id', $user->getId()));
+
             return $qb->getQuery()->getResult();
         }
     }
-    
+
     public function getStartDate($project_id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($qb->expr()->min('t.createdAt'));
         $qb->from('PMT\TaskBundle\Entity\Task', 't');
         $qb->andWhere($qb->expr()->eq('t.project', $project_id));
-        
+
         $result = $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
 
-        if(isset($result[1]))
-        {
+        if (isset($result[1])) {
             $time = strtotime($result[1]);
-        }
-        else
-        {
+        } else {
             $time = time();
         }
-        
+
         return strftime('%Y-%m-%d', $time);
     }
 }

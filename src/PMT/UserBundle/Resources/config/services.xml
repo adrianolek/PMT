@@ -9,24 +9,24 @@
         <parameter key="pmt_user.example.class">PMT\UserBundle\Example</parameter>
     </parameters>
     -->
-    
+
     <services>
         <service id="pmt.user_manager" class="PMT\UserBundle\Model\UserManager">
             <argument type="service" id="security.encoder_factory" />
             <argument type="service" id="doctrine.orm.entity_manager"></argument>
             <argument>PMT\UserBundle\Entity\User</argument>
         </service>
-        
+
         <service id="pmt.menu.builder" class="PMT\UserBundle\Menu\MenuBuilder">
             <argument type="service" id="knp_menu.factory" />
             <argument type="service" id="security.context" />
         </service>
-        
+
         <service id="pmt.menu.main" class="Knp\Menu\MenuItem" factory-service="pmt.menu.builder" factory-method="createMainMenu" scope="request">
             <argument type="service" id="request" />
             <tag name="knp_menu.menu" alias="main"/>
         </service>
-        
+
         <service id="pmt.menu.right" class="Knp\Menu\MenuItem" factory-service="pmt.menu.builder" factory-method="createRightMenu" scope="request">
             <argument type="service" id="request" />
             <tag name="knp_menu.menu" alias="right"/>

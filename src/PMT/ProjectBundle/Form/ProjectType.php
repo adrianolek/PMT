@@ -5,21 +5,19 @@ namespace PMT\ProjectBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProjectType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['user_repository'])
-        {
+        if ($options['user_repository']) {
             $choices = $options['user_repository']->getAssignedUsersChoices($options['data']);
         }
-        
+
         $builder->add('name')
             ->add('assignedUsers', 'entity', array(
                 'class' => 'PMTUserBundle:User',

@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class File
 {
     private static $image_mimes = array('image/png', 'image/jpeg', 'image/gif');
-    
+
     /**
      * @var integer
      *
@@ -52,21 +52,21 @@ class File
      * @Gedmo\UploadableFileSize
      */
     private $size;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="download_key", type="string", length=255, nullable=true)
      */
     private $download_key;
-    
+
     /**
      * @var \DateTime
      *
@@ -74,7 +74,7 @@ class File
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
-    
+
     /**
      * @var \DateTime
      *
@@ -82,32 +82,32 @@ class File
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
-    
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\TaskBundle\Entity\Task", inversedBy="files")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
      */
     private $task;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="\PMT\UserBundle\Entity\User", inversedBy="files")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
      * @Assert\NotBlank
      * @Assert\File(maxSize="10485760")
      */
     private $file;
-    
+
     /**
      * Sets file.
      *
@@ -117,7 +117,7 @@ class File
     {
       $this->file = $file;
     }
-    
+
     /**
      * Get file.
      *
@@ -131,7 +131,7 @@ class File
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -141,20 +141,20 @@ class File
     /**
      * Set path
      *
-     * @param string $path
+     * @param  string $path
      * @return File
      */
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -164,20 +164,20 @@ class File
     /**
      * Set mimeType
      *
-     * @param string $mimeType
+     * @param  string $mimeType
      * @return File
      */
     public function setMimeType($mimeType)
     {
         $this->mimeType = $mimeType;
-    
+
         return $this;
     }
 
     /**
      * Get mimeType
      *
-     * @return string 
+     * @return string
      */
     public function getMimeType()
     {
@@ -187,20 +187,20 @@ class File
     /**
      * Set size
      *
-     * @param float $size
+     * @param  float $size
      * @return File
      */
     public function setSize($size)
     {
         $this->size = $size;
-    
+
         return $this;
     }
 
     /**
      * Get size
      *
-     * @return float 
+     * @return float
      */
     public function getSize()
     {
@@ -210,20 +210,20 @@ class File
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param  \DateTime $createdAt
      * @return File
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -233,20 +233,20 @@ class File
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return File
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -256,20 +256,20 @@ class File
     /**
      * Set deletedAt
      *
-     * @param \DateTime $deletedAt
+     * @param  \DateTime $deletedAt
      * @return File
      */
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
-    
+
         return $this;
     }
 
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -279,26 +279,26 @@ class File
     /**
      * Set task
      *
-     * @param \PMT\TaskBundle\Entity\Task $task
+     * @param  \PMT\TaskBundle\Entity\Task $task
      * @return File
      */
     public function setTask(\PMT\TaskBundle\Entity\Task $task = null)
     {
         $this->task = $task;
-    
+
         return $this;
     }
 
     /**
      * Get task
      *
-     * @return \PMT\TaskBundle\Entity\Task 
+     * @return \PMT\TaskBundle\Entity\Task
      */
     public function getTask()
     {
         return $this->task;
     }
-    
+
     public function getUploadPath()
     {
        return 'uploads/'.floor($this->getId()/10000).'/'.$this->getId();
@@ -307,88 +307,84 @@ class File
     /**
      * Set name
      *
-     * @param string $name
+     * @param  string $name
      * @return File
      */
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
      * @ORM\PrePersist()
      */
     public function setOriginalName()
     {
-        if($this->getFile())
-        {
+        if ($this->getFile()) {
             $this->setName($this->getFile()->getClientOriginalName());
         }
     }
-    
+
     /**
      * @Orm\PostPersist()
      */
     public function updateDownloadKey()
     {
-      if($this->getFile())
-      {
+      if ($this->getFile()) {
         $this->setDownloadKey(sha1($this->getId().rand()));
       }
     }
-    
+
     /**
      * @Orm\PostUpdate()
      */
     public function createThumb()
     {
-      if($this->isImage())
-      {
+      if ($this->isImage()) {
           $image = new \Imagick();
           $image->readImage($this->getPath());
           $image->cropThumbnailImage(250, 200);
           $image->writeImage($this->getThumbPath());
       }
     }
-    
+
     public function getThumbPath()
     {
         $info = pathinfo($this->getPath());
         $path = $info['dirname'].'/'.$info['filename'].'_thumb';
-        if(isset($info['extension']) && $info['extension'])
-        {
+        if (isset($info['extension']) && $info['extension']) {
             $path .= '.'.$info['extension'];
         }
+
         return $path;
     }
-    
+
     public function __toString()
     {
         return $this->getName();
     }
-    
+
     public function isImage()
     {
         return in_array($this->getMimeType(), self::$image_mimes);
     }
-    
+
     public function getExtension()
     {
         $info = pathinfo($this->getPath());
-        if(isset($info['extension']) && $info['extension'])
-        {
+        if (isset($info['extension']) && $info['extension']) {
             return strtolower($info['extension']);
         }
     }
@@ -396,20 +392,20 @@ class File
     /**
      * Set download_key
      *
-     * @param string $downloadKey
+     * @param  string $downloadKey
      * @return File
      */
     public function setDownloadKey($downloadKey)
     {
         $this->download_key = $downloadKey;
-    
+
         return $this;
     }
 
     /**
      * Get download_key
      *
-     * @return string 
+     * @return string
      */
     public function getDownloadKey()
     {
@@ -419,20 +415,20 @@ class File
     /**
      * Set user
      *
-     * @param \PMT\UserBundle\Entity\User $user
+     * @param  \PMT\UserBundle\Entity\User $user
      * @return File
      */
     public function setUser(\PMT\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \PMT\UserBundle\Entity\User 
+     * @return \PMT\UserBundle\Entity\User
      */
     public function getUser()
     {

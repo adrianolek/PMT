@@ -19,7 +19,7 @@
     {{ form_row(form.startTime, {'attr': {'placeholder': 'hh:mm:ss'}}) }}
     {{ form_row(form.endTime, {'attr': {'placeholder': 'hh:mm:ss'}}) }}
     {{ form_row(form.description, {'attr': {'rows': 5}}) }}
-    
+
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
             <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
@@ -27,7 +27,7 @@
             <a href="{{ path('tracking') }}">Return to time tracking</a>
         </div>
     </div>
-        
+
     {{ form_end(form) }}
 </ul>
 {% endblock %}

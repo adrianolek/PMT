@@ -24,28 +24,26 @@ class MenuBuilder
     /* @var $menu \Knp\Menu\ItemInterface */
     $menu = $this->factory->createItem('root');
     $menu->setChildrenAttribute('class', 'nav navbar-nav');
-    
-    if($this->securityContext->isGranted('ROLE_USER'))
-    {
+
+    if ($this->securityContext->isGranted('ROLE_USER')) {
         $menu->addChild('Projects', array('route' => 'projects'));
         $menu->addChild('People', array('route' => 'people'));
         $menu->addChild('Time Tracking', array('route' => 'tracking'));
-    }    
+    }
 
     return $menu;
   }
-  
+
   public function createRightMenu(Request $request)
   {
     /* @var $menu \Knp\Menu\ItemInterface */
     $menu = $this->factory->createItem('root');
     $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right');
-  
-    if($this->securityContext->isGranted('ROLE_USER'))
-    {
+
+    if ($this->securityContext->isGranted('ROLE_USER')) {
       $menu->addChild('Log out', array('route' => 'logout'));
     }
-  
+
     return $menu;
   }
 }

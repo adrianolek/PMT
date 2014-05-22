@@ -12,7 +12,7 @@
         {{ form_start(form, {'action': path('project_task_edit', { 'project_id': project.id, 'id': task.id }) }) }}
     {% endif %}
     {{ form_errors(form) }}
-    
+
     {{ form_row(form.name) }}
     {{ form_row(form.description, {'attr': {'rows': 5}}) }}
     {{ form_row(form.category) }}
@@ -20,7 +20,7 @@
     {{ form_row(form.status) }}
     {{ form_row(form.progress) }}
     {{ form_row(form.assignedUsers) }}
-    
+
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
@@ -31,7 +31,7 @@
         <a href="{{ path('project_tasks', { 'project_id': project.id }) }}">Return to tasks</a>
       </div>
     </div>
-        
+
     {{ form_end(form) }}
 </ul>
 {% endblock %}

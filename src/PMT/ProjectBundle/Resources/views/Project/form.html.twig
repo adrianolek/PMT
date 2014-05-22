@@ -12,10 +12,10 @@
         {{ form_start(form, {'action': path('project_edit', { 'id': project.id }) }) }}
     {% endif %}
     {{ form_errors(form) }}
-    
+
     {{ form_row(form.name) }}
     {{ form_row(form.assignedUsers) }}
-    
+
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
@@ -26,7 +26,7 @@
         <a href="{{ path('projects') }}">Return to projects</a>
       </div>
     </div>
-        
+
     {{ form_end(form) }}
 </ul>
 {% endblock %}

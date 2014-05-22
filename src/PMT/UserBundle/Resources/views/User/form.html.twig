@@ -12,7 +12,7 @@
         {{ form_start(form, {'action': path('people_edit', { 'id': user.id }) }) }}
     {% endif %}
     {{ form_errors(form) }}
-    
+
     {% if user.id == app.user.id %}
         <div class="form-group">
             <label class="col-lg-2 control-label" for="user_avatar">Picture</label>
@@ -22,7 +22,7 @@
             </div>
         </div>
     {% endif %}
-    
+
     {{ form_row(form.first_name) }}
     {{ form_row(form.last_name) }}
     {{ form_row(form.email) }}
@@ -30,7 +30,7 @@
     {% if 'role' in form|keys %}
         {{ form_row(form.role) }}
     {% endif %}
-    
+
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <button type="submit" class="btn btn-primary">{{ is_new ? 'Create' : 'Update' }}</button>
@@ -41,7 +41,7 @@
         <a href="{{ path('people') }}">Return to people</a>
       </div>
     </div>
-        
+
     {{ form_end(form) }}
 </ul>
 {% endblock %}

@@ -8,14 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PMT\UserBundle\Entity\User;
-use PMT\UserBundle\Entity\UserRepository;
 use PMT\UserBundle\Form\UserType;
 use Symfony\Component\Security\Core\SecurityContext;
 use PMT\UserBundle\Form\LoginType;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -23,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class UserController extends Controller
 {
-    
+
     /**
      * Lists all User entities.
      *
@@ -42,7 +38,7 @@ class UserController extends Controller
             'organizations' => $organizations,
         );
     }
-    
+
     /**
      * Displays a form to create a new User entity.
      *
@@ -57,8 +53,8 @@ class UserController extends Controller
             'validation_groups' => array('Default', 'New'),
             'is_manager' => $this->get('security.context')->isGranted('ROLE_MANAGER')
         ));
-    
-        if($request->isMethod('post')) {
+
+        if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
                 /* @var $userManager \PMT\UserBundle\Model\UserManager */
@@ -67,13 +63,13 @@ class UserController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-                
+
                 $this->get('session')->getFlashBag()->add('success', sprintf('%s has been created.', $user->getFullName()));
-                
+
                 return $this->redirect($this->generateUrl('people'));
             }
         }
-        
+
         return array(
             'user' => $user,
             'is_new' => true,
@@ -99,8 +95,8 @@ class UserController extends Controller
         $form = $this->createForm(new UserType(), $user, array(
             'is_manager' => $this->get('security.context')->isGranted('ROLE_MANAGER')
         ));
-        
-        if($request->isMethod('post')) {
+
+        if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
                 /* @var $userManager \PMT\UserBundle\Model\UserManager */
@@ -108,16 +104,16 @@ class UserController extends Controller
                 $userManager->updatePassword($user);
                 $em->persist($user);
                 $em->flush();
-                
+
                 $this->get('session')->getFlashBag()->add('success', sprintf('%s has been updated.', $user->getFullName()));
-                
+
                 return $this->redirect($this->generateUrl('people'));
           }
         }
 
         return array(
             'user' => $user,
-            'is_new' => false, 
+            'is_new' => false,
             'form'   => $form->createView(),
         );
     }
@@ -138,12 +134,12 @@ class UserController extends Controller
 
         $em->remove($user);
         $em->flush();
-        
+
         $this->get('session')->getFlashBag()->add('success', sprintf('%s has been deleted.', $user->getFullName()));
 
         return $this->redirect($this->generateUrl('people'));
     }
-    
+
     /**
      * @Route("/login", name="login")
      * @Template
@@ -152,13 +148,12 @@ class UserController extends Controller
     {
         $session = $request->getSession();
         $form = $this->createForm(new LoginType());
-        
-        if($session->has(SecurityContext::LAST_USERNAME))
-        {
+
+        if ($session->has(SecurityContext::LAST_USERNAME)) {
             $form->setData(array('_username' => $session->get(SecurityContext::LAST_USERNAME)));
-            $session->remove(SecurityContext::LAST_USERNAME);   
+            $session->remove(SecurityContext::LAST_USERNAME);
         }
-        
+
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
           $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
@@ -167,15 +162,15 @@ class UserController extends Controller
         } else {
           $error = null;
         }
-        
+
         if ($error) {
             $form_error = new FormError($error->getMessage());
             $form->addError($form_error);
         }
-        
+
         return array(
             'form' => $form->createView(),
         );
     }
-    
+
 }
