@@ -2,13 +2,13 @@
 
 namespace PMT\UserBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use PMT\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData implements FixtureInterface, ContainerAwareInterface
+class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 {
 
     /**
@@ -36,6 +36,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setPassword($encoder->encodePassword('manager', $user->getSalt()));
 
         $em->persist($user);
+
+        $this->addReference('manager', $user);
 
         $user = new User();
         $user->setRole('user');
