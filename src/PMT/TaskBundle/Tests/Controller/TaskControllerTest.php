@@ -75,7 +75,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
         $task_url = '/project/' . $task->getProject()->getId() . '/task/' . $task->getId();
         $crawler = $client->request('GET', $task_url);
@@ -101,7 +101,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
         $crawler = $client->request('GET', '/project/' . $task->getProject()->getId() . '/task/' . $task->getId());
 

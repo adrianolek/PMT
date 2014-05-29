@@ -23,7 +23,7 @@ class CommentControllerTest extends WebTestCase
 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
         $crawler = $client->request('GET', '/task/' . $task->getId() . '/comment/new');
 

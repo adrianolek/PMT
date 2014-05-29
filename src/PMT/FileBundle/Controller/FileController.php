@@ -73,7 +73,7 @@ class FileController extends Controller
      */
     public function showAction(Request $request, $key)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $file = $em->getRepository('PMT\FileBundle\Entity\File')->findOneBy(array('download_key' => $key));
 
         $response = new Response(null, 200);
