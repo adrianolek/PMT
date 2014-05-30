@@ -19,7 +19,7 @@ class LoadTaskData extends AbstractFixture
         $em->persist($task);
 
         $em->flush();
-        
+
         $this->addReference('task-1', $task);
     }
 }

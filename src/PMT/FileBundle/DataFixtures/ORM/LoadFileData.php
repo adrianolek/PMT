@@ -21,6 +21,6 @@ class LoadFileData extends AbstractFixture
         $em->persist($file);
 
         $em->flush();
-        
+
     }
 }

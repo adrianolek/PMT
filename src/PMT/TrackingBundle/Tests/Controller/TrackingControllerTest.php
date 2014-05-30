@@ -14,7 +14,7 @@ class TrackingControllerTest extends WebTestCase
             'PMT\TrackingBundle\DataFixtures\ORM\LoadTrackData'
         ));
     }
-    
+
     public function testIndex()
     {
         $client = static::createAuthClient();

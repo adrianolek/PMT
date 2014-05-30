@@ -18,7 +18,7 @@ class FileControllerTest extends WebTestCase
             'PMT\FileBundle\DataFixtures\ORM\LoadFileData',
         ));
     }
-    
+
     public function testAdd()
     {
         $client = static::createAuthClient();
@@ -51,7 +51,7 @@ class FileControllerTest extends WebTestCase
         $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
         $client->request('GET', '/task/' . $task->getId() . '/files');
-        
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 

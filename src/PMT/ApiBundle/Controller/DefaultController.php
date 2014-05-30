@@ -21,6 +21,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/token.json")
+     */
+    public function tokenAction()
+    {
+        return new JsonResponse(array('token' => null));
+    }
 
     /**
      * @Route("/project.json")
