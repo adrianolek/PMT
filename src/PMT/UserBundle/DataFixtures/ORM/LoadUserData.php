@@ -34,6 +34,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->getEncoder($user)
         ;
         $user->setPassword($encoder->encodePassword('manager', $user->getSalt()));
+        $user->setApiKey('managerkey');
 
         $em->persist($user);
 

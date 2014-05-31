@@ -14,4 +14,13 @@ class WebTestCase extends BaseWebTestCase
 
         return parent::createClient($options, $server);
     }
+
+    public static function createApiClient(array $options = array(), array $server = array())
+    {
+        $server = array_merge($server, array(
+            'HTTP_X-Auth-Token' => 'managerkey'
+        ));
+
+        return parent::createClient($options, $server);
+    }
 }

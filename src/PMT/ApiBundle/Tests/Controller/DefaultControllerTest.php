@@ -30,4 +30,13 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertNotEmpty($response->token);
     }
+
+    public function testProjects()
+    {
+        $client = static::createApiClient();
+
+        $client->request('GET', '/api/project.json');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }
