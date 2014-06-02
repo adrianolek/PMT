@@ -82,4 +82,31 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+    
+    public function testTrack()
+    {
+        $client = static::createApiClient();
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+
+        $client->request('POST', '/api/tracking.json', array(
+            'taskId' => $task->getId(),
+        ));
+
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
+
+        $response = json_decode($client->getResponse()->getContent());
+
+        $client->request('POST', '/api/tracking/'.$response->id.'.json');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('POST', '/api/tracking/'.$response->id.'.json', array(
+            'complete' => 1,
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }
