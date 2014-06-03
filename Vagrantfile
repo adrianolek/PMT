@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.synced_folder ".", "/var/www/pmt", type: "rsync", rsync__exclude: [ '.git/', '/app/cache/*', '/app/logs/*']
+  config.vm.synced_folder ".", "/var/www/pmt", type: "rsync", rsync__exclude: [ '.git/', '/app/cache/*', '/app/logs/*'], rsync__args: ["--verbose", "--archive", "-z"]
   config.vm.synced_folder ".", "/var/www/pmt_host"
 
   config.vm.usable_port_range = (10200..10500)

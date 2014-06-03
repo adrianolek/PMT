@@ -16,7 +16,7 @@ class DefaultControllerTest extends WebTestCase
         ));
     }
 
-    public function testToken()
+    public function testAuth()
     {
         $client = static::createClient();
 
@@ -32,11 +32,21 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertNotEmpty($response->token);
     }
+    
+    public function testToken()
+    {
+        $client = static::createApiClient();
+
+        $client->request('GET', '/api/token.json');
+
+        $response = json_decode($client->getResponse()->getContent());
+
+        $this->assertNotEmpty($response->token);
+    }    
 
     public function testProjects()
     {
         $client = static::createApiClient();
-
         $client->request('GET', '/api/project.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -44,53 +54,67 @@ class DefaultControllerTest extends WebTestCase
     
     public function testTasks()
     {
-        $client = static::createApiClient();
-
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
         $project = $em->createQueryBuilder()->select('p')->from('PMT\ProjectBundle\Entity\Project', 'p')->getQuery()->getSingleResult();
-        
+
+        $client = static::createApiClient();
         $client->request('GET', '/api/project/'.$project->getId().'/task.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createApiClient(array('key' => 'userkey'));
+        $client->request('GET', '/api/project/'.$project->getId().'/task.json');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testTask()
     {
-        $client = static::createApiClient();
-
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
         $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
+        $client = static::createApiClient();
         $client->request('GET', '/api/project/'.$task->getProject()->getId().'/task/'.$task->getId().'.json');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createApiClient(array('key' => 'userkey'));
+        $client->request('GET', '/api/project/'.$task->getProject()->getId().'/task/'.$task->getId().'.json');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testEstimate()
     {
-        $client = static::createApiClient();
-
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
         $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
+        $client = static::createApiClient();
         $client->request('POST', '/api/task/'.$task->getId().'/estimate.json', array(
             'time' => 4,
         ));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createApiClient(array('key' => 'userkey'));
+        $client->request('POST', '/api/task/'.$task->getId().'/estimate.json', array(
+            'time' => 4,
+        ));
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
     
     public function testTrack()
     {
-        $client = static::createApiClient();
-
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
         $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
 
+
+        $client = static::createApiClient();
         $client->request('POST', '/api/tracking.json', array(
             'taskId' => $task->getId(),
         ));
@@ -108,5 +132,18 @@ class DefaultControllerTest extends WebTestCase
         ));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createApiClient(array('key' => 'userkey'));
+        $client->request('POST', '/api/tracking.json', array(
+            'taskId' => $task->getId(),
+        ));
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+
+        $client->request('POST', '/api/tracking/'.$response->id.'.json', array(
+            'complete' => 1,
+        ));
+        
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 }

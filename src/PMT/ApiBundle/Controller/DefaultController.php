@@ -26,7 +26,7 @@ class DefaultController extends Controller
      */
     public function tokenAction()
     {
-        return new JsonResponse(array('token' => null));
+        return new JsonResponse(array('token' => $this->getUser()->getApiKey()));
     }
 
     /**
