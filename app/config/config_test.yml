@@ -24,3 +24,6 @@ doctrine:
         password: pmt
         
 liip_functional_test: ~
+
+parameters:
+    test.client.class: PMT\TestBundle\Test\Client
