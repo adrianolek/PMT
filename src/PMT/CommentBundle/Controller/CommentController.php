@@ -11,21 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CommentController extends Controller
 {
-
-    /**
-     * @Route("/task/{task_id}/comments", name="task_comments")
-     * @Template()
-     */
-    public function indexAction($task_id)
-    {
-      $em = $this->getDoctrine()->getManager();
-      $task = $em->getRepository('PMTPTaskBundle:Task')->findOne($task_id);
-
-      return array(
-          'comments' => $task->getComments,
-      );
-    }
-
     /**
      * @Route("/task/{task_id}/comment/new", name="task_comment_new")
      * @Template("PMTCommentBundle:Comment:form.html.twig")
