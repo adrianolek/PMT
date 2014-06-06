@@ -16,6 +16,7 @@ class LoadTaskData extends AbstractFixture
         $task->setProject($this->getReference('project-foo'));
         $task->setStatus('waiting');
         $task->setCategory('feature');
+        $task->setDescription('This is test task.');
         $em->persist($task);
 
         $em->flush();

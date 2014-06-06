@@ -17,7 +17,7 @@ class SearchController extends Controller
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $results = $em->getRepository('PMTTaskBundle:Task')->search($request->get('term'), $request->get('page'), $this->get('router'));
+        $results = $em->getRepository('PMTTaskBundle:Task')->search($request->get('term'), $request->get('page', 1), $this->get('router'));
 
         return new JsonResponse(array(
             'results' => $results,
