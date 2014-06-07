@@ -99,10 +99,6 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if (!$project) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
-        }
-
         $em->remove($project);
         $em->flush();
 

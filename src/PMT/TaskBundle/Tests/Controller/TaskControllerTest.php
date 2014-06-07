@@ -119,4 +119,18 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals(0, $crawler->selectLink($task->getName())->count());
     }
+
+    public function testStatus()
+    {
+        $client = static::createAuthClient();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+
+        $client->request('POST', '/task/' . $task->getId() . '/status', array(
+            'status' => 'in_progress',
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }
