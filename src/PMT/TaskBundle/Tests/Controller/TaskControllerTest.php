@@ -75,7 +75,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $task_url = '/project/' . $task->getProject()->getId() . '/task/' . $task->getId();
         $crawler = $client->request('GET', $task_url);
@@ -101,7 +101,7 @@ class TaskControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $crawler = $client->request('GET', '/project/' . $task->getProject()->getId() . '/task/' . $task->getId());
 
@@ -125,10 +125,40 @@ class TaskControllerTest extends WebTestCase
         $client = static::createAuthClient();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $client->request('POST', '/task/' . $task->getId() . '/status', array(
             'status' => 'in_progress',
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+    
+    public function testOrder()
+    {
+        $client = static::createAuthClient();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $tasks = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getResult();
+
+        $client->request('POST', '/tasks/order', array(
+            'item' => $tasks[0]->getId(),
+            'prev' => $tasks[1]->getId(),
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('POST', '/tasks/order', array(
+            'item' => $tasks[0]->getId(),
+            'next' => $tasks[1]->getId(),
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('POST', '/tasks/order', array(
+            'item' => $tasks[0]->getId(),
+            'prev' => $tasks[1]->getId(),
+            'next' => $tasks[2]->getId(),
         ));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

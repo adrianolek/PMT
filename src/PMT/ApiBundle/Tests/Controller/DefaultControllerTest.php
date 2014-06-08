@@ -2,6 +2,7 @@
 
 namespace PMT\ApiBundle\Tests\Controller;
 
+use Doctrine\ORM\EntityManager;
 use PMT\TestBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
@@ -73,7 +74,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $client = static::createApiClient();
         $client->jsonRequest('GET', '/api/project/'.$task->getProject()->getId().'/task/'.$task->getId().'.json');
@@ -90,7 +91,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $client = static::createApiClient();
         $client->jsonRequest('POST', '/api/task/'.$task->getId().'/estimate.json', array(
@@ -111,7 +112,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->getQuery()->getSingleResult();
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $client = static::createApiClient();
         $client->jsonRequest('POST', '/api/tracking.json', array(
