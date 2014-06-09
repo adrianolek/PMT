@@ -2,6 +2,7 @@
 
 namespace PMT\TrackingBundle\Tests\Controller;
 
+use Doctrine\ORM\EntityManager;
 use PMT\TestBundle\Test\WebTestCase;
 
 class TrackingControllerTest extends WebTestCase
@@ -11,6 +12,8 @@ class TrackingControllerTest extends WebTestCase
     {
         $this->loadFixtures(array(
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData',
+            'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData',
+            'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData',
             'PMT\TrackingBundle\DataFixtures\ORM\LoadTrackData'
         ));
     }
@@ -21,11 +24,24 @@ class TrackingControllerTest extends WebTestCase
         $client->request('GET', '/tracking');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $user = $em->createQueryBuilder()->select('u')->from('PMT\UserBundle\Entity\User', 'u')->setMaxResults(1)->getQuery()->getSingleResult();
+
+        $client->request('GET', '/user/' . $user->getId() . '/tracking');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testAdd()
     {
         $client = static::createAuthClient();
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
+        
         $crawler = $client->request('GET', '/tracking');
         $link = $crawler->selectLink('Add entry')->link();
         $crawler = $client->click($link);
@@ -35,6 +51,7 @@ class TrackingControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
+            'track[task]' => $task->getId(),
             'track[date]' => '2014-01-01',
             'track[startTime]' => '08:00',
             'track[endTime]' => '09:00',

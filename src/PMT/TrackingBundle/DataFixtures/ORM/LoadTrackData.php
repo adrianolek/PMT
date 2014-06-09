@@ -16,6 +16,7 @@ class LoadTrackData extends AbstractFixture
         $track->setDate('2014-01-01');
         $track->setStartTime('08:00');
         $track->setEndTime('09:00');
+        $track->setTask($this->getReference('task-1'));
 
         $em->persist($track);
 
