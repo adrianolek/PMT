@@ -15,13 +15,6 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
-
-doctrine:
-    dbal:
-        host:     localhost
-        dbname:   pmt_test
-        user:     pmt
-        password: pmt
         
 liip_functional_test: ~
 
