@@ -24,6 +24,12 @@ class OrganizationControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
+            'organization[name]' => '',
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
+        
+        $client->submit($form, array(
             'organization[name]' => 'ACME',
         ));
 

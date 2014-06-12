@@ -62,6 +62,12 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
+            'user[email]' => '',
+        ));
+        
+        $this->assertFalse($client->getResponse()->isRedirection());
+        
+        $client->submit($form, array(
             'user[email]' => 'test@test.com',
             'user[last_name]' => 'test',
             'user[first_name]' => 'test',
@@ -81,6 +87,13 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Update')->form();
+
+        $form['user[first_name]'] = '';
+
+        $client->submit($form);
+        
+        $this->assertFalse($client->getResponse()->isRedirection());
+        
         $form['user[first_name]'] = 'Foo';
         $form['user[last_name]'] = 'Bar';
 

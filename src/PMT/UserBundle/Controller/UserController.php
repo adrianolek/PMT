@@ -88,10 +88,6 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
         $form = $this->createForm(new UserType(), $user, array(
             'is_manager' => $this->get('security.context')->isGranted('ROLE_MANAGER')
         ));
@@ -127,10 +123,6 @@ class UserController extends Controller
     public function deleteAction(Request $request, User $user)
     {
         $em = $this->getDoctrine()->getManager();
-
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
 
         $em->remove($user);
         $em->flush();
