@@ -7,7 +7,6 @@
             People
             {% if is_granted('ROLE_MANAGER') %}
                 <a href="{{ path('people_new') }}" class="btn btn-default">Add user</a>
-                <a href="{{ path('organization_new') }}" class="btn btn-default">Add organization</a>
             {% endif %}
         </h1>
     </div>
