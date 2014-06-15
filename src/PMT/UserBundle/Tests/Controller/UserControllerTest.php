@@ -64,9 +64,9 @@ class UserControllerTest extends WebTestCase
         $client->submit($form, array(
             'user[email]' => '',
         ));
-        
+
         $this->assertFalse($client->getResponse()->isRedirection());
-        
+
         $client->submit($form, array(
             'user[email]' => 'test@test.com',
             'user[last_name]' => 'test',
@@ -91,9 +91,9 @@ class UserControllerTest extends WebTestCase
         $form['user[first_name]'] = '';
 
         $client->submit($form);
-        
+
         $this->assertFalse($client->getResponse()->isRedirection());
-        
+
         $form['user[first_name]'] = 'Foo';
         $form['user[last_name]'] = 'Bar';
 

@@ -28,13 +28,12 @@ class OrganizationControllerTest extends WebTestCase
         ));
 
         $this->assertFalse($client->getResponse()->isRedirection());
-        
+
         $client->submit($form, array(
             'organization[name]' => 'ACME',
         ));
 
         $this->assertTrue($client->getResponse()->isRedirect('/people'));
     }
-
 
 }

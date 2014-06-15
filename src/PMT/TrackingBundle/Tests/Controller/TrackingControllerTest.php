@@ -41,7 +41,7 @@ class TrackingControllerTest extends WebTestCase
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
         $task = $em->createQueryBuilder()->select('t')->from('PMT\TaskBundle\Entity\Task', 't')->setMaxResults(1)->getQuery()->getSingleResult();
-        
+
         $crawler = $client->request('GET', '/tracking');
         $link = $crawler->selectLink('Add entry')->link();
         $crawler = $client->click($link);
@@ -78,7 +78,7 @@ class TrackingControllerTest extends WebTestCase
         $form['track[date]'] = '';
         $client->submit($form);
         $this->assertFalse($client->getResponse()->isRedirection());
-        
+
         $form['track[date]'] = '2014-01-02';
         $client->submit($form);
 

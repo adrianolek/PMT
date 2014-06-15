@@ -140,10 +140,6 @@ class TaskController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        if (!$task) {
-            throw $this->createNotFoundException('Unable to find Task entity.');
-        }
-
         $em->remove($task);
         $em->flush();
 

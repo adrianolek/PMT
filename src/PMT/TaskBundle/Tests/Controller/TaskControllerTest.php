@@ -26,6 +26,8 @@ class TaskControllerTest extends WebTestCase
         $client->click($link);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('GET', $client->getRequest()->getUri(), array('order' => 'date'));
     }
 
     public function testAddTask()
@@ -45,6 +47,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Create')->form();
+
+        $client->submit($form, array(
+            'task[name]' => '',
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
 
         $client->submit($form, array(
             'task[name]' => 'Foo',
@@ -68,6 +76,12 @@ class TaskControllerTest extends WebTestCase
         $client->click($link);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createAuthClient(array('user' => 'user'));
+
+        $client->click($link);
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     public function testEditTask()
@@ -87,6 +101,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Update')->form();
+
+        $client->submit($form, array(
+            'task[name]' => '',
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
 
         $client->submit($form, array(
             'task[name]' => 'Foo',
@@ -133,7 +153,7 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-    
+
     public function testOrder()
     {
         $client = static::createAuthClient();
@@ -161,6 +181,21 @@ class TaskControllerTest extends WebTestCase
             'next' => $tasks[2]->getId(),
         ));
 
+        $client->request('POST', '/tasks/order', array(
+            'item' => $tasks[0]->getId(),
+            'prev' => $tasks[2]->getId(),
+            'next' => $tasks[1]->getId(),
+        ));
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createAuthClient(array('user' => 'user'));
+
+        $client->request('POST', '/tasks/order', array(
+            'item' => $tasks[0]->getId(),
+            'prev' => $tasks[1]->getId(),
+        ));
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
 }

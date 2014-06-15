@@ -7,10 +7,21 @@ class WebTestCase extends BaseWebTestCase
 {
     public static function createAuthClient(array $options = array(), array $server = array())
     {
-        $server = array_merge($server, array(
-            'PHP_AUTH_USER' => 'manager@pmt.test',
-            'PHP_AUTH_PW' => 'manager'
-        ));
+        $options = array_merge(array('user' => 'manager'), $options);
+
+        if ($options['user'] == 'manager') {
+            $server = array_merge($server, array(
+                'PHP_AUTH_USER' => 'manager@pmt.test',
+                'PHP_AUTH_PW' => 'manager'
+            ));
+        } elseif ($options['user'] == 'user') {
+            $server = array_merge($server, array(
+                'PHP_AUTH_USER' => 'user@pmt.test',
+                'PHP_AUTH_PW' => 'user'
+            ));
+        }
+
+        unset($options['user']);
 
         return parent::createClient($options, $server);
     }
