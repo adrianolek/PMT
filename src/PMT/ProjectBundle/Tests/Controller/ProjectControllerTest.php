@@ -35,6 +35,12 @@ class ProjectControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
+            'project[name]' => '',
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
+
+        $client->submit($form, array(
             'project[name]' => 'Foo project',
         ));
 
@@ -51,6 +57,13 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Update')->form();
+
+        $form['project[name]'] = '';
+
+        $client->submit($form);
+
+        $this->assertFalse($client->getResponse()->isRedirection());
+
         $form['project[name]'] = 'Bar project';
 
         $client->submit($form);
