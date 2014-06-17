@@ -34,6 +34,12 @@ class FileControllerTest extends WebTestCase
         $form = $crawler->selectButton('Upload')->form();
 
         $client->submit($form, array(
+            'form[file]' => ''
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
+
+        $client->submit($form, array(
             'form[file]' => new UploadedFile(
                 'src/PMT/FileBundle/DataFixtures/File/test.txt', 'test.txt'
             )
