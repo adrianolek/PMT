@@ -32,6 +32,12 @@ class CommentControllerTest extends WebTestCase
         $form = $crawler->selectButton('Create')->form();
 
         $client->submit($form, array(
+            'comment[content]' => '',
+        ));
+
+        $this->assertFalse($client->getResponse()->isRedirection());
+
+        $client->submit($form, array(
             'comment[content]' => 'Foo Bar',
         ));
 
