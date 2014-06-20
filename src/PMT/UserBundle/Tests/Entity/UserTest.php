@@ -1,5 +1,5 @@
 <?php
-namespace PMT\UserBundle\Test\Entity;
+namespace PMT\UserBundle\Tests\Entity;
 use PMT\UserBundle\Entity\User;
 
 /**
