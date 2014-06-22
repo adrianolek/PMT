@@ -427,6 +427,8 @@ class Task
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->assignedUsers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
