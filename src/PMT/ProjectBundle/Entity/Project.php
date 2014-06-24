@@ -178,6 +178,7 @@ class Project
     public function __construct()
     {
         $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->assignedUsers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

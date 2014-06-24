@@ -176,7 +176,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @covers ::getComments
      * @covers ::getCommentsCount
      */
-    public function testAddComment()
+    public function testComment()
     {
         $comment = $this->getMock('PMT\CommentBundle\Entity\Comment');
         $this->task->addComment($comment);
@@ -192,7 +192,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @covers ::getFiles
      * @covers ::getFilesCount
      */
-    public function testAddFile()
+    public function testFile()
     {
         $file = $this->getMock('PMT\FileBundle\Entity\File');
         $this->task->addFile($file);
@@ -207,7 +207,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @covers ::removeTrack
      * @covers ::getTracks
      */
-    public function testAddTrack()
+    public function testTrack()
     {
         $track = $this->getMock('PMT\TrackingBundle\Entity\Track');
         $this->task->addTrack($track);
@@ -221,7 +221,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @covers ::removeAssignedUser
      * @covers ::getAssignedUsers
      */
-    public function testAddAssignedUser()
+    public function testAssignedUser()
     {
         $user = $this->getMock('PMT\UserBundle\Entity\User');
         $this->task->addAssignedUser($user);
@@ -234,7 +234,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
      * @covers ::getEstimatedTimeHours
      * @covers ::setEstimatedTimeHours
      */
-    public function testGetEstimatedTimeHours()
+    public function testEstimatedTimeHours()
     {
         $value = 4;
         $this->task->setEstimatedTimeHours($value);
