@@ -24,7 +24,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     public function testFile()
     {
         $value = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-            ->disableOriginalConstructor()->getMock();
+            ->setConstructorArgs(array('src/PMT/FileBundle/DataFixtures/File/test.txt', 'test.txt'))->getMock();
         $this->object->setFile($value);
         $this->assertEquals($value, $this->object->getFile());
     }
@@ -140,7 +140,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     {
         $value = 'foo';
         $file = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-            ->disableOriginalConstructor()->getMock();
+            ->setConstructorArgs(array('src/PMT/FileBundle/DataFixtures/File/test.txt', 'test.txt'))->getMock();
         $file->expects($this->once())
             ->method('getClientOriginalName')
             ->will($this->returnValue($value));
@@ -158,7 +158,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     public function testUpdateDownloadKey()
     {
         $file = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-            ->disableOriginalConstructor()->getMock();
+            ->setConstructorArgs(array('src/PMT/FileBundle/DataFixtures/File/test.txt', 'test.txt'))->getMock();
         $this->object->setFile($file);
         $this->object->updateDownloadKey();
         $this->assertNotEmpty($this->object->getDownloadKey());
