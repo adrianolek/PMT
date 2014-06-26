@@ -78,52 +78,6 @@ class Comment
     }
 
     /**
-     * Set userId
-     *
-     * @param  integer $userId
-     * @return Comment
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Set taskId
-     *
-     * @param  integer $taskId
-     * @return Comment
-     */
-    public function setTaskId($taskId)
-    {
-        $this->taskId = $taskId;
-
-        return $this;
-    }
-
-    /**
-     * Get taskId
-     *
-     * @return integer
-     */
-    public function getTaskId()
-    {
-        return $this->taskId;
-    }
-
-    /**
      * Set content
      *
      * @param  string  $content
