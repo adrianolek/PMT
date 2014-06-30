@@ -13,7 +13,8 @@ class TaskControllerTest extends WebTestCase
         $this->loadFixtures(array(
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData',
             'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData',
-            'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData'
+            'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData',
+            'PMT\TrackingBundle\DataFixtures\ORM\LoadTrackData'
         ));
     }
 
@@ -27,7 +28,29 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $client->request('GET', $client->getRequest()->getUri(), array('order' => 'date'));
+        $client->request('GET', $client->getRequest()->getUri(), array(
+            'order' => 'date',
+            'assignment' => 'assigned',
+            'categories' => array('bug', 'feature'),
+            'statuses' => array('waiting', 'done'),
+            'date_start' => '2010-01-05',
+            'date_end' => '2014-06-02',
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('GET', $client->getRequest()->getUri(), array(
+            'order' => 'progress',
+            'assignment' => 'unassigned',
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('GET', $client->getRequest()->getUri(), array(
+            'order' => 'name',
+        ));
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testAddTask()

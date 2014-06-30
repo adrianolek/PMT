@@ -18,6 +18,7 @@ class LoadTaskData extends AbstractFixture
         $task->setCategory('feature');
         $task->setDescription('This is test task.');
         $task->addAssignedUser($this->getReference('manager'));
+        $task->setEstimatedTimeHours(1);
         $em->persist($task);
 
         $this->addReference('task-1', $task);
@@ -27,6 +28,7 @@ class LoadTaskData extends AbstractFixture
         $task->setProject($this->getReference('project-foo'));
         $task->setStatus('waiting');
         $task->setCategory('bug');
+        $task->setEstimatedTimeHours(1);
         $em->persist($task);
 
         $task = new Task();
@@ -34,6 +36,7 @@ class LoadTaskData extends AbstractFixture
         $task->setProject($this->getReference('project-foo'));
         $task->setStatus('waiting');
         $task->setCategory('modification');
+        $task->setEstimatedTimeHours(1);
         $em->persist($task);
 
         $em->flush();
