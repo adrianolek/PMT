@@ -15,9 +15,14 @@ class LoadProjectData extends AbstractFixture
         $project->setName('Foo Project');
 
         $em->persist($project);
-
         $em->flush();
 
         $this->addReference('project-foo', $project);
+
+        $project = new Project();
+        $project->setName('Bar Project');
+
+        $em->persist($project);
+        $em->flush();
     }
 }

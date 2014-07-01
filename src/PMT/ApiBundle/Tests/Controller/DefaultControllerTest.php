@@ -58,7 +58,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         /** @var $em EntityManager */
-        $project = $em->createQueryBuilder()->select('p')->from('PMT\ProjectBundle\Entity\Project', 'p')->getQuery()->getSingleResult();
+        $project = $em->createQueryBuilder()->select('p')->from('PMT\ProjectBundle\Entity\Project', 'p')->setMaxResults(1)->getQuery()->getSingleResult();
 
         $client = static::createApiClient();
         $client->jsonRequest('GET', '/api/project/'.$project->getId().'/task.json');

@@ -21,6 +21,11 @@ class ProjectControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client = static::createAuthClient(array('user' => 'user'));
+        $client->request('GET', '/');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
     public function testAddProject()
