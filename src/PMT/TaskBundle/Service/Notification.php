@@ -5,6 +5,7 @@ namespace PMT\TaskBundle\Service;
 use Doctrine\ORM\EntityManager;
 use ICanBoogie\Inflector;
 use PMT\TaskBundle\Entity\Task;
+use PMT\UserBundle\Entity\User;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\SecurityContext;
 use PMT\CommentBundle\Entity\Comment;
@@ -34,63 +35,138 @@ class Notification
 
         if (method_exists($this, $method)) {
             call_user_func_array(array($this, $method), $args);
+        } else {
+            throw new \Exception(strtr('Undefined status %s', $type));
         }
     }
 
     private function notifyTaskStatus(Task $task, $previous)
     {
-        $user = $this->sc->getToken()->getUser();
+        $recipients = array();
+        if ($task->getAssignedUsers()) {
+            $recipients = $this->getEmails($task->getAssignedUsers());
+        } else {
+            $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
+        }
 
-        $this->sendEmail('['.$task->getProject().'] Status change to '.$task->getStatusName().': #'.$task->getId().' '.$task->getName(),
-            $user.' changed task status from '.$previous.' to '.$task->getStatusName().': #'.$task->getId().' '.$task->getName()."\n"
-            .$this->getTaskUrl($task));
+        return $this->sendEmail(
+            strtr('[%project%] Status change to %status%: #%task_id% %task_name%', array(
+                '%project%' => $task->getProject(),
+                '%status%' => $task->getStatusName(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+            )),
+            strtr("%user% changed task status from %previous% to %current%: #%task_id% %task_name%\n%url%", array(
+                '%user%' => $this->getUser(),
+                '%previous%' => $previous,
+                '%current%' => $task->getStatusName(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+                '%url%' => $this->getTaskUrl($task),
+            )),
+            $recipients
+        );
     }
 
     private function notifyNewTask(Task $task)
     {
+        $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
 
-        $this->sendEmail('['.$task->getProject().'] New task: #'.$task->getId().' '.$task->getName(),
-            $task->getUser().' added new task: #'.$task->getId().' '.$task->getName()."\n"
-            .$this->getTaskUrl($task)."\n\n"
-            .$task->getDescription());
+        $this->sendEmail(
+            strtr('[%project%] New task: #%task_id% %task_name%', array(
+                '%project%' => $task->getProject(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+            )),
+            strtr("%user% added new task: #%task_id% %task_name%\n%url%\n\n%description%", array(
+                '%user%' => $this->getUser(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+                '%url%' => $this->getTaskUrl($task),
+                '%description%' => $task->getDescription(),
+            )),
+            $recipients
+        );
     }
 
     private function notifyNewComment(Comment $comment)
     {
         $task = $comment->getTask();
-        $this->sendEmail('['.$task->getProject().'] New comment: #'.$task->getId().' '.$task->getName(),
-            $comment->getUser().' added new comment: #'.$task->getId().' '.$task->getName()."\n"
-            .$this->getTaskUrl($task)."\n\n"
-            .$comment->getContent());
+
+        if ($task->getAssignedUsers()) {
+            $recipients = $this->getEmails($task->getAssignedUsers());
+        } else {
+            $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
+        }
+
+        $this->sendEmail(
+            strtr('[%project%] New comment: #%task_id% %task_name%', array(
+                '%project%' => $task->getProject(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+            )),
+            strtr("%user% added new comment: #%task_id% %task_name%\n%url%\n\n%content%", array(
+                '%user%' => $this->getUser(),
+                '%task_id%' => $task->getId(),
+                '%task_name%' => $task->getName(),
+                '%url%' => $this->getTaskUrl($task),
+                '%content%' => $comment->getContent(),
+            )),
+            $recipients
+        );
     }
 
-    private function sendEmail($subject, $body)
+    /**
+     * @param  string         $subject
+     * @param  string         $body
+     * @param  string[]       $recipients
+     * @return \Swift_Message
+     */
+    private function sendEmail($subject, $body, $recipients)
     {
+        $recipients = array_unique(array_diff($recipients, array($this->getUser()->getEmail())));
+
+        if (empty($recipients)) {
+            return false;
+        }
+
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom('notify@pmt', 'PMT Notification')
-            ->setBcc($this->getRecipients())
+            ->setBcc($recipients)
             ->setBody($body);
 
         $this->mailer->send($message);
+
+        return $message;
     }
 
-    private function getRecipients()
+    /**
+     * @return User
+     */
+    private function getUser()
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->select('u')
-            ->from('PMTUserBundle:User', 'u')
-            ->andWhere($qb->expr()->isNotNull('u.email'));
+        return $this->sc->getToken()->getUser();
+    }
 
+    /**
+     * @param  User[]   $users
+     * @return string[]
+     */
+    private function getEmails($users)
+    {
         $emails = array();
-        foreach ($qb->getQuery()->getResult() as $user) {
-            $emails[] = $user->getEmail();
+
+        foreach ($users as $user) {
+            if ($user->getEmail()) {
+                $emails[] = $user->getEmail();
+            }
         }
 
-        return array_unique(array_diff($emails, array($this->sc->getToken()->getUser()->getEmail())));
+        return $emails;
     }
 
-    private function getTaskUrl($task)
+    private function getTaskUrl(Task $task)
     {
         return $this->router->generate('project_task', array('project_id' => $task->getProject()->getId(), 'id' => $task->getId()), true);
     }

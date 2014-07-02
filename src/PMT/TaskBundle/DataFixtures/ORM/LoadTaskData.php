@@ -18,6 +18,7 @@ class LoadTaskData extends AbstractFixture
         $task->setCategory('feature');
         $task->setDescription('This is test task.');
         $task->addAssignedUser($this->getReference('manager'));
+        $task->addAssignedUser($this->getReference('user'));
         $task->setEstimatedTimeHours(1);
         $em->persist($task);
 

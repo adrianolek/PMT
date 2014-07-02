@@ -52,6 +52,8 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 
         $em->persist($user);
 
+        $this->addReference('user', $user);
+
         $em->flush();
     }
 }
