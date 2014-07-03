@@ -36,18 +36,13 @@ class Notification
         if (method_exists($this, $method)) {
             call_user_func_array(array($this, $method), $args);
         } else {
-            throw new \Exception(strtr('Undefined status %s', $type));
+            throw new \Exception(sprintf('Undefined status %s', $type));
         }
     }
 
     private function notifyTaskStatus(Task $task, $previous)
     {
-        $recipients = array();
-        if ($task->getAssignedUsers()) {
-            $recipients = $this->getEmails($task->getAssignedUsers());
-        } else {
-            $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
-        }
+        $recipients = $this->getTaskRecipients($task);
 
         return $this->sendEmail(
             strtr('[%project%] Status change to %status%: #%task_id% %task_name%', array(
@@ -70,7 +65,7 @@ class Notification
 
     private function notifyNewTask(Task $task)
     {
-        $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
+        $recipients = $this->getTaskRecipients($task);
 
         $this->sendEmail(
             strtr('[%project%] New task: #%task_id% %task_name%', array(
@@ -93,11 +88,7 @@ class Notification
     {
         $task = $comment->getTask();
 
-        if ($task->getAssignedUsers()) {
-            $recipients = $this->getEmails($task->getAssignedUsers());
-        } else {
-            $recipients = $this->getEmails($task->getProject()->getAssignedUsers());
-        }
+        $recipients = $this->getTaskRecipients($task);
 
         $this->sendEmail(
             strtr('[%project%] New comment: #%task_id% %task_name%', array(
@@ -114,6 +105,15 @@ class Notification
             )),
             $recipients
         );
+    }
+
+    private function getTaskRecipients(Task $task)
+    {
+        if ($task->getAssignedUsers()) {
+            return $this->getEmails($task->getAssignedUsers());
+        } else {
+            return $this->getEmails($task->getProject()->getAssignedUsers());
+        }
     }
 
     /**
