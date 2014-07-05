@@ -68,6 +68,17 @@ apache:
             ssl_key: ''
             ssl_chain: ''
             ssl_certs_dir: ''
+        coverage:
+            servername: coverage.pmt.dev
+            docroot: /var/www/coverage
+            port: '80'
+            override:
+                - All
+            custom_fragment: ''
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
     mod_pagespeed: 0
     mod_spdy: 0
 php:
