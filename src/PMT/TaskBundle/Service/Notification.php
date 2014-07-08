@@ -109,7 +109,7 @@ class Notification
 
     private function getTaskRecipients(Task $task)
     {
-        if ($task->getAssignedUsers()) {
+        if ($task->getAssignedUsers()->count()) {
             return $this->getEmails($task->getAssignedUsers());
         } else {
             return $this->getEmails($task->getProject()->getAssignedUsers());
