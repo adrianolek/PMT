@@ -17,6 +17,7 @@ class LoadTaskData extends AbstractFixture
         $task->setStatus('waiting');
         $task->setCategory('feature');
         $task->setDescription('This is test task.');
+        $task->setUser($this->getReference('user'));
         $task->addAssignedUser($this->getReference('manager'));
         $task->addAssignedUser($this->getReference('user'));
         $task->setEstimatedTimeHours(1);

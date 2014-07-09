@@ -163,4 +163,16 @@ OFFSET :offset');
 
         return $results;
     }
+
+    public function getCommentUsers(Task $task)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('DISTINCT u')
+            ->from('PMTUserBundle:User', 'u')
+            ->join('u.comments', 'c')
+            ->andWhere('c.task = :id')
+            ->setParameter('id', $task->getId());
+
+        return $qb->getQuery()->getResult();
+    }
 }

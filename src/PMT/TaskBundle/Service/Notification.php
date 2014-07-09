@@ -107,13 +107,33 @@ class Notification
         );
     }
 
+    /**
+     * @param  Task     $task
+     * @return string[]
+     *
+     * Returns emails for users involved in a task, which are:
+     * - task adder
+     * - assigned users
+     * - users who commented on task
+     */
     private function getTaskRecipients(Task $task)
     {
         if ($task->getAssignedUsers()->count()) {
-            return $this->getEmails($task->getAssignedUsers());
+            $emails = $this->getEmails($task->getAssignedUsers());
         } else {
-            return $this->getEmails($task->getProject()->getAssignedUsers());
+            $emails = $this->getEmails($task->getProject()->getAssignedUsers());
         }
+
+        if ($task->getUser() && $task->getUser()->getEmail()) {
+            $emails[] = $task->getUser()->getEmail();
+        }
+
+        $emails = array_merge(
+            $emails,
+            $this->getEmails($this->em->getRepository('PMTTaskBundle:Task')->getCommentUsers($task))
+        );
+
+        return $emails;
     }
 
     /**
