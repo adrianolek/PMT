@@ -68,7 +68,9 @@
             <script src="{{ asset('/js/app.js') }}"></script>
             {% if is_granted('ROLE_USER') %}
                 <script type="text/javascript">
-                    app.search.side('{{ path('search') }}');
+                    require(['page/search'], function(Search) {
+                        new Search('{{ path('search') }}');
+                    });
                 </script>
             {% endif %}
         {% endblock %}
