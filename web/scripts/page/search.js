@@ -1,4 +1,4 @@
-define(['domReady'], function(domReady){
+define(['domReady', 'modules/helper/Url'], function(domReady, urlHelper){
     return function (path) {
         domReady(function(){
             $('#search_term').select2({
@@ -6,7 +6,7 @@ define(['domReady'], function(domReady){
                 minimumInputLength: 3,
                 dropdownCssClass: 'bigdrop',
                 ajax: {
-                    url: path,
+                    url: urlHelper.urlFor('search'),
                     dataType: 'json',
                     quietMillis: 100,
                     data: function (term, page) {

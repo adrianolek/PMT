@@ -95,15 +95,7 @@
 {% block javascripts %}
   {{ parent() }}
   <script type="text/javascript">
-      app.tasks.status('{{ path('task_status', {'id' : 'id'}) }}');
       $(function(){
-          $('#task_filter select').selectpicker();
-          $('#task_filter .input-daterange').datepicker({
-            todayBtn: true,
-            autoclose: true,
-            format: 'yyyy-mm-dd'
-          });
-
           {% if(filter.vars.value.order == 'priority') %}
             $('#tasks_list tbody').addClass('sortable').sortable({
               handle: '.priority',
@@ -137,4 +129,8 @@
           {% endif %}
       });
   </script>
+
+    <script type="text/javascript">
+        require(['page/tasks/index']);
+    </script>
 {% endblock %}

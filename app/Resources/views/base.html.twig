@@ -65,14 +65,12 @@
             <script src="{{ asset('/js/ui/jquery.ui.sortable.js') }}"></script>
             <script src="{{ asset('/js/ui/jquery.ui.effect.js') }}"></script>
             <script src="{{ asset('/js/select2/select2.js') }}"></script>
-            <script src="{{ asset('/js/app.js') }}"></script>
-            {% if is_granted('ROLE_USER') %}
-                <script type="text/javascript">
-                    require(['page/search'], function(Search) {
-                        new Search('{{ path('search') }}');
-                    });
-                </script>
-            {% endif %}
+            <script type="text/javascript">
+                require(['page/search', 'modules/helper/Url'], function(Search, urlHelper) {
+                    urlHelper.setBase('{{ path('base_url') }}');
+                    new Search();
+                });
+            </script>
         {% endblock %}
     </body>
 </html>

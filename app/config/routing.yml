@@ -38,3 +38,6 @@ login_check:
     
 logout:
     pattern:   /logout
+    
+base_url:
+    pattern:  /
