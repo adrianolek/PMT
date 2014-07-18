@@ -50,8 +50,9 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+    {{ parent() }}
+    
     <script type="text/javascript">
-        require(['page/tasks/index']);
+        require(['page/tasks/show']);
     </script>
 {% endblock %}
