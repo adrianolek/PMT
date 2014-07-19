@@ -33,14 +33,8 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  <script type="text/javascript">
-      $(function(){
-          $('#track_date').datepicker({
-            todayBtn: true,
-            autoclose: true,
-            format: 'yyyy-mm-dd',
-          });
-      });
-  </script>
+    {{ parent() }}
+    <script type="text/javascript">
+        require(['page/tracking/form']);
+    </script>
 {% endblock %}

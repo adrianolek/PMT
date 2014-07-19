@@ -77,14 +77,8 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  <script type="text/javascript">
-      $(function(){
-          $('#track_filter .input-daterange').datepicker({
-            todayBtn: true,
-            autoclose: true,
-            format: 'yyyy-mm-dd',
-          });
-      });
-  </script>
+    {{ parent() }}
+    <script type="text/javascript">
+        require(['page/tracking/index']);
+    </script>
 {% endblock %}
