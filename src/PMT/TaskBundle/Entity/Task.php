@@ -116,6 +116,7 @@ class Task
     private $deletedAt;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="\PMT\ProjectBundle\Entity\Project", inversedBy="tasks")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */

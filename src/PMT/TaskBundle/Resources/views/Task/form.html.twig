@@ -18,6 +18,9 @@
     {{ form_row(form.category) }}
     {{ form_row(form.estimatedTimeHours) }}
     {{ form_row(form.status) }}
+    {% if is_new %}
+        {{ form_row(form.priority) }}
+    {% endif %}
     {{ form_row(form.progress) }}
     {{ form_row(form.assignedUsers) }}
 

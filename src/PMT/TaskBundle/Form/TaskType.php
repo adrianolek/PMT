@@ -32,6 +32,18 @@ class TaskType extends AbstractType
                 'expanded' => true,
                 'choices' => $choices,
             ));
+        
+        if($options['new'])
+        {
+            $builder->add('priority', 'choice', array(
+                'choices' => array(
+                    100 => 'very high',
+                    75 => 'high',
+                    50 => 'normal',
+                    25 => 'low',
+                    0 => 'very low',
+            )));
+        }
     }
 
     /**
@@ -42,6 +54,7 @@ class TaskType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'PMT\TaskBundle\Entity\Task',
             'user_repository' => null,
+            'new' => false,
         ));
     }
 

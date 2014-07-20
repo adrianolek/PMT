@@ -72,11 +72,13 @@ class TaskController extends Controller
         $task->setProject($project);
         $task->setUser($em->getReference('PMT\UserBundle\Entity\User', $this->getUser()->getId()));
         $task->setEstimatedTime(0);
-        $task->setPosition(0);
-        $task->setPriority(100);
+        $task->setPriority(50);
         $task->setProgress(0);
         $task->setStatus('waiting');
-        $form = $this->createForm(new TaskType(), $task, array('user_repository' => $em->getRepository('PMTUserBundle:User')));
+        $form = $this->createForm(new TaskType(), $task, array(
+            'user_repository' => $em->getRepository('PMTUserBundle:User'),
+            'new' => true,
+        ));
 
         if ($request->isMethod('post')) {
           $form->submit($request);
@@ -209,8 +211,8 @@ class TaskController extends Controller
         }
 
         if (!$request->get('prev')) {
-          $task->setPosition(0);
-          $task->setPriority(100);
+            $task->setPosition(0);
+            $task->setPriority(100);
         } elseif (!$request->get('next')) {
             $prev = $em->getRepository('PMTTaskBundle:Task')->find($request->get('prev'));
             $task->setPosition($prev->getPosition()+1);
@@ -218,11 +220,7 @@ class TaskController extends Controller
         } else {
             $prev = $em->getRepository('PMTTaskBundle:Task')->find($request->get('prev'));
             $next = $em->getRepository('PMTTaskBundle:Task')->find($request->get('next'));
-            if ($prev->getPosition() > $task->getPosition()) {
-                $task->setPosition($prev->getPosition());
-            } else {
-                $task->setPosition($prev->getPosition()+1);
-            }
+            $task->setPosition($prev->getPosition()+1);
             $task->setPriority(($prev->getPriority()+$next->getPriority())/2);
         }
 
