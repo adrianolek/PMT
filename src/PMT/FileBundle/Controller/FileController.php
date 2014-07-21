@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PMT\FileBundle\Entity\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class FileController extends Controller
 {
@@ -33,8 +34,6 @@ class FileController extends Controller
                 $em->flush();
 
                 $uploadableManager = $this->get('stof_doctrine_extensions.uploadable.manager');
-
-                // Here, "getMyFile" returns the "UploadedFile" instance that the form bound in your $myFile property
                 $uploadableManager->markEntityToUpload($file, $file->getFile());
 
                 $em->flush();
@@ -89,5 +88,24 @@ class FileController extends Controller
         $response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', strtotime('+1 year')));
 
         return $response;
+    }
+
+    /**
+     * @Route("/file/{id}/delete", name="file_delete")
+     * @Security("has_role('ROLE_MANAGER')")
+     */
+    public function deleteAction(Request $request, File $file)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($file);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', sprintf('File %s has been deleted.', $file));
+
+        return $this->redirect($this->generateUrl('project_task', array(
+            'project_id' => $file->getTask()->getProject()->getId(),
+            'id' => $file->getTask()->getId(),
+        )));
     }
 }

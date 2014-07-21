@@ -32,9 +32,8 @@ class TaskType extends AbstractType
                 'expanded' => true,
                 'choices' => $choices,
             ));
-        
-        if($options['new'])
-        {
+
+        if ($options['new']) {
             $builder->add('priority', 'choice', array(
                 'choices' => array(
                     100 => 'very high',
