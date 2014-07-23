@@ -38,7 +38,7 @@ vagrantfile-local:
                 sync_type: rsync
                 rsync:
                     args: null
-                    exclude: [ '.vagrant/', '.git/', '/app/cache/*', '/app/logs/*' ]
+                    exclude: [ '.vagrant/', '.git/', 'app/cache/*', 'app/logs/*', 'web/uploads/*' ]
                     auto: 'true'
             TtZOg2Set89r:
                 source: ./
@@ -92,6 +92,7 @@ apache:
         - deflate
         - expires
         - headers
+        - xsendfile
     vhosts:
         h9zTU3Q473hn:
             servername: pmt.dev

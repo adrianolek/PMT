@@ -8,6 +8,8 @@ framework:
         storage_id: session.storage.mock_file
     profiler:
         collect: false
+    session:
+        save_path: %kernel.cache_dir%/sessions
 
 web_profiler:
     toolbar: false

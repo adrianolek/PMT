@@ -24,7 +24,7 @@ class FileExtension extends \Twig_Extension
     public function getThumbPath(File $file)
     {
         if ($file->isImage()) {
-            return $this->router->generate('thumb', array('key' => $file->getDownloadKey(), 'ext' => $file->getExtension()));
+            return $this->router->generate('thumb', array('key' => $file->getDownloadKey()));
         } else {
             if (in_array($file->getExtension(), self::$types)) {
                 return '/images/types/'.$file->getExtension().'.png';

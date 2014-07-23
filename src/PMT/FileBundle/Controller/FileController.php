@@ -66,8 +66,8 @@ class FileController extends Controller
     }
 
     /**
-     * @Route("/file/{key}.{ext}", name="file")
-     * @Route("/file/t/{key}.{ext}", name="thumb")
+     * @Route("/file/{key}", name="file")
+     * @Route("/file/t/{key}", name="thumb")
      * @Template()
      */
     public function showAction(Request $request, $key)

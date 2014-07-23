@@ -2,11 +2,11 @@
     {% for file in files %}
         <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-                <a href="{{ path('file', {'key': file.downloadKey, 'ext': file.extension}) }}" class="thumbnail">
+                <a href="{{ path('file', {'key': file.downloadKey}) }}" class="thumbnail">
                     <img src="{{ thumb_path(file) }}" class="{{ file.isImage ? 'image' : 'file' }}">
                 </a>
                 <div class="caption">
-                    <a href="{{ path('file', {'key': file.downloadKey, 'ext': file.extension}) }}">
+                    <a href="{{ path('file', {'key': file.downloadKey}) }}">
                         {{ file.name }}
                     </a>
 
