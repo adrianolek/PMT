@@ -69,12 +69,12 @@ class FileControllerTest extends WebTestCase
         /** @var $em EntityManager */
         $file = $em->createQueryBuilder()->select('f')->from('PMT\FileBundle\Entity\File', 'f')->getQuery()->getSingleResult();
 
-        $client->request('GET', '/file/' . $file->getDownloadKey() . '.' . $file->getExtension());
+        $client->request('GET', '/file/' . $file->getDownloadKey());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->headers->has('X-Sendfile'));
 
-        $client->request('GET', '/file/t/' . $file->getDownloadKey() . '.' . $file->getExtension());
+        $client->request('GET', '/file/t/' . $file->getDownloadKey());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->headers->has('X-Sendfile'));

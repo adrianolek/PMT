@@ -9,6 +9,7 @@ use PMT\FileBundle\Entity\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class FileController extends Controller
 {
@@ -68,13 +69,11 @@ class FileController extends Controller
     /**
      * @Route("/file/{key}", name="file")
      * @Route("/file/t/{key}", name="thumb")
+     * @ParamConverter("file", options={"mapping": {"key": "download_key"}})
      * @Template()
      */
-    public function showAction(Request $request, $key)
+    public function showAction(Request $request, File $file)
     {
-        $em = $this->getDoctrine()->getManager();
-        $file = $em->getRepository('PMT\FileBundle\Entity\File')->findOneBy(array('download_key' => $key));
-
         $response = new Response(null, 200);
 
         if ($request->get('_route') == 'thumb') {
