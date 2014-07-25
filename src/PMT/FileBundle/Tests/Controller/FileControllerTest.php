@@ -79,4 +79,17 @@ class FileControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertTrue($client->getResponse()->headers->has('X-Sendfile'));
     }
+
+    public function testDelete()
+    {
+        $client = static::createAuthClient();
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var $em EntityManager */
+        $file = $em->createQueryBuilder()->select('f')->from('PMT\FileBundle\Entity\File', 'f')->getQuery()->getSingleResult();
+
+        $client->request('GET', '/file/' . $file->getId() . '/delete');
+
+        $this->assertTrue($client->getResponse()->isRedirect('/project/' . $file->getTask()->getProject()->getId() . '/task/' . $file->getTask()->getId()));
+    }
 }
