@@ -14,7 +14,7 @@ class DefaultControllerTest extends WebTestCase
         $this->loadFixtures(array(
             'PMT\UserBundle\DataFixtures\ORM\LoadUserData',
             'PMT\ProjectBundle\DataFixtures\ORM\LoadProjectData',
-            'PMT\TaskBundle\DataFixtures\ORM\LoadTaskData',
+            'PMT\ApiBundle\DataFixtures\ORM\LoadTaskData',
         ));
     }
 
