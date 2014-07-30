@@ -13,6 +13,10 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    
+    notification_sender:
+      email: noreply@pmt.local
+      name: PMT Notification
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt

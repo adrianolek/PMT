@@ -16,13 +16,15 @@ class Notification
     private $mailer;
     private $router;
     private $sc;
+    private $sender;
 
-    public function __construct(EntityManager $em, \Swift_Mailer $mailer, Router $router, SecurityContext $sc)
+    public function __construct(EntityManager $em, \Swift_Mailer $mailer, Router $router, SecurityContext $sc, $sender)
     {
         $this->em = $em;
         $this->mailer = $mailer;
         $this->router = $router;
         $this->sc = $sc;
+        $this->sender = $sender;
     }
 
     public function notify($type, $object)
@@ -152,7 +154,7 @@ class Notification
 
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom('notify@pmt', 'PMT Notification')
+            ->setFrom($this->sender['email'], $this->sender['name'])
             ->setBcc($recipients)
             ->setBody($body);
 
