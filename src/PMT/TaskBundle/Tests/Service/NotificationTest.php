@@ -18,7 +18,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
         $mailer = $this->getMockBuilder('\Swift_Mailer')->disableOriginalConstructor()->getMock();
         $router = $this->getMockBuilder('Symfony\Component\Routing\Router')->disableOriginalConstructor()->getMock();
         $sc = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContext')->disableOriginalConstructor()->getMock();
-        $this->object = new Notification($em, $mailer, $router, $sc);
+        $this->object = new Notification($em, $mailer, $router, $sc, array('name' => 'PMT Notification', 'email' => 'noreply@pmt.local'));
     }
 
     /**

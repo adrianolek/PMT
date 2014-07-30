@@ -9,5 +9,8 @@ parameters:
     mailer_host: null
     mailer_user: null
     mailer_password: null
+    notification_sender:
+      email: noreply@pmt.local
+      name: PMT Notification
     locale: en
     secret: test
