@@ -778,12 +778,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "089cca636e0e44a70dd9167b7d813762ea80daca"
+                "reference": "2ae8538f9693ac14c3996a44dc61a95c00195d0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/089cca636e0e44a70dd9167b7d813762ea80daca",
-                "reference": "089cca636e0e44a70dd9167b7d813762ea80daca",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2ae8538f9693ac14c3996a44dc61a95c00195d0b",
+                "reference": "2ae8538f9693ac14c3996a44dc61a95c00195d0b",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +844,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-07-24 15:34:21"
+            "time": "2014-07-31 16:02:34"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1375,12 +1375,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipUrlAutoConverterBundle.git",
-                "reference": "dd8b353af74d75d3f8e7cdbe2f3958b1b38b1265"
+                "reference": "0b86c255fb5e4f08d24f108f2c06110018d061db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/dd8b353af74d75d3f8e7cdbe2f3958b1b38b1265",
-                "reference": "dd8b353af74d75d3f8e7cdbe2f3958b1b38b1265",
+                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/0b86c255fb5e4f08d24f108f2c06110018d061db",
+                "reference": "0b86c255fb5e4f08d24f108f2c06110018d061db",
                 "shasum": ""
             },
             "require": {
@@ -1418,7 +1418,7 @@
             "keywords": [
                 "url"
             ],
-            "time": "2014-05-13 11:28:23"
+            "time": "2014-07-30 07:37:14"
         },
         {
             "name": "monolog/monolog",
