@@ -1,0 +1,7 @@
+UPDATE mysql.user SET Password=PASSWORD('123') WHERE User='root';
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+CREATE USER 'pmt'@'%' IDENTIFIED BY '123';
+CREATE DATABASE pmt DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`;
+GRANT SELECT, LOCK TABLES, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER ON `pmt`.* TO 'pmt'@'%';
+FLUSH PRIVILEGES;
