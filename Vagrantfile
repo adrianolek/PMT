@@ -31,7 +31,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.define 'php' do |machine|
     machine.vm.provider 'docker' do |d|
-      d.name = 'pmt.php'
+      d.name = 'pmt.php' if ARGV[0] != 'docker-run'
+      d.create_args = ['--rm', '--workdir=/var/www'] if ARGV[0] == 'docker-run'
       d.build_dir  = 'docker/php'
       d.build_args = ['--tag', 'pmt-php']
       d.link('pmt.mysql:mysql')
