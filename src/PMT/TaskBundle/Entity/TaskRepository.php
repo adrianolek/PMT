@@ -96,6 +96,18 @@ class TaskRepository extends SortableRepository
 
     public function updateProgress(Task $task)
     {
+        $full = array(
+            'complete',
+            'merge',
+            'merged',
+            'done');
+
+        if (in_array($task->getStatus(), $full)) {
+            $task->setProgress(100);
+        } elseif ($task->getProgress() == 100) {
+            $task->setProgress(0);
+        }
+
         if ($task->getProgress() < 89) {
             $con = $this->getEntityManager()->getConnection();
             $stmt = $con->prepare('SELECT SUM(TIMESTAMPDIFF(SECOND, started_at, ended_at)) AS sum FROM pmt_tracks WHERE deleted_at IS NULL AND task_id = :task_id');
@@ -107,10 +119,10 @@ class TaskRepository extends SortableRepository
             } else {
                 $task->setProgress(0);
             }
-
-            $this->getEntityManager()->persist($task);
-            $this->getEntityManager()->flush($task);
         }
+
+        $this->getEntityManager()->persist($task);
+        $this->getEntityManager()->flush($task);
     }
 
     public function getInProgress()

@@ -188,6 +188,8 @@ class TaskController extends Controller
         $em->persist($task);
         $em->flush();
 
+        $em->getRepository('PMTTaskBundle:Task')->updateProgress($task);
+
         $this->get('pmt.notification')->notify('task_status', $task, $previous);
 
         return $this->render(
