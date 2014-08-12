@@ -776,12 +776,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "723529ffff4880ab97499d03b23f90911db2e0b3"
+                "reference": "6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/723529ffff4880ab97499d03b23f90911db2e0b3",
-                "reference": "723529ffff4880ab97499d03b23f90911db2e0b3",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022",
+                "reference": "6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022",
                 "shasum": ""
             },
             "require": {
@@ -842,7 +842,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-08-04 14:17:11"
+            "time": "2014-08-12 08:16:17"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -3185,6 +3185,7 @@
         "doctrine/doctrine-fixtures-bundle": 20,
         "liip/functional-test-bundle": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3"
     },
