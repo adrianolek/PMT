@@ -18,7 +18,7 @@ framework:
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:
-        save_path: %kernel.root_dir%/cache/sessions
+        handler_id: ~
         name: pmt
     fragments:       ~
     http_method_override: true

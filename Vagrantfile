@@ -9,11 +9,11 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.define 'data' do |machine|
+  config.vm.define 'mysqldata' do |machine|
     machine.vm.provider 'docker' do |d|
-      d.name = 'pmt.data'
-      d.build_dir  = 'docker/data'
-      d.build_args = ['--tag', 'pmt-data']
+      d.name = 'pmt.mysqldata'
+      d.image  = 'pmt-base'
+      d.create_args = ['-v', '/var/lib/mysql']
       d.remains_running = false
     end
   end
@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
       d.name = 'pmt.mysql'
       d.build_dir  = 'docker/mysql'
       d.build_args = ['--tag', 'pmt-mysql']
-      d.create_args = ['--volumes-from', 'pmt.data']
+      d.create_args = ['--volumes-from', 'pmt.mysqldata']
       d.volumes = %W(#{pwd}/docker/mysql/init.sql:/init.sql:/init.sql
                    #{pwd}/docker/mysql/my.cnf:/etc/mysql/my.cnf:/etc/mysql/my.cnf)
     end
