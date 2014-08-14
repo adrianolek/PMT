@@ -18,6 +18,15 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define 'uploads' do |machine|
+    machine.vm.provider 'docker' do |d|
+      d.name = 'pmt.uploads'
+      d.image  = 'pmt-base'
+      d.create_args = ['-v', '/srv/data/']
+      d.remains_running = false
+    end
+  end
+
   config.vm.define 'mysql' do |machine|
     machine.vm.provider 'docker' do |d|
       d.name = 'pmt.mysql'
@@ -32,11 +41,13 @@ Vagrant.configure(2) do |config|
   config.vm.define 'php' do |machine|
     machine.vm.provider 'docker' do |d|
       d.name = 'pmt.php' if ARGV[0] != 'docker-run'
-      d.create_args = ['--rm', '--workdir=/var/www'] if ARGV[0] == 'docker-run'
+      d.create_args = ['--volumes-from', 'pmt.uploads']
+      d.create_args += ['--rm', '--workdir=/var/www'] if ARGV[0] == 'docker-run'
       d.build_dir  = 'docker/php'
       d.build_args = ['--tag', 'pmt-php']
       d.link('pmt.mysql:mysql')
       d.volumes = %W(#{pwd}:/var/www
+                  #{pwd}/docker/php/entrypoint.sh:/entrypoint.sh
                   #{pwd}/docker/php/php.ini:/etc/php5/fpm/php.ini
                   #{pwd}/docker/php/www.conf:/etc/php5/fpm/pool.d/www.conf)
     end
@@ -48,6 +59,7 @@ Vagrant.configure(2) do |config|
       d.build_dir  = 'docker/nginx'
       d.build_args = ['--tag', 'pmt-nginx']
       d.link('pmt.php:php')
+      d.create_args = ['--volumes-from', 'pmt.uploads']
       d.volumes = %W(#{pwd}:/var/www
                    #{pwd}/docker/nginx/vhost.conf:/etc/nginx/sites-enabled/default
                    #{pwd}/docker/nginx/nginx.conf:/etc/nginx/nginx.conf)
