@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     machine.vm.provider 'docker' do |d|
       d.name = 'pmt.uploads'
       d.image  = 'pmt-base'
-      d.create_args = ['-v', '/srv/data/']
+      d.create_args = ['-v', '/srv/uploads']
       d.remains_running = false
     end
   end
@@ -61,6 +61,7 @@ Vagrant.configure(2) do |config|
       d.link('pmt.php:php')
       d.create_args = ['--volumes-from', 'pmt.uploads']
       d.volumes = %W(#{pwd}:/var/www
+                   #{pwd}/docker/nginx/entrypoint.sh:/entrypoint.sh
                    #{pwd}/docker/nginx/vhost.conf:/etc/nginx/sites-enabled/default
                    #{pwd}/docker/nginx/nginx.conf:/etc/nginx/nginx.conf)
       d.ports = ['80:80']
