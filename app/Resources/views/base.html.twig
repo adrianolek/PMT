@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="robots" content="noindex, nofollow">
         {% block stylesheets %}
-            {% stylesheets
+            {% stylesheets filter='uglifycss' filter='cssrewrite'
             '../app/Resources/public/css/bootstrap.css'
             '../app/Resources/public/js/bootstrap-select/bootstrap-select.css'
             '../app/Resources/public/js/bootstrap-datepicker/datepicker.css'
@@ -58,19 +58,19 @@
         </div>
         
         {% block javascripts %}
-            {% javascripts
+            {% javascripts filter='uglifyjs2'
             '../app/Resources/public/js/jquery-2.0.3.js'
             '../app/Resources/public/js/bootstrap.js'
             '../app/Resources/public/js/respond.src.js'
             '../app/Resources/public/js/bootstrap-select/bootstrap-select.js'
             '../app/Resources/public/js/bootstrap-datepicker/bootstrap-datepicker.js'
-            '../app/Resources/public/js/jquery.ui.core.js'
-            '../app/Resources/public/js/jquery.ui.widget.js'
-            '../app/Resources/public/js/jquery.ui.mouse.js'
-            '../app/Resources/public/js/jquery.ui.sortable.js'
-            '../app/Resources/public/js/jquery.ui.effect.js'
+            '../app/Resources/public/js/ui/jquery.ui.core.js'
+            '../app/Resources/public/js/ui/jquery.ui.widget.js'
+            '../app/Resources/public/js/ui/jquery.ui.mouse.js'
+            '../app/Resources/public/js/ui/jquery.ui.sortable.js'
+            '../app/Resources/public/js/ui/jquery.ui.effect.js'
             '../app/Resources/public/js/select2/select2.js'
-            %}
+             %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
             <script type="text/javascript">
