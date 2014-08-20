@@ -8,12 +8,12 @@
         <meta name="robots" content="noindex, nofollow">
         {% block stylesheets %}
             {% stylesheets filter='uglifycss' filter='cssrewrite'
-            '../app/Resources/public/css/bootstrap.css'
-            '../app/Resources/public/js/bootstrap-select/bootstrap-select.css'
-            '../app/Resources/public/js/bootstrap-datepicker/datepicker.css'
-            '../app/Resources/public/js/select2/select2.css'
-            '../app/Resources/public/js/select2/select2-bootstrap.css'
-            '../app/Resources/public/css/pmt.css'
+            'assets/css/bootstrap.css'
+            'assets/js/bootstrap-select/bootstrap-select.css'
+            'assets/js/bootstrap-datepicker/datepicker.css'
+            'assets/js/select2/select2.css'
+            'assets/js/select2/select2-bootstrap.css'
+            'assets/css/pmt.css'
             %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
             {% endstylesheets %}
@@ -59,17 +59,17 @@
         
         {% block javascripts %}
             {% javascripts filter='uglifyjs2'
-            '../app/Resources/public/js/jquery-2.0.3.js'
-            '../app/Resources/public/js/bootstrap.js'
-            '../app/Resources/public/js/respond.src.js'
-            '../app/Resources/public/js/bootstrap-select/bootstrap-select.js'
-            '../app/Resources/public/js/bootstrap-datepicker/bootstrap-datepicker.js'
-            '../app/Resources/public/js/ui/jquery.ui.core.js'
-            '../app/Resources/public/js/ui/jquery.ui.widget.js'
-            '../app/Resources/public/js/ui/jquery.ui.mouse.js'
-            '../app/Resources/public/js/ui/jquery.ui.sortable.js'
-            '../app/Resources/public/js/ui/jquery.ui.effect.js'
-            '../app/Resources/public/js/select2/select2.js'
+            'assets/js/jquery-2.0.3.js'
+            'assets/js/bootstrap.js'
+            'assets/js/respond.src.js'
+            'assets/js/bootstrap-select/bootstrap-select.js'
+            'assets/js/bootstrap-datepicker/bootstrap-datepicker.js'
+            'assets/js/ui/jquery.ui.core.js'
+            'assets/js/ui/jquery.ui.widget.js'
+            'assets/js/ui/jquery.ui.mouse.js'
+            'assets/js/ui/jquery.ui.sortable.js'
+            'assets/js/ui/jquery.ui.effect.js'
+            'assets/js/select2/select2.js'
             %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}

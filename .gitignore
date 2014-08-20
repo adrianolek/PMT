@@ -9,6 +9,8 @@
 /composer.phar
 /web/uploads
 /.vagrant
+/web/css
+/web/js
 
 .buildpath
 .settings
