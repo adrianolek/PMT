@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5dc5811d1781db81846f74272dd6334d",
+    "hash": "366e893ae54b6b57c07830211bd38664",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "6d0b0486bd6284d0886fef22fea164f7349990fb"
+                "reference": "fce77af2c3c6f8446b868c729cd15257c2c9bd81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/6d0b0486bd6284d0886fef22fea164f7349990fb",
-                "reference": "6d0b0486bd6284d0886fef22fea164f7349990fb",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fce77af2c3c6f8446b868c729cd15257c2c9bd81",
+                "reference": "fce77af2c3c6f8446b868c729cd15257c2c9bd81",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-08-05 18:04:50"
+            "time": "2014-08-21 17:53:42"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -376,12 +376,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "b20a34c360431b961a4bff58edcd9ebdd9317d84"
+                "reference": "a57fe0f38379a1a971a0fc95c962fff95ae5d399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/b20a34c360431b961a4bff58edcd9ebdd9317d84",
-                "reference": "b20a34c360431b961a4bff58edcd9ebdd9317d84",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/a57fe0f38379a1a971a0fc95c962fff95ae5d399",
+                "reference": "a57fe0f38379a1a971a0fc95c962fff95ae5d399",
                 "shasum": ""
             },
             "require": {
@@ -447,7 +447,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2014-08-09 07:27:40"
+            "time": "2014-08-18 19:16:57"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -540,12 +540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
-                "reference": "f7138381aa884c0f679da4de41e369b94ead9cd3"
+                "reference": "81575a4316951125ce408c70f30547c77d98f78a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/f7138381aa884c0f679da4de41e369b94ead9cd3",
-                "reference": "f7138381aa884c0f679da4de41e369b94ead9cd3",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/81575a4316951125ce408c70f30547c77d98f78a",
+                "reference": "81575a4316951125ce408c70f30547c77d98f78a",
                 "shasum": ""
             },
             "require": {
@@ -571,18 +571,16 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
                 },
                 {
                     "name": "Doctrine Project",
                     "homepage": "http://www.doctrine-project.org"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DoctrineMigrationsBundle",
@@ -592,7 +590,7 @@
                 "migrations",
                 "schema"
             ],
-            "time": "2014-03-20 14:48:55"
+            "time": "2014-08-17 07:53:47"
         },
         {
             "name": "doctrine/inflector",
@@ -716,12 +714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "4256449c5e2603a6b6ee5a78c7c4521d4d4430b8"
+                "reference": "1a9dffa64e33fdc10f4b4c3f5d7230b74d4a1021"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/4256449c5e2603a6b6ee5a78c7c4521d4d4430b8",
-                "reference": "4256449c5e2603a6b6ee5a78c7c4521d4d4430b8",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/1a9dffa64e33fdc10f4b4c3f5d7230b74d4a1021",
+                "reference": "1a9dffa64e33fdc10f4b4c3f5d7230b74d4a1021",
                 "shasum": ""
             },
             "require": {
@@ -752,14 +750,12 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/",
-                    "role": "Creator"
-                },
-                {
                     "name": "Benjamin Eberlei",
                     "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
                 }
             ],
             "description": "Database Schema migrations using Doctrine DBAL",
@@ -768,7 +764,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2014-07-09 07:58:02"
+            "time": "2014-08-18 18:03:07"
         },
         {
             "name": "doctrine/orm",
@@ -776,12 +772,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022"
+                "reference": "400acad53355f24137e18d5cd55ccf6ff828cfbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022",
-                "reference": "6ac19b04bfbd7a97aad5ed8c2abd6279ff5e0022",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/400acad53355f24137e18d5cd55ccf6ff828cfbe",
+                "reference": "400acad53355f24137e18d5cd55ccf6ff828cfbe",
                 "shasum": ""
             },
             "require": {
@@ -842,7 +838,61 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-08-12 08:16:17"
+            "time": "2014-08-21 20:33:44"
+        },
+        {
+            "name": "elao/error-notifier-bundle",
+            "version": "dev-master",
+            "target-dir": "Elao/ErrorNotifierBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Elao/ErrorNotifierBundle.git",
+                "reference": "059a1a470476b4fe9f8b149f0fcc27081ae19b26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Elao/ErrorNotifierBundle/zipball/059a1a470476b4fe9f8b149f0fcc27081ae19b26",
+                "reference": "059a1a470476b4fe9f8b149f0fcc27081ae19b26",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Elao\\ErrorNotifierBundle": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Elao Team",
+                    "homepage": "http://www.elao.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "http://github.com/Elao/ErrorNotifierBundle/contributors"
+                }
+            ],
+            "description": "This bundle send html mail when an error appear",
+            "homepage": "http://github.com/Elao/ErrorNotifierBundle",
+            "keywords": [
+                "bundle",
+                "elao",
+                "error",
+                "notifier"
+            ],
+            "time": "2014-02-25 13:32:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -2412,12 +2462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "ccd69d9ec90013955a412a21125672afc09738dc"
+                "reference": "3ffa2184c94d94477d5bb625b94597ed0d44ebe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/ccd69d9ec90013955a412a21125672afc09738dc",
-                "reference": "ccd69d9ec90013955a412a21125672afc09738dc",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/3ffa2184c94d94477d5bb625b94597ed0d44ebe0",
+                "reference": "3ffa2184c94d94477d5bb625b94597ed0d44ebe0",
                 "shasum": ""
             },
             "require": {
@@ -2443,18 +2493,16 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
                 },
                 {
                     "name": "Doctrine Project",
                     "homepage": "http://www.doctrine-project.org"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DoctrineFixturesBundle",
@@ -2463,7 +2511,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2014-03-05 01:11:31"
+            "time": "2014-08-20 20:34:54"
         },
         {
             "name": "liip/functional-test-bundle",
@@ -2472,12 +2520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "e665bb4fca6ca449e225db569db671348a2579e4"
+                "reference": "2574c9d319067b122ec783e5be9408e306b62673"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/e665bb4fca6ca449e225db569db671348a2579e4",
-                "reference": "e665bb4fca6ca449e225db569db671348a2579e4",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/2574c9d319067b122ec783e5be9408e306b62673",
+                "reference": "2574c9d319067b122ec783e5be9408e306b62673",
                 "shasum": ""
             },
             "require": {
@@ -2520,7 +2568,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2014-06-27 14:00:35"
+            "time": "2014-08-13 18:37:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3181,6 +3229,7 @@
         "liip/url-auto-converter-bundle": 20,
         "whiteoctober/breadcrumbs-bundle": 20,
         "icanboogie/inflector": 20,
+        "elao/error-notifier-bundle": 20,
         "phpunit/phpunit-skeleton-generator": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "liip/functional-test-bundle": 20

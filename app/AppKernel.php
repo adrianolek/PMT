@@ -38,6 +38,7 @@ class AppKernel extends Kernel
             new Liip\UrlAutoConverterBundle\LiipUrlAutoConverterBundle(),
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new PMT\ApiBundle\PMTApiBundle(),
+            new Elao\ErrorNotifierBundle\ElaoErrorNotifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

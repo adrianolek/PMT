@@ -20,3 +20,6 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+    
+    error_from: error@example.com
+    error_to: notify@example.com

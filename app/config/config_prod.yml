@@ -21,3 +21,11 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+elao_error_notifier:
+    from: %error_from%
+    to: %error_to%
+    handle404: true
+    handlePHPErrors: true
+    handlePHPWarnings: true
+    repeatTimeout: 3600

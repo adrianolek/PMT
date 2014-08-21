@@ -32,7 +32,8 @@
         "knplabs/knp-time-bundle": "dev-master",
         "liip/url-auto-converter-bundle": "dev-master",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
-        "icanboogie/inflector": "dev-master"
+        "icanboogie/inflector": "dev-master",
+        "elao/error-notifier-bundle" : "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.19",
