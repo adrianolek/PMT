@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "fce77af2c3c6f8446b868c729cd15257c2c9bd81"
+                "reference": "14f730fb2e02df2c1daf8df09057b6771d5c226a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fce77af2c3c6f8446b868c729cd15257c2c9bd81",
-                "reference": "fce77af2c3c6f8446b868c729cd15257c2c9bd81",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/14f730fb2e02df2c1daf8df09057b6771d5c226a",
+                "reference": "14f730fb2e02df2c1daf8df09057b6771d5c226a",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-08-21 17:53:42"
+            "time": "2014-08-22 07:42:27"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -772,12 +772,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "400acad53355f24137e18d5cd55ccf6ff828cfbe"
+                "reference": "65f8357b46cf247405ca4bb5bf348e0ffc67854b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/400acad53355f24137e18d5cd55ccf6ff828cfbe",
-                "reference": "400acad53355f24137e18d5cd55ccf6ff828cfbe",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/65f8357b46cf247405ca4bb5bf348e0ffc67854b",
+                "reference": "65f8357b46cf247405ca4bb5bf348e0ffc67854b",
                 "shasum": ""
             },
             "require": {
@@ -838,7 +838,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-08-21 20:33:44"
+            "time": "2014-08-22 12:00:20"
         },
         {
             "name": "elao/error-notifier-bundle",
@@ -2442,7 +2442,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -3159,7 +3159,8 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
+                    "email": "aharvey@php.net",
+                    "role": "Lead"
                 },
                 {
                     "name": "Bernhard Schussek",
