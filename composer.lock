@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "14f730fb2e02df2c1daf8df09057b6771d5c226a"
+                "reference": "1c9c24a7e2295b71249ae2a719ce38861fccd551"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/14f730fb2e02df2c1daf8df09057b6771d5c226a",
-                "reference": "14f730fb2e02df2c1daf8df09057b6771d5c226a",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1c9c24a7e2295b71249ae2a719ce38861fccd551",
+                "reference": "1c9c24a7e2295b71249ae2a719ce38861fccd551",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-08-22 07:42:27"
+            "time": "2014-08-24 01:25:05"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -1423,12 +1423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipUrlAutoConverterBundle.git",
-                "reference": "0b86c255fb5e4f08d24f108f2c06110018d061db"
+                "reference": "36670f7a339d388be0d232e3c9d46c851b8481da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/0b86c255fb5e4f08d24f108f2c06110018d061db",
-                "reference": "0b86c255fb5e4f08d24f108f2c06110018d061db",
+                "url": "https://api.github.com/repos/liip/LiipUrlAutoConverterBundle/zipball/36670f7a339d388be0d232e3c9d46c851b8481da",
+                "reference": "36670f7a339d388be0d232e3c9d46c851b8481da",
                 "shasum": ""
             },
             "require": {
@@ -1466,7 +1466,7 @@
             "keywords": [
                 "url"
             ],
-            "time": "2014-07-30 07:37:14"
+            "time": "2014-08-25 06:13:57"
         },
         {
             "name": "monolog/monolog",
