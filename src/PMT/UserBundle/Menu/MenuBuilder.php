@@ -28,7 +28,10 @@ class MenuBuilder
     if ($this->securityContext->isGranted('ROLE_USER')) {
         $menu->addChild('Projects', array('route' => 'projects'));
         $menu->addChild('People', array('route' => 'people'));
-        $menu->addChild('Time Tracking', array('route' => 'tracking'));
+        $menu->addChild('Time Tracking', array(
+            'route' => 'user_tracking',
+            'routeParameters' => array('id' => $this->securityContext->getToken()->getUser()->getId()),
+        ));
     }
 
     return $menu;
