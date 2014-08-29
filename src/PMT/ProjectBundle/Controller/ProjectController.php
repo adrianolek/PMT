@@ -18,6 +18,9 @@ class ProjectController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        
         $em = $this->getDoctrine()->getManager();
         $projects = $em->getRepository('PMTProjectBundle:Project')->findFor(
             $this->get('security.context')->isGranted('ROLE_MANAGER'),
@@ -36,6 +39,10 @@ class ProjectController extends Controller
      */
     public function newAction(Request $request)
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        $breadcrumbs->addItem('New', $request->getUri());
+        
         $project = new Project();
         $form = $this->createForm(new ProjectType(), $project);
 
@@ -66,6 +73,10 @@ class ProjectController extends Controller
      */
     public function editAction(Request $request, Project $project)
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        $breadcrumbs->addItem('Edit', $request->getUri());
+        
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new ProjectType(), $project, array('user_repository' => $em->getRepository('PMTUserBundle:User')));
