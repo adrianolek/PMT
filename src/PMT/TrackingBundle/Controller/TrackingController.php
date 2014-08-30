@@ -35,6 +35,7 @@ class TrackingController extends Controller
         }
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
         $breadcrumbs->addItem($user->getFullName());
         $breadcrumbs->addItem('Time Tracking', $request->getUri());
 
@@ -63,6 +64,7 @@ class TrackingController extends Controller
         $track->setUser($user);
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
         $breadcrumbs->addItem($user->getFullName());
         $breadcrumbs->addItem('Time Tracking', $this->generateUrl('user_tracking', array('id' => $user->getId())));
         $breadcrumbs->addItem('New', $request->getUri());
@@ -101,6 +103,7 @@ class TrackingController extends Controller
     {
         $user = $track->getUser();
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
         $breadcrumbs->addItem($user->getFullName());
         $breadcrumbs->addItem('Time Tracking', $this->generateUrl('user_tracking', array('id' => $user->getId())));
         $breadcrumbs->addItem('Edit', $request->getUri());

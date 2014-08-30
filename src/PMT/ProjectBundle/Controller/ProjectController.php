@@ -75,6 +75,7 @@ class ProjectController extends Controller
     {
         $breadcrumbs = $this->get('white_october_breadcrumbs');
         $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        $breadcrumbs->addItem($project->getName());
         $breadcrumbs->addItem('Edit', $request->getUri());
         
         $em = $this->getDoctrine()->getManager();

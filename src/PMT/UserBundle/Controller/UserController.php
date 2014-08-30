@@ -29,6 +29,9 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
+        
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('PMTUserBundle:User')->findAll();
         $organizations = $em->getRepository('PMTUserBundle:Organization')->findAll();
@@ -48,6 +51,10 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
+        $breadcrumbs->addItem('New', $request->getUri());
+        
         $user = new User();
         $form = $this->createForm(new UserType(), $user, array(
             'validation_groups' => array('Default', 'New'),
@@ -86,6 +93,11 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+        $breadcrumbs->addItem('People', $this->generateUrl('people'));
+        $breadcrumbs->addItem($user->getFullName());
+        $breadcrumbs->addItem('Edit', $request->getUri());
+        
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new UserType(), $user, array(
