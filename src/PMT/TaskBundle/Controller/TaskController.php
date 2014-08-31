@@ -29,7 +29,7 @@ class TaskController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem('Projects', $this->get("router")->generate('projects'));
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
         $breadcrumbs->addItem($project->getName());
         $breadcrumbs->addItem('Tasks', $request->getUri());
 
@@ -66,6 +66,12 @@ class TaskController extends Controller
      */
     public function newAction(Request $request, Project $project)
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        $breadcrumbs->addItem($project->getName());
+        $breadcrumbs->addItem('Tasks', $this->generateUrl('project_tasks', array('project_id' => $project->getId())));
+        $breadcrumbs->addItem('New', $request->getUri());
+        
         $em = $this->getDoctrine()->getManager();
 
         $task = new Task();
@@ -108,6 +114,16 @@ class TaskController extends Controller
      */
     public function editAction(Request $request, Task $task)
     {
+        $project = $task->getProject();
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
+        $breadcrumbs->addItem($project->getName());
+        $breadcrumbs->addItem('Tasks', $this->generateUrl('project_tasks', array('project_id' => $project->getId())));
+        $breadcrumbs->addItem('#'.$task->getId(), $this->generateUrl('project_task', array(
+            'project_id' => $project->getId(),
+            'id' => $task->getId())));
+        $breadcrumbs->addItem('Edit', $request->getUri());
+        
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new TaskType(), $task, array('user_repository' => $em->getRepository('PMTUserBundle:User')));
@@ -165,9 +181,9 @@ class TaskController extends Controller
         }
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem('Projects', $this->get("router")->generate('projects'));
+        $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
         $breadcrumbs->addItem($project->getName());
-        $breadcrumbs->addItem('Tasks', $this->get("router")->generate('project_tasks', array('project_id' => $project->getId())));
+        $breadcrumbs->addItem('Tasks', $this->generateUrl('project_tasks', array('project_id' => $project->getId())));
         $breadcrumbs->addItem('#'.$task->getId(), $request->getUri());
 
         return $this->render('PMTTaskBundle:Task:show.html.twig', array(
