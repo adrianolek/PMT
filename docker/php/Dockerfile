@@ -1,8 +1,6 @@
 FROM pmt-base
 
-RUN apt-get install -y php5-fpm php5-cli php5-mysqlnd php5-intl mysql-client npm
-RUN npm install -g uglify-js uglifycss
-RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN apt-get install -y php5-fpm php5-cli php5-mysqlnd php5-intl mysql-client
 
 EXPOSE 9000
 
