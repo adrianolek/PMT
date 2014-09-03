@@ -112,15 +112,10 @@ class DefaultController extends Controller
 
     /**
      * @Route("/task/{id}/estimate.json")
+     * @Security("has_role('ROLE_MANAGER') or task.getProject().getAssignedUsers().contains(user)")
      */
     public function estimateAction(Request $request, Task $task)
     {
-        if (!$this->get('security.context')->isGranted(new Expression(
-            'has_role("ROLE_MANAGER") or object.getAssignedUsers().contains(user)'
-        ), $task->getProject())) {
-            throw new AccessDeniedException();
-        }
-
         $em = $this->getDoctrine()->getManager();
 
         $task->setEstimatedTimeHours($request->get('time'));
