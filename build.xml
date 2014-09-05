@@ -40,6 +40,7 @@
       <arg value="install"/>
       <arg value="--optimize-autoloader"/>
       <arg value="--no-dev" />
+      <arg value="--no-scripts" />
     </exec>
   </target>
 
