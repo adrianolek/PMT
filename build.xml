@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="PMT" default="prod">
   <target name="prod">
-    <antcall target="cache"/>
     <antcall target="composer"/>
-    <antcall target="assets"/>
     <antcall target="assetic"/>
     <antcall target="cache"/>
     <antcall target="logs"/>
@@ -40,7 +38,6 @@
       <arg value="install"/>
       <arg value="--optimize-autoloader"/>
       <arg value="--no-dev" />
-      <arg value="--no-scripts" />
     </exec>
   </target>
 
