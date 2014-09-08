@@ -33,7 +33,7 @@
   </target>
   
   <target name="composer" description="Install composer">
-    <exec executable="${basedir}/composer.phar" failonerror="true">
+    <exec executable="composer" failonerror="true">
       <env key="SYMFONY_ENV" value="prod"/>
       <arg value="install"/>
       <arg value="--optimize-autoloader"/>
@@ -42,14 +42,14 @@
   </target>
 
   <target name="assets" description="Install assets">
-    <exec executable="${basedir}/app/console">
+    <exec executable="${basedir}/app/console" failonerror="true">
       <arg value="assets:install" />
       <arg value="--env=prod" />
     </exec>
   </target>
   
   <target name="assetic" description="Dump assets">
-    <exec executable="${basedir}/app/console">
+    <exec executable="${basedir}/app/console" failonerror="true">
       <arg value="assetic:dump" />
       <arg value="--env=prod" />
     </exec>
