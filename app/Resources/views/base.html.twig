@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="robots" content="noindex, nofollow">
         {% block stylesheets %}
-            {% stylesheets filter='uglifycss' filter='cssrewrite'
+            {% stylesheets filter='?uglifycss,?cssrewrite'
             'assets/css/bootstrap.css'
             'assets/js/bootstrap-select/bootstrap-select.css'
             'assets/js/bootstrap-datepicker/datepicker.css'
@@ -58,7 +58,7 @@
         </div>
         
         {% block javascripts %}
-            {% javascripts filter='uglifyjs2'
+            {% javascripts filter='?uglifyjs2'
             'assets/js/jquery-2.0.3.js'
             'assets/js/bootstrap.js'
             'assets/js/respond.src.js'
