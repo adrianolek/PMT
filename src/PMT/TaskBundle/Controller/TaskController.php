@@ -31,7 +31,7 @@ class TaskController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
         $breadcrumbs->addItem($project->getName());
-        $breadcrumbs->addItem('Tasks', $request->getUri());
+        $breadcrumbs->addItem('Tasks', $this->generateUrl('project_tasks', array('project_id' => $project->getId())));
 
         $filter = $this->createForm(new TaskFilterType());
 
