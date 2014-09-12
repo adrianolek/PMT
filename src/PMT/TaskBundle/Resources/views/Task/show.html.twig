@@ -35,7 +35,7 @@
     {{ render(controller('PMTCommentBundle:Comment:new', { 'task_id': task.id })) }}
 
     {% for comment in task.comments %}
-      <div class="panel panel-default">
+      <div class="panel panel-default" id="comment-{{ comment.id }}">
           <div class="panel-body">
               <div class="media">
                   <img src="{{ gravatar(comment.user.email) }}" class="img-circle pull-left media-object"/>
