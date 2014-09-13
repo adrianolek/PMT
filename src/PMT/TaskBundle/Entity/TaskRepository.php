@@ -3,6 +3,7 @@
 namespace PMT\TaskBundle\Entity;
 
 use Gedmo\Sortable\Entity\Repository\SortableRepository;
+use PMT\ProjectBundle\Entity\Project;
 
 /**
  * TaskRepository
@@ -125,14 +126,14 @@ class TaskRepository extends SortableRepository
         $this->getEntityManager()->flush($task);
     }
 
-    public function getInProgress()
+    public function getInProgress(Project $project)
     {
         $in_progress = array();
 
         $con = $this->getEntityManager()->getConnection();
-        $stmt = $con->prepare('SELECT task_id, user_id FROM pmt_tracks WHERE updated_at >= ? ORDER BY updated_at DESC');
+        $stmt = $con->prepare('SELECT tr.task_id, tr.user_id FROM pmt_tracks tr JOIN pmt_tasks t ON tr.task_id=t.id WHERE t.project_id=? AND tr.updated_at >= ? ORDER BY tr.updated_at DESC');
         $ago = new \DateTime('-1 minute', new \DateTimeZone('UTC'));
-        $stmt->execute(array($ago->format('Y-m-d H:i:s')));
+        $stmt->execute(array($project->getId(), $ago->format('Y-m-d H:i:s')));
 
         $users = array();
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {

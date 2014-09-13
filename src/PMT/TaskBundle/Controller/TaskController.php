@@ -47,7 +47,7 @@ class TaskController extends Controller
         }
 
         list($tasks, $durations) = $em->getRepository('PMTTaskBundle:Task')->filter($filter->getData(), $project->getId(), $this->getUser()->getId());
-        $in_progress = $em->getRepository('PMTTaskBundle:Task')->getInProgress();
+        $in_progress = $em->getRepository('PMTTaskBundle:Task')->getInProgress($project);
 
         return $this->render('PMTTaskBundle:Task:index.html.twig', array(
             'project' => $project,
