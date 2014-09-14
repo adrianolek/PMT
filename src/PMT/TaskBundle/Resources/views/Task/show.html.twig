@@ -34,19 +34,11 @@
 
     {{ render(controller('PMTCommentBundle:Comment:new', { 'task_id': task.id })) }}
 
-    {% for comment in task.comments %}
-      <div class="panel panel-default" id="comment-{{ comment.id }}">
-          <div class="panel-body">
-              <div class="media">
-                  <img src="{{ gravatar(comment.user.email) }}" class="img-circle pull-left media-object"/>
-                  <div class="media-body">
-                      {{ comment.content|nl2br|converturls }}
-                  </div>
-              </div>
-          </div>
-          <div class="panel-footer">{{ comment.user }} {{ time_diff(comment.createdAt) }} ({{ comment.createdAt|date }})</div>
-      </div>
-    {% endfor %}
+    <div id="comments-list">
+        {% for comment in task.comments %}
+          {{ include('PMTCommentBundle:Comment:show.html.twig', {'comment': comment}) }}
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}

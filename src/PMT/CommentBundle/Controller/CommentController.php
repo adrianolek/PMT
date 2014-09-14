@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PMT\CommentBundle\Entity\Comment;
 use PMT\CommentBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {
@@ -24,26 +25,37 @@ class CommentController extends Controller
 
         $form = $this->createForm(new CommentType(), $comment);
 
+
         if ($request->isMethod('post')) {
-          $form->submit($request);
-          if ($form->isValid()) {
-            $em->persist($comment);
-            $em->flush();
+            $form->submit($request);
 
-            $this->get('session')->getFlashBag()->add('success', 'Comment has been created.');
-            $this->get('pmt.notification')->notify('new_comment', $comment);
+            if ($form->isValid()) {
+                $em->persist($comment);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('project_task',
-                array('project_id' => $comment->getTask()->getProject()->getId(),
-                'id' => $task_id,
-            )));
-          }
+                $this->get('pmt.notification')->notify('new_comment', $comment);
+
+                return $this->render(
+                    'PMTCommentBundle:Comment:show.html.twig',
+                    array('comment' => $comment)
+                );
+            }
         }
 
-        return array(
-            'form' => $form->createView(),
-            'task_id' => $task_id,
+        $response = $this->render(
+            'PMTCommentBundle:Comment:form.html.twig',
+            array(
+                'form' => $form->createView(),
+                'task_id' => $task_id,
+            )
         );
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $response;
+
     }
 
 }
