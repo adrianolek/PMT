@@ -35,10 +35,12 @@ class CommentController extends Controller
 
                 $this->get('pmt.notification')->notify('new_comment', $comment);
 
-                return $this->render(
+                $response = $this->render(
                     'PMTCommentBundle:Comment:show.html.twig',
                     array('comment' => $comment)
                 );
+                $response->setStatusCode(Response::HTTP_CREATED);
+                return $response;
             }
         }
 

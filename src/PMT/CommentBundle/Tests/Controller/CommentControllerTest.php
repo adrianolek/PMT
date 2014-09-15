@@ -4,6 +4,7 @@ namespace PMT\CommentBundle\Tests\Controller;
 
 use Doctrine\ORM\EntityManager;
 use PMT\TestBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class CommentControllerTest extends WebTestCase
 {
@@ -27,7 +28,7 @@ class CommentControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/task/' . $task->getId() . '/comment/new');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Create')->form();
 
@@ -35,12 +36,12 @@ class CommentControllerTest extends WebTestCase
             'comment[content]' => '',
         ));
 
-        $this->assertFalse($client->getResponse()->isRedirection());
+        $this->assertEquals(Response::HTTP_UNPROCESSABLE_ENTITY, $client->getResponse()->getStatusCode());
 
         $client->submit($form, array(
             'comment[content]' => 'Foo Bar',
         ));
 
-        $this->assertTrue($client->getResponse()->isRedirect('/project/' . $task->getProject()->getId() . '/task/' . $task->getId()));
+        $this->assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
     }
 }
