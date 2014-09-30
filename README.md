@@ -12,15 +12,4 @@ A simple Project Management Tool providing following features:
 * Comments
 * File uploads
 * Time tracking
-
-Requirements
-------------
-
-* PHP 5.3
-* MySQL
-
-Installation
-------------
-
-Usage
------
+* API
