@@ -71,7 +71,7 @@ class TaskController extends Controller
         $breadcrumbs->addItem($project->getName());
         $breadcrumbs->addItem('Tasks', $this->generateUrl('project_tasks', array('project_id' => $project->getId())));
         $breadcrumbs->addItem('New', $request->getUri());
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $task = new Task();
@@ -123,7 +123,7 @@ class TaskController extends Controller
             'project_id' => $project->getId(),
             'id' => $task->getId())));
         $breadcrumbs->addItem('Edit', $request->getUri());
-        
+
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new TaskType(), $task, array('user_repository' => $em->getRepository('PMTUserBundle:User')));

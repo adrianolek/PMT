@@ -60,7 +60,7 @@ class TrackingController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $track = new Track();
-        
+
         $track->setUser($user);
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");

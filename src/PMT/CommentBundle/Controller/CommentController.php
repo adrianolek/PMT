@@ -25,7 +25,6 @@ class CommentController extends Controller
 
         $form = $this->createForm(new CommentType(), $comment);
 
-
         if ($request->isMethod('post')) {
             $form->submit($request);
 
@@ -40,6 +39,7 @@ class CommentController extends Controller
                     array('comment' => $comment)
                 );
                 $response->setStatusCode(Response::HTTP_CREATED);
+
                 return $response;
             }
         }

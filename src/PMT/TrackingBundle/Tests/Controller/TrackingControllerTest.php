@@ -69,7 +69,7 @@ class TrackingControllerTest extends WebTestCase
         /** @var $em EntityManager */
         $user = $em->getRepository('PMTUserBundle:User')->findOneBy(array('email' => 'manager@pmt.test'));
         $trackingPath = '/user/' . $user->getId() . '/tracking';
-        
+
         $client = static::createAuthClient();
         $crawler = $client->request('GET', $trackingPath.'?date_start=2014-01-01&date_end=2014-01-31');
         $link = $crawler->selectLink('Edit')->link();
@@ -95,7 +95,7 @@ class TrackingControllerTest extends WebTestCase
         /** @var $em EntityManager */
         $user = $em->getRepository('PMTUserBundle:User')->findOneBy(array('email' => 'manager@pmt.test'));
         $trackingPath = '/user/' . $user->getId() . '/tracking';
-        
+
         $client = static::createAuthClient();
         $crawler = $client->request('GET', $trackingPath.'?date_start=2014-01-01&date_end=2014-01-31');
         $link = $crawler->selectLink('Delete')->link();
