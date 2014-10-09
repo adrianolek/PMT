@@ -143,6 +143,8 @@ docker_stop() {
     if is_running ${NAME}; then
       docker stop ${PREFIX}.${NAME}
       docker rm ${PREFIX}.${NAME}
+    elif is_present ${NAME}; then
+      docker rm ${PREFIX}.${NAME}
     else
       echo "stop: ${PREFIX}.${NAME} isn't running"
     fi
