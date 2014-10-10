@@ -13,3 +13,17 @@ A simple Project Management Tool providing following features:
 * File uploads
 * Time tracking
 * API
+
+Quick start
+-----------
+
+The fastest way to get the application running is to use [Docker](https://www.docker.io).
+After installing Docker you should run
+
+    ./docker/docker.sh build
+
+which will build docker images, and then
+
+    ./docker/docker.sh start
+
+which will start the application.
