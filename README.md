@@ -27,3 +27,10 @@ which will build docker images, and then
     ./docker/docker.sh start
 
 which will start the application.
+
+Running tests
+-------------
+
+To run the test suite via Docker use
+
+    ./docker/docker.sh test
