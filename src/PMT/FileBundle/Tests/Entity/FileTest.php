@@ -119,7 +119,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetUploadPath()
     {
-        $this->assertEquals('uploads/0/', $this->object->getUploadPath());
+        $this->assertEquals('/foo/uploads/0/', $this->object->getUploadPath('/foo'));
     }
 
     /**
