@@ -299,9 +299,9 @@ class File
         return $this->task;
     }
 
-    public function getUploadPath()
+    public function getUploadPath($defaultPath)
     {
-       return 'uploads/'.floor($this->getId()/10000).'/'.$this->getId();
+        return sprintf('%s/uploads/%s/%s', $defaultPath, floor($this->getId()/10000), $this->getId());
     }
 
     /**
