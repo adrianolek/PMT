@@ -24,7 +24,7 @@
         
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "1.1.*@dev",
+        "stof/doctrine-extensions-bundle": "1.2.*@dev",
         "ornicar/gravatar-bundle" : "dev-master",
         "ircmaxell/password-compat": "dev-master",
         "knplabs/knp-menu": "2.0.*@dev",
