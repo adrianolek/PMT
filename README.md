@@ -34,3 +34,7 @@ Running tests
 To run the test suite via Docker use
 
     ./docker/docker.sh test
+
+If you don't have Docker installed, then use PHPUnit directly
+
+    ./bin/phpunit -c app
