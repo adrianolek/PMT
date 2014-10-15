@@ -18,7 +18,7 @@ Quick start
 -----------
 
 The fastest way to get the application running is to use [Docker](https://www.docker.io).
-After installing Docker you should run
+After [installing Docker](https://docs.docker.com/installation/#installation) you should run
 
     ./docker/docker.sh build
 
