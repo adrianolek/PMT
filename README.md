@@ -28,6 +28,8 @@ which will build docker images, and then
 
 which will start the application.
 
+You should be able to access the application under [http://localhost](http://localhost) url.
+
 Running tests
 -------------
 
