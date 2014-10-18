@@ -40,3 +40,14 @@ To run the test suite via Docker use
 If you don't have Docker installed, then use PHPUnit directly
 
     ./bin/phpunit -c app
+
+Additional commands
+-------------------
+
+To see available commands run
+
+    ./docker/docker.sh
+
+To see available Ant targets run
+
+    ./docker/docker.sh ant -p
