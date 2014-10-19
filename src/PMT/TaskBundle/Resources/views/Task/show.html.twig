@@ -15,6 +15,8 @@
     <div class="progress">
         <div class="progress-bar" role="progressbar" title="{{ task.progress }}%" style="width: {{ task.progress }}%;">
             {{ task.progress }}%
+            &middot;
+            {{ duration }}h of {{ task.estimatedTimeHours }}h
         </div>
     </div>
 

@@ -70,6 +70,9 @@ doctrine:
                     softdeleteable:
                         class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                         enabled: true
+                dql:
+                    datetime_functions:
+                        timestampdiff: PMT\DoctrineExtensions\Query\Mysql\TimestampDiff
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -101,4 +104,3 @@ services:
             - { name: validator.constraint_validator, alias: password_required }
         
 knp_time: ~
-        

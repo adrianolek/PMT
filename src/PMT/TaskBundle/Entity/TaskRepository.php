@@ -95,6 +95,19 @@ class TaskRepository extends SortableRepository
         return $durations;
     }
 
+    public function getDuration(Task $task)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('SUM(TIMESTAMPDIFF(SECOND, track.startedAt, track.endedAt))')
+            ->from('PMTTrackingBundle:Track', 'track')
+            ->andWhere('track.task=:task')
+            ->setParameter(':task', $task);
+
+        $result = $qb->getQuery()->getSingleResult();
+
+        return round($result[1] / 3600, 2);
+    }
+
     public function updateProgress(Task $task)
     {
         $full = array(

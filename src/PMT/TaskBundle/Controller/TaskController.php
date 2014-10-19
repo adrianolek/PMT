@@ -3,6 +3,7 @@
 namespace PMT\TaskBundle\Controller;
 
 use PMT\ProjectBundle\Entity\Project;
+use PMT\TaskBundle\Entity\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -180,6 +181,10 @@ class TaskController extends Controller
             throw new AccessDeniedException();
         }
 
+        /** @var TaskRepository $repository */
+        $repository = $this->getDoctrine()->getManager()->getRepository('PMTTaskBundle:Task');
+        $duration = $repository->getDuration($task);
+
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem('Projects', $this->generateUrl('projects'));
         $breadcrumbs->addItem($project->getName());
@@ -189,6 +194,7 @@ class TaskController extends Controller
         return $this->render('PMTTaskBundle:Task:show.html.twig', array(
             'project' => $project,
             'task' => $task,
+            'duration' => $duration,
         ));
     }
 
