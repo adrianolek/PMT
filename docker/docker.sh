@@ -142,9 +142,9 @@ docker_stop() {
   for NAME in 'nginx' 'php' 'mysql'; do
     if is_running ${NAME}; then
       docker stop ${PREFIX}.${NAME}
-      docker rm ${PREFIX}.${NAME}
+      docker rm -v ${PREFIX}.${NAME}
     elif is_present ${NAME}; then
-      docker rm ${PREFIX}.${NAME}
+      docker rm -v ${PREFIX}.${NAME}
     else
       echo "stop: ${PREFIX}.${NAME} isn't running"
     fi
@@ -214,9 +214,9 @@ docker_test() {
   local status=$?
 
   docker stop pmt-test.mysql
-  docker rm pmt-test.mysql
-  docker rm pmt-test.mysqldata
-  docker rm pmt-test.uploads
+  docker rm -v pmt-test.mysql
+  docker rm -v pmt-test.mysqldata
+  docker rm -v pmt-test.uploads
 
   return ${status}
 }
@@ -257,7 +257,7 @@ docker_cleanup() {
 
     if is_present ${NAME}; then
       echo "cleanup: removing ${PREFIX}.${NAME}"
-      docker rm ${PREFIX}.${NAME}
+      docker rm -v ${PREFIX}.${NAME}
     fi
   done
 }
