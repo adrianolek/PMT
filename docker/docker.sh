@@ -25,7 +25,7 @@ is_running() {
 is_image() {
     local name=${1}
     local image
-    image=`docker images | grep -w pmt-${name}`
+    image=`docker images | grep -w ${IPREFIX}-${name}`
     if [ "${image}" ]; then
         return 0
     fi
@@ -34,6 +34,7 @@ is_image() {
 }
 
 docker_start() {
+    IPREFIX=${FLAGS_imageprefix}
     PREFIX=${FLAGS_prefix}
 
     if ! is_present 'mysqldata'; then
@@ -58,7 +59,7 @@ docker_start() {
     if is_present 'mysql'; then
         echo "start: ${PREFIX}.mysql already running"
     elif ! is_image 'mysql'; then
-        echo "image pmt-mysql is missing, you need to build it first"
+        echo "image ${IPREFIX}-mysql is missing, you need to build it first"
     else
         if [ ${FLAGS_debug} -eq ${FLAGS_TRUE} ]; then
             docker run -d \
@@ -68,7 +69,7 @@ docker_start() {
                 --volumes-from=${PREFIX}.mysqldata \
                 -v $(pwd)/docker/mysql/init.sql:/init.sql \
                 -v $(pwd)/docker/mysql/my.cnf:/etc/mysql/my.cnf \
-                pmt-mysql
+                ${IPREFIX}-mysql
         else
             docker run -d \
                 --name=${PREFIX}.mysql \
@@ -76,14 +77,14 @@ docker_start() {
                 --volumes-from=${PREFIX}.mysqldata \
                 -v $(pwd)/docker/mysql/init.sql:/init.sql \
                 -v $(pwd)/docker/mysql/my.cnf:/etc/mysql/my.cnf \
-                pmt-mysql
+                ${IPREFIX}-mysql
         fi
     fi
 
     if is_present 'php'; then
         echo "start: ${PREFIX}.php already running"
     elif ! is_image 'php'; then
-        echo "image pmt-php is missing, you need to build it first"
+        echo "image ${IPREFIX}-php is missing, you need to build it first"
     else
         if [ ${FLAGS_debug} -eq ${FLAGS_TRUE} ]; then
             docker run -d \
@@ -97,7 +98,7 @@ docker_start() {
                 -v $(pwd)/docker/php/php.ini:/etc/php5/fpm/php.ini \
                 -v $(pwd)/docker/php/xdebug.ini:/etc/php5/fpm/conf.d/xdebug-conf.ini \
                 -v $(pwd)/docker/php/www.conf:/etc/php5/fpm/pool.d/www.conf \
-                pmt-php
+                ${IPREFIX}-php
         else
             docker run -d \
                 --name=${PREFIX}.php \
@@ -110,14 +111,14 @@ docker_start() {
                 -v $(pwd)/docker/php/php.ini:/etc/php5/fpm/php.ini \
                 -v /dev/null:/etc/php5/fpm/conf.d/20-xdebug.ini \
                 -v $(pwd)/docker/php/www.conf:/etc/php5/fpm/pool.d/www.conf \
-                pmt-php
+                ${IPREFIX}-php
         fi
     fi
 
     if is_present 'nginx'; then
         echo "start: ${PREFIX}.nginx already running"
     elif ! is_image 'mysql'; then
-        echo "image pmt-nginx is missing, you need to build it first"
+        echo "image ${IPREFIX}-nginx is missing, you need to build it first"
     else
         docker run -d \
             --name=${PREFIX}.nginx \
@@ -129,7 +130,7 @@ docker_start() {
             -v $(pwd)/docker/nginx/vhost.conf:/etc/nginx/sites-enabled/default \
             -v $(pwd)/docker/nginx/nginx.conf:/etc/nginx/nginx.conf \
             -p ${FLAGS_port}:80 \
-            pmt-nginx
+            ${IPREFIX}-nginx
     fi
 }
 
@@ -154,6 +155,7 @@ docker_restart() {
 }
 
 docker_php() {
+    IPREFIX=${FLAGS_imageprefix}
     PREFIX=${FLAGS_prefix}
 
     if ! is_present 'mysql'; then
@@ -171,7 +173,7 @@ docker_php() {
         -v $(pwd)/docker/php/xdebug.ini:/etc/php5/cli/conf.d/xdebug-config.ini \
         --env 'PHP_IDE_CONFIG=serverName=localhost' \
         -w /var/www \
-        pmt-php \
+        ${IPREFIX}-php \
         $@
 }
 
@@ -179,28 +181,29 @@ docker_ant() {
     docker run --rm \
         -v $HOME/.composer/:/root/.composer \
         -v $(pwd):/var/www \
-        pmt-ant -logger org.apache.tools.ant.listener.AnsiColorLogger -Ddocker=1 -Duid=$(id -u) -Dgid=$(id -g) $*
+        ${FLAGS_imageprefix}-ant -logger org.apache.tools.ant.listener.AnsiColorLogger -Ddocker=1 -Duid=$(id -u) -Dgid=$(id -g) $*
 }
 
 docker_test() {
+    PREFIX=${FLAGS_prefix}
+    IPREFIX=${FLAGS_imageprefix}
+
     if [ ! -f $(pwd)/docker/mysql/init.sql ]; then
         echo >&2 "Please create $(pwd)/docker/mysql/init.sql"
         exit 1
     fi
 
-    FLAGS_prefix='pmt-test'
+    docker run -d -v=/var/lib/mysql --name=${PREFIX}.mysqldata busybox true
 
-    docker run -d -v=/var/lib/mysql --name=pmt-test.mysqldata busybox true
-
-    docker run -d -v=/srv/uploads --name=pmt-test.uploads busybox true
-    docker run --rm --volumes-from=pmt-test.uploads busybox chmod 777 /srv/uploads
+    docker run -d -v=/srv/uploads --name=${PREFIX}.uploads busybox true
+    docker run --rm --volumes-from=${PREFIX}.uploads busybox chmod 777 /srv/uploads
 
     docker run -d \
-        --name=pmt-test.mysql \
-        --volumes-from=pmt-test.mysqldata \
+        --name=${PREFIX}.mysql \
+        --volumes-from=${PREFIX}.mysqldata \
         -v $(pwd)/docker/mysql/init.sql:/init.sql \
         -v $(pwd)/docker/mysql/my.cnf:/etc/mysql/my.cnf \
-        pmt-mysql
+        ${IPREFIX}-mysql
 
     # wait for the mysql container to start
     sleep 3
@@ -210,24 +213,24 @@ docker_test() {
 
     local status=$?
 
-    docker stop pmt-test.mysql
-    docker rm -v pmt-test.mysql
-    docker rm -v pmt-test.mysqldata
-    docker rm -v pmt-test.uploads
+    docker stop ${PREFIX}.mysql
+    docker rm -v ${PREFIX}.mysql
+    docker rm -v ${PREFIX}.mysqldata
+    docker rm -v ${PREFIX}.uploads
 
     return ${status}
 }
 
 docker_build_image() {
     if [ ${FLAGS_cache} -eq ${FLAGS_TRUE} ]; then
-        docker build --rm -t pmt-$1 docker/$1
+        docker build --rm -t ${FLAGS_imageprefix}-$1 docker/$1
     else
-        docker build --no-cache --rm -t pmt-$1 docker/$1
+        docker build --no-cache --rm -t ${FLAGS_imageprefix}-$1 docker/$1
     fi
 }
 
 docker_build() {
-    docker build --no-cache --rm -t pmt-base docker/base
+    docker build --no-cache --rm -t ${FLAGS_imageprefix}-base docker/base
 
     for NAME in 'ant' 'mysql' 'php' 'nginx'; do
         docker_build_image ${NAME}
@@ -237,8 +240,8 @@ docker_build() {
 docker_cleanup_images() {
     for NAME in 'nginx' 'php' 'mysql' 'ant' 'base'; do
         if is_image "${NAME}"; then
-            echo "cleanup images: removing pmt-${NAME}"
-            docker rmi "pmt-${NAME}"
+            echo "cleanup images: removing ${FLAGS_imageprefix}-${NAME}"
+            docker rmi "${FLAGS_imageprefix}-${NAME}"
         fi
     done
 }
@@ -276,6 +279,7 @@ main () {
 
     case ${command} in
         'start')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             DEFINE_string 'prefix' 'pmt' 'Docker containers prefix'
             DEFINE_string 'port' '80' 'Bind to port' 'p'
             DEFINE_boolean 'debug' false 'Enable xdebug and expose mysql port' 'd'
@@ -287,6 +291,7 @@ main () {
             ;;
 
         'restart')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             DEFINE_string 'prefix' 'pmt' 'Docker containers prefix'
             DEFINE_string 'port' '80' 'Bind to port' 'p'
             DEFINE_boolean 'debug' false 'Enable xdebug and expose mysql port' 'd'
@@ -306,6 +311,7 @@ main () {
             ;;
 
         'build')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             DEFINE_boolean 'cache' true 'Use cache when building'
             FLAGS_HELP="USAGE: $0 build"
 
@@ -314,6 +320,7 @@ main () {
             ;;
 
         'build-image')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker image prefix'
             DEFINE_boolean 'cache' true 'Use cache when building'
             FLAGS_HELP="USAGE: $0 build-image image_name"
 
@@ -322,10 +329,15 @@ main () {
             ;;
 
         'ant')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
+            FLAGS_HELP="USAGE: $0 ant 'target'"
+
+            set_flags "$@"
             docker_ant "$@"
             ;;
 
         'php')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             DEFINE_string 'prefix' 'pmt' 'Docker containers prefix'
             FLAGS_HELP="USAGE: $0 php [flags] 'command_to_run'"
 
@@ -341,6 +353,7 @@ main () {
             ;;
 
         'cleanup-images')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             FLAGS_HELP="USAGE: $0 cleanup-images"
 
             set_flags "$@"
@@ -348,6 +361,10 @@ main () {
             ;;
 
         'test')
+            DEFINE_string 'prefix' 'pmt-test' 'Docker containers prefix'
+            FLAGS_HELP="USAGE: $0 test"
+
+            set_flags "$@"
             docker_test "$@"
             ;;
 
