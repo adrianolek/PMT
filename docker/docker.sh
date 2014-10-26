@@ -361,6 +361,7 @@ main () {
             ;;
 
         'test')
+            DEFINE_string 'imageprefix' 'pmt' 'Docker images prefix'
             DEFINE_string 'prefix' 'pmt-test' 'Docker containers prefix'
             FLAGS_HELP="USAGE: $0 test"
 
