@@ -14,7 +14,11 @@ use PMT\UserBundle\Entity\User;
  */
 class ProjectRepository extends EntityRepository
 {
-
+    /**
+     * @param bool $is_manager
+     * @param User $user
+     * @return Project[]
+     */
     public function findFor($is_manager = false, User $user = null)
     {
         if ($is_manager) {

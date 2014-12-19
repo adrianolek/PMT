@@ -20,6 +20,7 @@
         <service id="pmt.menu.builder" class="PMT\UserBundle\Menu\MenuBuilder">
             <argument type="service" id="knp_menu.factory" />
             <argument type="service" id="security.context" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
         <service id="pmt.menu.main" class="Knp\Menu\MenuItem" factory-service="pmt.menu.builder" factory-method="createMainMenu" scope="request">

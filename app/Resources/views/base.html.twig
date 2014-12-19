@@ -33,20 +33,20 @@
                     <a class="navbar-brand" href="#">PMT</a>
                 </div>
                 <nav class="navbar-collapse collapse navbar-responsive-collapse" role="navigation">
-                    {{ knp_menu_render('main', { currentClass: 'active' }) }}
-                    
+                    {{ knp_menu_render('main', { currentClass: 'active', template: 'PMTUserBundle:Menu:menu.html.twig' }) }}
+
                     {{ knp_menu_render('right', { currentClass: 'active' }) }}
                 </nav>
             </div>
         </header>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-10">
                     {% include 'flash.html.twig' %}
-                    
+
                     {{ wo_render_breadcrumbs() }}
-                    
+
                     {% block body %}{% endblock %}
                 </div>
                 {% if is_granted('ROLE_USER') %}
@@ -56,7 +56,7 @@
                 {% endif %}
             </div>
         </div>
-        
+
         {% block javascripts %}
             {% javascripts filter='?uglifyjs2'
             'assets/js/jquery-2.0.3.js'
