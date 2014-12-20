@@ -31,6 +31,8 @@ class MenuBuilder
         if ($this->securityContext->isGranted('ROLE_USER')) {
             $projectsMenu = $menu->addChild('Projects', array('route' => 'projects'));
             $projectsMenu->setAttribute('dropdown', true);
+            $projectsMenu->addChild('List', array('route' => 'projects'))
+                ->setAttribute('divider_append', true);
 
             $projects = $this->em->getRepository('PMTProjectBundle:Project')->findFor(
                 $this->securityContext->isGranted('ROLE_MANAGER'),
