@@ -1,6 +1,11 @@
-FROM pmt-base
+FROM stackbrew/ubuntu:14.04
 
-RUN apt-get install -y mysql-server
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update -y; \
+  apt-get install -y mysql-server; \
+  apt-get clean; \
+  rm -rf /var/lib/apt/lists/*
 
 ADD entrypoint.sh /entrypoint.sh
 

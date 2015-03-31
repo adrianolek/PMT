@@ -230,15 +230,13 @@ docker_build_image() {
 }
 
 docker_build() {
-    docker build --no-cache --rm -t ${FLAGS_imageprefix}-base docker/base
-
     for NAME in 'ant' 'mysql' 'php' 'nginx'; do
         docker_build_image ${NAME}
     done
 }
 
 docker_cleanup_images() {
-    for NAME in 'nginx' 'php' 'mysql' 'ant' 'base'; do
+    for NAME in 'nginx' 'php' 'mysql' 'ant'; do
         if is_image "${NAME}"; then
             echo "cleanup images: removing ${FLAGS_imageprefix}-${NAME}"
             docker rmi "${FLAGS_imageprefix}-${NAME}"
