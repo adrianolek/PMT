@@ -51,3 +51,8 @@ To see available commands run
 To see available Ant targets run
 
     ./docker/docker.sh ant -p
+
+Chrome App client
+-----------------
+
+There is a time tracking [client app](https://github.com/adrianolek/PMT-Client), which uses the API.
